@@ -1,0 +1,51 @@
+ <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ru.android.cyfral.servisnik.ui.RepairRequestActivity">
+
+
+            <item
+                android:id="@+id/menusearch"
+                android:orderInCategory="100"
+                android:title="@string/search"
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/ic_magnify_white_48dp">
+
+                <menu xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    tools:context=".ui.RepairRequestActivity">
+
+                    <item
+                        android:id="@+id/findStreet"
+                        android:orderInCategory="100"
+                        android:title="@string/nameStreet"
+                        app:showAsAction="never"/>
+
+                    <item
+                        android:id="@+id/numberDesk"
+                        android:orderInCategory="100"
+                        android:title="@string/numberDesk"
+                        app:showAsAction="never"/>
+
+                    <item
+                        android:id="@+id/numberMobile"
+                        android:orderInCategory="100"
+                        android:title="@string/numberPhone"
+                        app:showAsAction="never"/>
+                </menu>
+
+
+            </item>
+
+            <item
+                android:id="@+id/menusearch2"
+                android:orderInCategory="100"
+                android:title=""
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/ic_home_map_marker_white_48dp">
+            </item>
+
+
+
+</menu>

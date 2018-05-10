@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F6"
+    tools:context=".ui.OrderCardActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="31dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/header_street"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingLeft="4pt"
+                    android:paddingRight="2pt"
+                    android:paddingTop="5pt"
+                    android:background="#FFFFFF"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+
+                    tools:text="Header" />
+
+                <TextView
+                    android:id="@+id/adress_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:fontFamily="@font/roboto"
+                    android:paddingLeft="4pt"
+                    android:paddingRight="2pt"
+                    android:paddingTop="5pt"
+                    android:paddingBottom="5pt"
+                    android:textSize="14dp"
+                    tools:text="Header2" />
+
+
+                <TextView
+                    android:id="@+id/about_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="#FFFFFF"
+                    android:fontFamily="@font/roboto"
+                    android:paddingLeft="4pt"
+                    android:paddingRight="2pt"
+                    android:paddingTop="5pt"
+                    android:paddingBottom="5pt"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/about_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:fontFamily="@font/roboto"
+                    android:paddingLeft="4pt"
+                    android:paddingRight="2pt"
+                    android:textSize="14dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/Date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:fontFamily="@font/roboto"
+                        android:gravity="center"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="4pt"
+                        android:paddingRight="4pt"
+                        android:text="Крайняя дата выполнения"
+                        android:textAlignment="viewStart"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                         />
+
+                    <TextView
+                        android:id="@+id/date_deadline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:fontFamily="@font/roboto"
+                        android:paddingLeft="4pt"
+                        android:paddingRight="4pt"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        tools:text="Просрочена" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/agree_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="0dp"
+                            android:background="#FFFFFF"
+                            android:fontFamily="@font/roboto"
+                            android:hint="Согласованная дата выполнения"
+                            android:paddingLeft="4pt"
+                            android:paddingBottom="5dp"
+                            android:paddingRight="4pt"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:id="@+id/angree_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="4pt"
+                            android:paddingRight="4pt"
+                            android:background="#FFFFFF"
+                            android:paddingBottom="5dp"
+                            android:hint="Согласованная дата выполнения"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/btn_date_agreed"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/pensil34" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/TMC"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/button"
+                    android:fontFamily="@font/roboto"
+                    android:text="ТМЦ"
+                    android:textSize="16sp"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/Contacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:fontFamily="@font/roboto"
+                    android:text="Контакты"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/equipment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:fontFamily="@font/roboto"
+                    android:text="Оборудование"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/SaveHouse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:fontFamily="@font/roboto"
+                    android:text="Безопасный дом"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/PDInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:fontFamily="@font/roboto"
+                    android:text="Информация о подьезде"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/result"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#154E85"
+                    android:fontFamily="@font/roboto"
+                    android:text="РЕЗУЛЬТАТЫ ВЫПОЛЕНИЯ РАБОТ"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

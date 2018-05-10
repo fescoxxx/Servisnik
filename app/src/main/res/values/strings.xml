@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Сервисник</string>
+    <string name="title_activity_repair_request">RepairRequestActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="nameStreet">Название улицы</string>
+    <string name="numberPhone">№ телефона</string>
+    <string name="collapsed">collapsed: %s</string>
+    <string name="expanded">expanded: %s</string>
+    <string name="numberDesk">№ заказ-наряда</string>
+    <string name="search">Поиск</string>
+    <string name="search_">Search</string>
+</resources>
