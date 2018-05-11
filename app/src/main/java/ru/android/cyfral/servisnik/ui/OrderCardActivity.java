@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
@@ -71,6 +72,8 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private ImageButton btn_date_agreed;
     private DatePicker datePicker;
     private TimePicker timePicker;
+    private Dialog dialogAgreed;
+
 
     private static ProgressDialog mDialog;
 
@@ -105,11 +108,13 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         btn_date_agreed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(OrderCardActivity.this, "test", Toast.LENGTH_SHORT).show();
-                Dialog dialog = new Dialog(OrderCardActivity.this);
-                dialog.setContentView(R.layout.date_time_agreed_picker);
-                dialog.setTitle("Custom Dialog");
-                dialog.show();
+                dialogAgreed = new Dialog(OrderCardActivity.this);
+                dialogAgreed.setContentView(R.layout.date_time_agreed_picker);
+                dialogAgreed.setTitle("Назначить дату и время");
+                timePicker = (TimePicker) dialogAgreed.findViewById(R.id.timePicker_agreed);
+                datePicker = (DatePicker) dialogAgreed.findViewById(R.id.datePicker_argeed);
+                timePicker.setIs24HourView(true);
+                dialogAgreed.show();
             }
         });
     }
