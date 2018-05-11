@@ -1,11 +1,13 @@
 package ru.android.cyfral.servisnik.ui;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -35,11 +37,13 @@ import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchListener;
 import ru.android.cyfral.servisnik.model.OrderCard.Data;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
+import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.Utils;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
+
 //123
 public class OrderCardActivity extends AppCompatActivity implements DataFetchListener {
 
@@ -68,6 +72,8 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private DatePicker datePicker;
     private TimePicker timePicker;
 
+    private static ProgressDialog mDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +91,16 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         angreed_date_text =  (TextView) findViewById(R.id.agree_date);
         angreed_time_text = (TextView) findViewById(R.id.angree_time);
         btn_date_agreed = (ImageButton) findViewById(R.id.btn_date_agreed);
+
         Intent intent = getIntent();
         guid = intent.getStringExtra(Constants.SETTINGS.GUID);
+
+        if (Utils.isNetworkAvailable(this)) {
+            getFeed();
+        } else {
+            getFeedFromDatabase();
+        }
+
 
         btn_date_agreed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,16 +112,6 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                 dialog.show();
             }
         });
-
-        mDatabase.fetchDatasForOrderCard(this, guid);
-
-
-       /* if (Utils.isNetworkAvailable(this)) {
-            getFeed();
-        } else {
-            getFeedFromDatabase();
-        }*/
-
     }
 
 
@@ -123,7 +127,36 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     }
 
 
+    public static class SaveIntoDatabaseOdrerCard extends AsyncTask<OrderCard, Void, Void> {
+        private final String TAG = SaveIntoDatabaseOdrerCard.class.getSimpleName();
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override
+        protected Void doInBackground(OrderCard... params) {
+            OrderCard orderCard = params[0];
+            try {
+                mDatabase.addDataOrderCard(orderCard);
+            } catch (Exception e) {
+                Log.d(TAG, e.getMessage());
+            }
+            return null;
+        }
+    }
+
+    private String loadTextPref(String prefStr) {
+        sPref = getSharedPreferences("myPrefs", MODE_PRIVATE);
+        return sPref.getString(prefStr, "");
+    }
+
     public void getFeed() {
+        mDialog = new ProgressDialog(this);
+        mDialog.setMessage("Отправляем данные...");
+        mDialog.setCancelable(true);
+        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mDialog.setIndeterminate(true);
+        mDialog.show();
         SharedPreferences sPref = getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
         String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
         orderCardCall = serviceApiClient.getOrderCard(guid, "Bearer " + token);
@@ -132,17 +165,56 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
             public void onResponse(Call<OrderCard> call, Response<OrderCard> response) {
                 if (response.isSuccessful()) {
                     if (response.body().getIsSuccess().equals("true")) {
-                      //  showOrderCard(response.body().getData());
-
+                        showOrderCard(response.body());
+                        SaveIntoDatabaseOdrerCard task = new SaveIntoDatabaseOdrerCard();
+                        task.execute(response.body());
                     } else {
+                        int sc = response.code();
+                        switch (sc) {
+                            case 401:
+                                Log.d("case 401", response.message());
+                                //Токен просрочен, пробуем получить новый
+                                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                                        "mpservisnik",
+                                        "secret",
+                                        loadTextPref("token_refresh"));
+                                callRedresh.enqueue(new Callback<RefreshToken>() {
+                                    @Override
+                                    public void onResponse(Call<RefreshToken> call, Response<RefreshToken> response) {
+                                        if (response.isSuccessful()) {
+                                            SharedPreferences myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                                            SharedPreferences.Editor ed = myPrefs.edit();
+                                            ed.putString("token",  response.body().getAccess_token());
+                                            ed.putString("token_refresh",  response.body().getRefresh_token());
+                                            ed.apply();
+                                            getFeed();
+                                        } else {
+                                            startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                                            finish();
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<RefreshToken> call, Throwable t) {
+                                        startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                                        finish();
+                                    }
+                                });
+                                break;
+                        }
                         showErrorDialog(response.body().getErrors().getCode());
                         getFeedFromDatabase();
                     }
+
+                    mDialog.cancel();
+                } else {
+
+                    mDialog.cancel();
                 }
             }
             @Override
             public void onFailure(Call<OrderCard> call, Throwable t) {
                 Log.d("orderCardCall", t.getMessage());
+                mDialog.cancel();
             }
         });
     }
@@ -151,15 +223,25 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         String group = orderCard.getData().getWorks().getGroup();
         String element = orderCard.getData().getWorks().getElement();
         String type = orderCard.getData().getWorks().getType();
-        if (!group.equals("null")) {
-            str = str + group;
-        }
-        if (!element.equals("null")) {
-            str = str + " | "+element;
-        }
-        if (!type.equals("null")) {
-            str = str + " | "+type;
-        }
+        try {
+            if (!group.equals("null")) {
+                    str = str + group;
+                }
+            }
+        catch (java.lang.NullPointerException ex) {}
+
+        try {
+            if (!element.equals("null")) {
+                    str = str + " | "+element;
+                }
+            }
+        catch (java.lang.NullPointerException ex) {}
+
+        try {
+            if (!type.equals("null")) {
+                str = str + " | "+type;
+            }
+        } catch (java.lang.NullPointerException ex) {}
 
         about_title.setText(str);
 
@@ -206,7 +288,8 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     }
 
     private void getFeedFromDatabase(){
-
+        mDatabase.fetchDatasForOrderCard(this, guid);
+        mDialog.cancel();
     }
 
     private void showErrorDialog(String code) {

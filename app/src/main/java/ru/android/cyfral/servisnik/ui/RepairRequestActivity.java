@@ -317,25 +317,6 @@ public class RepairRequestActivity extends AppCompatActivity {
             }
         }
 
-        public static class SaveIntoDatabaseOdrerCard extends AsyncTask<OrderCard, Void, Void> {
-            private final String TAG = SaveIntoDatabaseOdrerCard.class.getSimpleName();
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-            @Override
-            protected Void doInBackground(OrderCard... params) {
-                OrderCard orderCard = params[0];
-
-                try {
-                    mDatabase.addDataOrderCard(orderCard);
-                } catch (Exception e) {
-                    Log.d(TAG, e.getMessage());
-                }
-                return null;
-            }
-        }
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -369,47 +350,13 @@ public class RepairRequestActivity extends AppCompatActivity {
             return rootView;
         }
 
+
         @Override
         public void onClick(View view, Data data, int position) {
             if (itemClickListener != null) {
-                mDialog = new ProgressDialog(getActivity());
-                mDialog.setMessage("Отправляем данные...");
-                mDialog.setCancelable(true);
-                mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                mDialog.setIndeterminate(true);
-                mDialog.show();
-                SharedPreferences sPref = getActivity().getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
-                String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
-                orderCardCall = serviceApiClient.getOrderCard(data.getId(), "Bearer " + token);
-                orderCardCall.enqueue(new Callback<OrderCard>() {
-                    @Override
-                    public void onResponse(Call<OrderCard> call, Response<OrderCard> response) {
-                        if (response.isSuccessful()) {
-                            if (response.body().getIsSuccess().equals("true")) {
-                               // showOrderCard(response.body().getData());
-
-                                SaveIntoDatabaseOdrerCard task = new SaveIntoDatabaseOdrerCard();
-                                task.execute(response.body());
-                            } else {
-                                Log.d("", response.body().toString());
-                                showErrorDialog(response.body().getErrors().getCode());
-                                //getFeedFromDatabase();
-                            }
-                            mDialog.cancel();
-                            Intent intent = new Intent("ru.android.cyfral.servisnik.card");
-                               intent.putExtra(Constants.SETTINGS.GUID, response.body().getData().getId());
-                               startActivity(intent);
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<OrderCard> call, Throwable t) {
-                        Log.d("orderCardCall", t.getMessage());
-                        mDialog.cancel();
-                    }
-                });
-               // Intent intent = new Intent("ru.android.cyfral.servisnik.card");
-             //   intent.putExtra(Constants.SETTINGS.GUID, data.getId());
-             //   startActivity(intent);
+                Intent intent = new Intent("ru.android.cyfral.servisnik.card");
+                intent.putExtra(Constants.SETTINGS.GUID, data.getId());
+                startActivity(intent);
             }
         }
 

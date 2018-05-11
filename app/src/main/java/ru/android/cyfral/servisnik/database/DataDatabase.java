@@ -70,20 +70,16 @@ public class DataDatabase extends SQLiteOpenHelper {
         if (cursorData.getCount() > 0) {
             db.execSQL(Constants.DATABASE.DELETE_DATAS_ORDER_CARD+orderCard.getData().getId()+ "'");
             Log.d("addDataOrderCard_cur", cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.ID_GUID_ORDER_CARD)));
-
         }
             //записи нет - создаем
             ContentValues valuesDatas = new ContentValues();
             valuesDatas.put(Constants.DATABASE.ID_GUID_ORDER_CARD, orderCard.getData().getId());
             valuesDatas.put(Constants.DATABASE.JSON_ORDER_CARD, orderCard.toString());
-
             try {
                 db.insert(Constants.DATABASE.TABLE_NAME_ORDER_CARD, null, valuesDatas);
             } catch (Exception e) {
                 Log.d("addDataOrderCard", e.fillInStackTrace().toString());
             }
-
-
     }
 
     public void addDataRequest(Data data) {
