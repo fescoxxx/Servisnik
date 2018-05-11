@@ -40,7 +40,7 @@ import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
-
+//123
 public class OrderCardActivity extends AppCompatActivity implements DataFetchListener {
 
     private SharedPreferences sPref;
