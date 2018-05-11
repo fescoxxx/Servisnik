@@ -201,20 +201,24 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                                 });
                                 break;
                         }
-                        showErrorDialog(response.body().getErrors().getCode());
-                        getFeedFromDatabase();
+                       // showErrorDialog(response.body().getErrors().getCode());
+                     //   getFeedFromDatabase();
                     }
 
                     mDialog.cancel();
                 } else {
 
                     mDialog.cancel();
+                    startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                    finish();
                 }
             }
             @Override
             public void onFailure(Call<OrderCard> call, Throwable t) {
                 Log.d("orderCardCall", t.getMessage());
                 mDialog.cancel();
+                startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                finish();
             }
         });
     }

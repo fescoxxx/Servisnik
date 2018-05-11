@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="#FFFFFF"
        >
 
         <TextView
@@ -39,7 +40,7 @@
 
             <TextView
                 android:id="@+id/numberhome"
-                android:layout_width="549dp"
+                android:layout_width="533dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingBottom="5pt"
@@ -57,6 +58,9 @@
                 android:text="TextView"
                 android:textAlignment="textEnd" />
         </LinearLayout>
-
+        <View android:background="#b3b3b3"
+            android:layout_width = "match_parent"
+            android:layout_height="1px"/>
     </LinearLayout>
+
 </LinearLayout>

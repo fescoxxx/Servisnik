@@ -5,7 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
@@ -65,6 +68,24 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
                 mData.get(position).getAddress().getEntrance() + " кв."+
                 mData.get(position).getAddress().getApartment()
         );
+
+
+        Date dateToday = new Date();
+        Date deadLine = null;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'");
+        SimpleDateFormat format_data = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            deadLine = format.parse(mData.get(position).getDeadline());
+            if (deadLine.before(format.parse(format.format(dateToday)))) {
+                holder.mDateDeadLine.setText("Просрочена");
+            } else if (deadLine.equals(format.parse(format.format(dateToday)))){
+                holder.mDateDeadLine.setText("Сегодня");
+            } else {
+                holder.mDateDeadLine.setText(format_data.format(deadLine));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
