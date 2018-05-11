@@ -23,6 +23,7 @@ import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.TokenClient;
 
+//Тестовый
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Snackbar snackbar; //снекбар
