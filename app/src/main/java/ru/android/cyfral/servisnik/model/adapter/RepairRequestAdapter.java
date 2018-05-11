@@ -29,7 +29,7 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item_repair_request_child, parent, false);
+        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item_repair_request_from_search, parent, false);
 
         return new Holder(row);
     }
@@ -83,13 +83,14 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView mWorks, mCityStreet, mNumberhome;
+        private TextView mWorks, mCityStreet, mNumberhome, mDateDeadLine;
 
         public Holder(View itemView) {
             super(itemView);
             mWorks = (TextView) itemView.findViewById(R.id.works);
             mCityStreet = (TextView) itemView.findViewById(R.id.citystreet);
             mNumberhome = (TextView) itemView.findViewById(R.id.numberhome);
+            mDateDeadLine = (TextView)  itemView.findViewById(R.id.date_deadline_search);
             itemView.setOnClickListener(this);
         }
         @Override
