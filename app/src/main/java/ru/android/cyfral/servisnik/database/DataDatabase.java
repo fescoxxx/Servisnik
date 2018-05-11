@@ -243,11 +243,17 @@ public class DataDatabase extends SQLiteOpenHelper {
         public void run() {
             Cursor cursorData = null;
             if (filtrType.equals(Constants.SEARCH.NAME_STREET)) {
-                cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_FOR_STREET+filtr+"%'", null);
+                cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_FOR_STREET+filtr
+                        +"%' order by "+Constants.DATABASE.DEADLINE+ ", "
+                        +Constants.DATABASE.STREET +" desc", null);
             } else if (filtrType.equals(Constants.SEARCH.NUMBER_PHONE)) {
-                cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_FOR_PHONE+filtr+"%'", null);
+                cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_FOR_PHONE+filtr
+                        +"%' order by "+Constants.DATABASE.DEADLINE+ ", "
+                        +Constants.DATABASE.STREET +" desc", null);
             } else if (filtrType.equals(Constants.SEARCH.NUMBER_ZN)) {
-                cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_FOR_NUMBER_ZN+filtr+"%'", null);
+                cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_FOR_NUMBER_ZN+filtr
+                        +"%' order by "+Constants.DATABASE.DEADLINE+ ", "
+                        +Constants.DATABASE.STREET +" desc", null);
             }
 
             Log.d("Constants.DATABASE",Constants.DATABASE.GET_DATAS_QUERY_FOR_STREET+filtr+"'");
@@ -346,7 +352,8 @@ public class DataDatabase extends SQLiteOpenHelper {
 
         @Override
         public void run() {
-            Cursor cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY, null);
+            Cursor cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY +" order by "
+                    +Constants.DATABASE.DEADLINE + ", "+Constants.DATABASE.STREET +" desc", null);
             final List<Data> dataList = new ArrayList<>();
             final List<Contacts> constantsList = new ArrayList<>();
             if (cursorData.getCount() > 0) {

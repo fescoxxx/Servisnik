@@ -13,7 +13,7 @@ public class Constants {
     public static final class DATABASE {
 
         public static final String DB_NAME = "datas";
-        public static final int DB_VERSION =9;
+        public static final int DB_VERSION =10;
         public static final String TABLE_NAME_DATAS = "data";
         public static final String TABLE_NAME_CONTACTS = "contacts";
         public static final String TABLE_NAME_ORDER_CARD = "order_card";
@@ -94,7 +94,7 @@ public class Constants {
                 CITY+ " TEXT," +
                 ISVIEWED+ " TEXT," +
                 NUMBER_+ " TEXT," +
-                DEADLINE+ " TEXT," +
+                DEADLINE+ " datetime," +
                 PHONEFORSEARCH+ " TEXT, " +
                 ELEMENT+ " TEXT, " +
                 TYPE_WORKS+ " TEXT, " +

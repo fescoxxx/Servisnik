@@ -1,4 +1,5 @@
 package ru.android.cyfral.servisnik.model.adapter;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,11 +79,15 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
             deadLine = format.parse(mData.get(position).getDeadline());
             if (deadLine.before(format.parse(format.format(dateToday)))) {
                 holder.mDateDeadLine.setText("Просрочена");
+                holder.mDateDeadLine.setTextColor(Color.parseColor("#000000"));
             } else if (deadLine.equals(format.parse(format.format(dateToday)))){
                 holder.mDateDeadLine.setText("Сегодня");
+                holder.mDateDeadLine.setTextColor(Color.parseColor("#CF1D1D"));
             } else {
                 holder.mDateDeadLine.setText(format_data.format(deadLine));
+                holder.mDateDeadLine.setTextColor(Color.parseColor("#4F7AB4"));
             }
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
