@@ -28,14 +28,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:paddingLeft="4pt"
-                    android:paddingRight="2pt"
-                    android:paddingTop="5pt"
                     android:background="#FFFFFF"
                     android:fontFamily="@font/roboto"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="5dp"
+                    android:textColor="#3c3c3c"
                     android:textSize="16dp"
-                    android:textStyle="bold"
 
+                    android:textStyle="bold"
                     tools:text="Header" />
 
                 <TextView
@@ -44,10 +45,11 @@
                     android:layout_height="wrap_content"
                     android:background="#FFFFFF"
                     android:fontFamily="@font/roboto"
-                    android:paddingLeft="4pt"
-                    android:paddingRight="2pt"
-                    android:paddingTop="5pt"
                     android:paddingBottom="5pt"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="5dp"
+                    android:textColor="#979797"
                     android:textSize="14dp"
                     tools:text="Header2" />
 
@@ -59,10 +61,11 @@
                     android:layout_marginTop="8dp"
                     android:background="#FFFFFF"
                     android:fontFamily="@font/roboto"
+                    android:paddingBottom="5pt"
                     android:paddingLeft="4pt"
                     android:paddingRight="2pt"
                     android:paddingTop="5pt"
-                    android:paddingBottom="5pt"
+                    android:textColor="#3c3c3c"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -74,6 +77,7 @@
                     android:fontFamily="@font/roboto"
                     android:paddingLeft="4pt"
                     android:paddingRight="2pt"
+                    android:textColor="#979797"
                     android:textSize="14dp" />
 
                 <LinearLayout
@@ -89,15 +93,14 @@
                         android:background="#FFFFFF"
                         android:fontFamily="@font/roboto"
                         android:gravity="center"
-                        android:paddingTop="20dp"
                         android:paddingBottom="20dp"
                         android:paddingLeft="4pt"
                         android:paddingRight="4pt"
+                        android:paddingTop="20dp"
                         android:text="Крайняя дата выполнения"
                         android:textAlignment="viewStart"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                         />
+                        android:textColor="#3c3c3c"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/date_deadline"
@@ -144,11 +147,12 @@
                             android:id="@+id/angree_time"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="#FFFFFF"
+                            android:fontFamily="@font/roboto"
+                            android:hint="Согласованная дата выполнения"
+                            android:paddingBottom="5dp"
                             android:paddingLeft="4pt"
                             android:paddingRight="4pt"
-                            android:background="#FFFFFF"
-                            android:paddingBottom="5dp"
-                            android:hint="Согласованная дата выполнения"
                             android:textSize="14dp" />
                     </LinearLayout>
 
@@ -214,7 +218,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#154E85"
-                    android:fontFamily="@font/roboto"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:layout_gravity="start"
+                    android:fontFamily="@font/roboto_medium"
                     android:text="РЕЗУЛЬТАТЫ ВЫПОЛЕНИЯ РАБОТ"
                     android:textColor="@android:color/background_light"
                     android:textSize="16sp" />

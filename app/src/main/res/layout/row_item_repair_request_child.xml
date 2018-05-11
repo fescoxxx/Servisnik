@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
     android:orientation="horizontal">
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,10 +16,12 @@
             android:id="@+id/works"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
             android:paddingLeft="4pt"
             android:paddingRight="2pt"
             android:paddingTop="5pt"
             android:text="works"
+            android:textColor="#3c3c3c"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -26,18 +29,22 @@
             android:id="@+id/citystreet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
             android:paddingLeft="4pt"
             android:paddingRight="2pt"
-            android:textSize="14dp"
-            android:text="citystreet" />
+            android:text="citystreet"
+            android:textColor="#979797"
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/numberhome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
             android:paddingBottom="5pt"
             android:paddingLeft="4pt"
-            android:textSize="14dp"
-            android:text="numberhome" />
+            android:text="numberhome"
+            android:textColor="#979797"
+            android:textSize="14dp" />
     </LinearLayout>
 </LinearLayout>
