@@ -34,7 +34,6 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item_repair_request_from_search, parent, false);
-
         return new Holder(row);
     }
 
