@@ -1,10 +1,12 @@
 package ru.android.cyfral.servisnik.service;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
+import retrofit2.http.PUT;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.Token;
 
@@ -31,6 +33,7 @@ public interface TokenClient {
                                     @Field("client_id") String client_id,
                                     @Field("client_secret") String client_secret,
                                     @Field("refresh_token") String refresh_token);
+
 
 
 
