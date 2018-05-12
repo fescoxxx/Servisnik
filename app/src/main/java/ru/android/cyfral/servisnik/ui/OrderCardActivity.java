@@ -95,7 +95,6 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         angreed_date_text =  (TextView) findViewById(R.id.agree_date);
         angreed_time_text = (TextView) findViewById(R.id.angree_time);
         btn_date_agreed = (ImageButton) findViewById(R.id.btn_date_agreed);
-        setTitle(titleActivity);
         Intent intent = getIntent();
         guid = intent.getStringExtra(Constants.SETTINGS.GUID);
 
@@ -230,6 +229,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     }
     private void showOrderCard(OrderCard orderCard) {
         titleActivity = "№ ЗН - " +orderCard.getData().getNumber();
+        setTitle(titleActivity);
         String str = "";
         String group = orderCard.getData().getWorks().getGroup();
         String element = orderCard.getData().getWorks().getElement();
