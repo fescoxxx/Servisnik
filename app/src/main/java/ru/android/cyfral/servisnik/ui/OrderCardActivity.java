@@ -232,6 +232,50 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         String group = orderCard.getData().getWorks().getGroup();
         String element = orderCard.getData().getWorks().getElement();
         String type = orderCard.getData().getWorks().getType();
+
+        String litera="";
+        String building="";
+        String floor="";
+        String room="";
+        String dom = "";
+        String entrance = "";
+        String apartment = "";
+
+        try {
+            if (!orderCard.getData().getAddress().getLetter().equals("null")) {
+                litera = orderCard.getData().getAddress().getLetter();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+        try {
+            if (!orderCard.getData().getAddress().getBuilding().equals("null")) {
+                building = orderCard.getData().getAddress().getBuilding();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+        try {
+            if (!orderCard.getData().getAddress().getFloor().equals("null")) {
+                floor = orderCard.getData().getAddress().getFloor();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+        try {
+            if (!orderCard.getData().getAddress().getRoom().equals("null")) {
+                room = orderCard.getData().getAddress().getRoom();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+        try {
+            if (!orderCard.getData().getAddress().getNumber().equals("null")) {
+                dom = orderCard.getData().getAddress().getNumber();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+        try {
+            if (!orderCard.getData().getAddress().getEntrance().equals("null")) {
+                entrance = orderCard.getData().getAddress().getEntrance();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+        try {
+            if (!orderCard.getData().getAddress().getApartment().equals("null")) {
+                apartment = orderCard.getData().getAddress().getApartment();
+            }
+        } catch (java.lang.NullPointerException ex) {}
         try {
             if (!group.equals("null")) {
                     str = str + group;
@@ -258,9 +302,9 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                 orderCard.getData().getAddress().getCity() + " "+
                 orderCard.getData().getAddress().getStreetType() + " " +
                 orderCard.getData().getAddress().getStreet() + " ");
-        adressTitle.setText("д."+ orderCard.getData().getAddress().getNumber()+ " п."+
-                orderCard.getData().getAddress().getEntrance() + " кв."+
-                orderCard.getData().getAddress().getApartment());
+        adressTitle.setText("д."+ dom+litera+ " п."+
+                entrance + " кв."+
+                apartment + " "+building + floor + room);
         about_desc.setText(orderCard.getData().getComment());
 
         Date dateToday = new Date();
