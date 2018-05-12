@@ -38,13 +38,13 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
             litera = data.getAddress().getLetter();
         } catch (java.lang.NullPointerException ex) {}
         try{
-            building = data.getAddress().getBuilding();
+            building = " корп. "+data.getAddress().getBuilding();
         } catch (java.lang.NullPointerException ex) {}
         try{
             floor = " эт. " +data.getAddress().getFloor();
         } catch (java.lang.NullPointerException ex) {}
         try{
-            room  = " ком. "+data.getAddress().getRoom();
+            room  = " ком. " +data.getAddress().getRoom();
         } catch (java.lang.NullPointerException ex) {}
 
         try {
