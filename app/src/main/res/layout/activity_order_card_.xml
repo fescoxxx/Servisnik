@@ -166,44 +166,6 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/TMC"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/button"
-                    android:fontFamily="@font/roboto"
-                    android:text="ТМЦ"
-                    android:textSize="16sp"
-                    android:visibility="visible" />
-
-                <Button
-                    android:id="@+id/Contacts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button"
-                    android:fontFamily="@font/roboto"
-                    android:text="Контакты"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/equipment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button"
-                    android:fontFamily="@font/roboto"
-                    android:text="Оборудование"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/SaveHouse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button"
-                    android:fontFamily="@font/roboto"
-                    android:text="Безопасный дом"
-                    android:textSize="16sp" />
-
-                <Button
                     android:id="@+id/PDInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
