@@ -215,6 +215,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                                     showErrorDialog(String.valueOf(sc));
                                     break;
                         }
+                        mDialog.cancel();
                        // showErrorDialog(response.body().getErrors().getCode());
                      //   getFeedFromDatabase();
                     }
@@ -233,6 +234,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         });
     }
     private void showOrderCard(OrderCard orderCard) {
+        mDialog.cancel();
         titleActivity = "№ ЗН - " +orderCard.getData().getNumber();
         setTitle(titleActivity);
         String str = "";
