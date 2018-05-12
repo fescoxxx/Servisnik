@@ -80,21 +80,21 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
         try{
             if (!mData.get(position).getAddress().getBuilding().equals("")
                     &!mData.get(position).getAddress().getBuilding().equals("null")) {
-                building = " корп. "+mData.get(position).getAddress().getBuilding();
+                building = mData.get(position).getAddress().getBuilding();
             }
         } catch (java.lang.NullPointerException ex) {}
 
         try{
             if (!mData.get(position).getAddress().getFloor().equals("")
                     &!mData.get(position).getAddress().getFloor().equals("null")) {
-                floor = " эт. " +mData.get(position).getAddress().getFloor();
+                floor = mData.get(position).getAddress().getFloor();
             }
         } catch (java.lang.NullPointerException ex) {}
 
         try{
             if (!mData.get(position).getAddress().getRoom().equals("")
                     &!mData.get(position).getAddress().getRoom().equals("null")) {
-                room  = " ком. " +mData.get(position).getAddress().getRoom();
+                room  = mData.get(position).getAddress().getRoom();
             }
         } catch (java.lang.NullPointerException ex) {}
 
@@ -128,7 +128,7 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
                 mData.get(position).getAddress().getStreet() + " ");
         holder.mNumberhome.setText("д."+ dom +litera+ " п."+
                 entrance + " кв."+
-                apartment+ " "+building + floor + room
+                apartment+ " корп. "+building + " эт."+ floor + " ком."+room
         );
 
 

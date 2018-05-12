@@ -302,9 +302,9 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                 orderCard.getData().getAddress().getCity() + " "+
                 orderCard.getData().getAddress().getStreetType() + " " +
                 orderCard.getData().getAddress().getStreet() + " ");
-        adressTitle.setText("д."+ dom+litera+ " п."+
+        adressTitle.setText("д."+ dom +litera+ " п."+
                 entrance + " кв."+
-                apartment + " "+building + floor + room);
+                apartment+ " корп."+building + " эт."+ floor + " ком."+room);
         about_desc.setText(orderCard.getData().getComment());
 
         Date dateToday = new Date();
