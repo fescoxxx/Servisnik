@@ -40,21 +40,59 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         String mWorksStr ="";
+
+        String litera="";
+        String building="";
+        String floor="";
+        String room="";
+
+        try{
+            if (!mData.get(position).getAddress().getLetter().equals("")
+                    &!mData.get(position).getAddress().getLetter().equals("null")) {
+                litera = mData.get(position).getAddress().getLetter();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            if (!mData.get(position).getAddress().getBuilding().equals("")
+                    &!mData.get(position).getAddress().getBuilding().equals("null")) {
+                building = " корп. "+mData.get(position).getAddress().getBuilding();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            if (!mData.get(position).getAddress().getFloor().equals("")
+                    &!mData.get(position).getAddress().getFloor().equals("null")) {
+                floor = " эт. " +mData.get(position).getAddress().getFloor();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            if (!mData.get(position).getAddress().getRoom().equals("")
+                    &!mData.get(position).getAddress().getRoom().equals("null")) {
+                room  = " ком. " +mData.get(position).getAddress().getRoom();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+
         try {
-            if (!mData.get(position).getWorks().getElement().equals("")) {
+            if (!mData.get(position).getWorks().getElement().equals("")
+                    & !mData.get(position).getWorks().getElement().equals("null")) {
                 mWorksStr = mData.get(position).getWorks().getElement();
             }
         } catch (java.lang.NullPointerException ex){
             mWorksStr = "";
         }
         try {
-            if (!mData.get(position).getWorks().getGroup().equals("")) {
+            if (!mData.get(position).getWorks().getGroup().equals("") &
+                    !mData.get(position).getWorks().getGroup().equals("null")) {
                 mWorksStr = mWorksStr + " | " + mData.get(position).getWorks().getGroup();
             }
 
         } catch (java.lang.NullPointerException ex){}
         try {
-            if (!mData.get(position).getWorks().getType().equals("")) {
+            if (!mData.get(position).getWorks().getType().equals("") &
+                    !mData.get(position).getWorks().getType().equals("null")) {
                 mWorksStr = mWorksStr + " | " + mData.get(position).getWorks().getType();
             }
         } catch (java.lang.NullPointerException ex){}
@@ -64,9 +102,9 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
                 mData.get(position).getAddress().getCity() + " "+
                 mData.get(position).getAddress().getStreetType() + " " +
                 mData.get(position).getAddress().getStreet() + " ");
-        holder.mNumberhome.setText("д."+ mData.get(position).getAddress().getNumber()+ " п."+
+        holder.mNumberhome.setText("д."+ mData.get(position).getAddress().getNumber()+litera+ " п."+
                 mData.get(position).getAddress().getEntrance() + " кв."+
-                mData.get(position).getAddress().getApartment()
+                mData.get(position).getAddress().getApartment()+ " "+building + floor + room
         );
 
 
