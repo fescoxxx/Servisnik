@@ -63,15 +63,15 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
         } catch (java.lang.NullPointerException ex) {}
 
         try {
-            if (!data.getWorks().getElement().equals("")) {
-                mWorksStr = data.getWorks().getElement();
+            if (!data.getWorks().getGroup().equals("")) {
+                mWorksStr = data.getWorks().getGroup();
             }
         } catch (java.lang.NullPointerException ex){
             mWorksStr = "";
         }
         try {
-            if (!data.getWorks().getGroup().equals("")) {
-                mWorksStr = mWorksStr + " | " + data.getWorks().getGroup();
+            if (!data.getWorks().getElement().equals("")) {
+                mWorksStr = mWorksStr + " | " + data.getWorks().getElement();
             }
 
         } catch (java.lang.NullPointerException ex){}

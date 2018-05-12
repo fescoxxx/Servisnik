@@ -18,10 +18,11 @@
             android:id="@+id/works"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="4pt"
+            android:paddingLeft="16dp"
             android:paddingRight="2pt"
             android:paddingTop="5pt"
             android:text="works"
+            android:textColor="#3c3c3c"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -29,9 +30,10 @@
             android:id="@+id/citystreet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="4pt"
+            android:paddingLeft="16dp"
             android:paddingRight="2pt"
             android:text="citystreet"
+            android:textColor="#979797"
             android:textSize="14dp" />
 
         <LinearLayout
@@ -45,8 +47,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingBottom="5pt"
-                android:paddingLeft="4pt"
+                android:paddingLeft="16dp"
                 android:text="numberhome"
+                android:textColor="#979797"
                 android:textSize="14dp" />
 
             <TextView

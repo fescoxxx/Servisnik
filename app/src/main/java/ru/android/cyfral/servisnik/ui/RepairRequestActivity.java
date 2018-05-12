@@ -243,9 +243,9 @@ public class RepairRequestActivity extends AppCompatActivity {
                     task.execute(data);
                 }
             }
-            RepairRequestCategory one_cat = new RepairRequestCategory("Просроченные("+overdueData.size()+")", overdueData);
-            RepairRequestCategory two_cat = new RepairRequestCategory("Выполнить сегодня("+todayData.size()+")", todayData);
-            RepairRequestCategory tree_cat = new RepairRequestCategory("Более одного дня("+manyday.size()+")", manyday);
+            RepairRequestCategory one_cat = new RepairRequestCategory("Просроченные ("+overdueData.size()+")", overdueData);
+            RepairRequestCategory two_cat = new RepairRequestCategory("Выполнить сегодня ("+todayData.size()+")", todayData);
+            RepairRequestCategory tree_cat = new RepairRequestCategory("Более одного дня ("+manyday.size()+")", manyday);
             if(overdueData.size() != 0) {datasCategories.add(one_cat);}
             if (todayData.size() != 0) {datasCategories.add(two_cat);}
             if (manyday.size() != 0) {datasCategories.add(tree_cat);}
