@@ -353,10 +353,11 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         isViewedCall.enqueue(new Callback<StandartAnswer>() {
             @Override
             public void onResponse(Call<StandartAnswer> call, Response<StandartAnswer> response) {
+                Toast toast2 = Toast.makeText(OrderCardActivity.this,
+                        response.toString(), Toast.LENGTH_SHORT);
+                toast2.show();
                 if (response.isSuccessful()) {
-                    Toast toast2 = Toast.makeText(OrderCardActivity.this,
-                            response.body().getIsSuccess(), Toast.LENGTH_SHORT);
-                    toast2.show();
+
                         if (response.body().getIsSuccess().equals("true")) {
                             Toast toast = Toast.makeText(OrderCardActivity.this,
                                     response.body().getIsSuccess(), Toast.LENGTH_SHORT);
@@ -364,9 +365,6 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
                         }
                     }
-                Toast toast2 = Toast.makeText(OrderCardActivity.this,
-                        response.message(), Toast.LENGTH_SHORT);
-                    toast2.show();
                 }
             @Override
             public void onFailure(Call<StandartAnswer> call, Throwable t) {
