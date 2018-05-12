@@ -81,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
                         android:fontFamily="@font/roboto"
-                        android:paddingLeft="4pt"
+                        android:paddingLeft="16dp"
                         android:paddingRight="2pt"
                         android:textColor="#979797"
                         android:textSize="14dp" />
