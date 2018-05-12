@@ -39,6 +39,7 @@ import ru.android.cyfral.servisnik.model.DataFetchListener;
 import ru.android.cyfral.servisnik.model.OrderCard.Data;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
+import ru.android.cyfral.servisnik.model.StandartAnswer;
 import ru.android.cyfral.servisnik.model.Utils;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
@@ -51,6 +52,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private SharedPreferences sPref;
     private String guid;
     private static Call<OrderCard> orderCardCall;
+    private static Call<StandartAnswer> isViewedCall;
     private static DataDatabase mDatabase;
     TokenClient tokenClient = RetrofitClientToken
             .getClient(Constants.HTTP.BASE_URL_TOKEN)
@@ -196,26 +198,29 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                                         } else {
                                             startActivity(new Intent("ru.android.cyfral.servisnik.login"));
                                             finish();
+                                            finishAffinity();
                                         }
                                     }
                                     @Override
                                     public void onFailure(Call<RefreshToken> call, Throwable t) {
                                         startActivity(new Intent("ru.android.cyfral.servisnik.login"));
                                         finish();
+                                        finishAffinity();
                                     }
                                 });
+                                mDialog.cancel();
                                 break;
+                                default:
+                                    mDialog.cancel();
+                                    showErrorDialog(String.valueOf(sc));
+                                    break;
                         }
                        // showErrorDialog(response.body().getErrors().getCode());
                      //   getFeedFromDatabase();
                     }
-
-                    mDialog.cancel();
                 } else {
-
+                    showErrorDialog(String.valueOf(response.code()));
                     mDialog.cancel();
-                    startActivity(new Intent("ru.android.cyfral.servisnik.login"));
-                    finish();
                 }
             }
             @Override
@@ -339,6 +344,26 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         } catch (Exception e) {
             e.printStackTrace();
         }
+        SharedPreferences sPref = getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
+        String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
+        //Метка - ЗН просмотрен
+        isViewedCall = serviceApiClient.putViewed(guid, "Bearer " + token);
+        isViewedCall.enqueue(new Callback<StandartAnswer>() {
+            @Override
+            public void onResponse(Call<StandartAnswer> call, Response<StandartAnswer> response) {
+                if (response.isSuccessful()) {
+                        if (response.body().getIsSuccess().equals("true")) {
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    response.body().getIsSuccess(), Toast.LENGTH_SHORT);
+                            toast.show();
+
+                        }
+                    }
+                }
+            @Override
+            public void onFailure(Call<StandartAnswer> call, Throwable t) {
+            }
+        });
         Log.d("dead_line_log", orderCard.getData().getDeadline());
     }
 
