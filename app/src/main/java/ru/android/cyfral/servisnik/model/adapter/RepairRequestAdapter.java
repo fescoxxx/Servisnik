@@ -40,11 +40,35 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         String mWorksStr ="";
-
         String litera="";
         String building="";
         String floor="";
         String room="";
+        String dom = "";
+        String entrance = "";
+        String apartment = "";
+
+        try{
+            if (!mData.get(position).getAddress().getApartment().equals("")
+                    &!mData.get(position).getAddress().getApartment().equals("null")) {
+                apartment = mData.get(position).getAddress().getApartment();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            if (!mData.get(position).getAddress().getEntrance().equals("")
+                    &!mData.get(position).getAddress().getEntrance().equals("null")) {
+                entrance = mData.get(position).getAddress().getEntrance();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+
+        try{
+            if (!mData.get(position).getAddress().getNumber().equals("")
+                    &!mData.get(position).getAddress().getNumber().equals("null")) {
+                dom = mData.get(position).getAddress().getNumber();
+            }
+        } catch (java.lang.NullPointerException ex) {}
 
         try{
             if (!mData.get(position).getAddress().getLetter().equals("")
@@ -102,9 +126,9 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
                 mData.get(position).getAddress().getCity() + " "+
                 mData.get(position).getAddress().getStreetType() + " " +
                 mData.get(position).getAddress().getStreet() + " ");
-        holder.mNumberhome.setText("д."+ mData.get(position).getAddress().getNumber()+litera+ " п."+
-                mData.get(position).getAddress().getEntrance() + " кв."+
-                mData.get(position).getAddress().getApartment()+ " "+building + floor + room
+        holder.mNumberhome.setText("д."+ dom +litera+ " п."+
+                entrance + " кв."+
+                apartment+ " "+building + floor + room
         );
 
 

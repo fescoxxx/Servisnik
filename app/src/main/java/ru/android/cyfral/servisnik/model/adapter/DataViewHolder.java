@@ -33,6 +33,21 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
         String building="";
         String floor="";
         String room="";
+        String dom = "";
+        String entrance = "";
+        String apartment = "";
+
+        try{
+            dom = data.getAddress().getNumber();
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            entrance = data.getAddress().getEntrance();
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            apartment = data.getAddress().getApartment();
+        } catch (java.lang.NullPointerException ex) {}
 
         try{
             litera = data.getAddress().getLetter();
@@ -73,9 +88,9 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
                 data.getAddress().getCity() + " "+
                 data.getAddress().getStreetType() + " " +
                 data.getAddress().getStreet() + " ");
-        mNumberhome.setText("д."+ data.getAddress().getNumber()+ litera+" "+ " п."+
-                        data.getAddress().getEntrance() + " кв."+
-                        data.getAddress().getApartment() + " "+building + floor + room);
+        mNumberhome.setText("д."+ dom + litera+" "+ " п."+
+                        entrance + " кв."+
+                        apartment + " "+building + floor + room);
 
         selectDate = data;
     }
