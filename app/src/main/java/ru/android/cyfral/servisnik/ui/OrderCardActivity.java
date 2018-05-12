@@ -364,6 +364,8 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
                         }
                     }
+                Toast toast2 = Toast.makeText(OrderCardActivity.this,
+                        response.message(), Toast.LENGTH_SHORT);
                 }
             @Override
             public void onFailure(Call<StandartAnswer> call, Throwable t) {
