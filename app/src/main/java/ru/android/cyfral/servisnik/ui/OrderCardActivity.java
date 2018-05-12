@@ -354,11 +354,11 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
             @Override
             public void onResponse(Call<StandartAnswer> call, Response<StandartAnswer> response) {
                 if (response.isSuccessful()) {
-                    Toast toast2 = Toast.makeText(getApplicationContext(),
+                    Toast toast2 = Toast.makeText(OrderCardActivity.this,
                             response.body().getIsSuccess(), Toast.LENGTH_SHORT);
                     toast2.show();
                         if (response.body().getIsSuccess().equals("true")) {
-                            Toast toast = Toast.makeText(getApplicationContext(),
+                            Toast toast = Toast.makeText(OrderCardActivity.this,
                                     response.body().getIsSuccess(), Toast.LENGTH_SHORT);
                             toast.show();
 
