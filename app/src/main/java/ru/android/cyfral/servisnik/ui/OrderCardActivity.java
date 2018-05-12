@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -350,7 +351,8 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
         //Метка - ЗН просмотрен
         isViewedCall = serviceApiClient.putViewed(guid, "Bearer " + token);
-        isViewedCall.enqueue(new Callback<StandartAnswer>() {
+
+       isViewedCall.enqueue(new Callback<StandartAnswer>() {
             @Override
             public void onResponse(Call<StandartAnswer> call, Response<StandartAnswer> response) {
                 Toast toast2 = Toast.makeText(OrderCardActivity.this,
