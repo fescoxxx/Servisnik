@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -95,6 +96,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             snackbar = Snackbar
                                     .make(findViewById(android.R.id.content), "Введены не правильные логин или пароль", Snackbar.LENGTH_LONG)
                                     .setAction("Скрыть", mOnClickListener);
+                            View snackbarView = snackbar.getView();
+                            snackbarView.setBackgroundColor(Color.WHITE);
                             snackbar.show();
                             break;
                         default:
