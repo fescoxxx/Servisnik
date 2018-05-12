@@ -59,15 +59,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.btn_login).setOnClickListener(this);
 
         username = findViewById(R.id.text_username);
-        password = findViewById(R.id.editText2);
+        password = findViewById(R.id.text_password);
     }
 
     private void login() {
         Call<Token> call = tokenClient.login("password",
                 "mpservisnik",
                 "secret",
-                "s.sidorov",
-                "!Qwerty7",
+                username.getText().toString(),
+                password.getText().toString(),
                 "");
         mDialog = new ProgressDialog(LoginActivity.this);
         mDialog.setMessage("Проверка данных...");

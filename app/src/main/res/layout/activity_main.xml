@@ -29,7 +29,7 @@
         app:layout_constraintVertical_bias="0.391" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/text_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="62dp"
