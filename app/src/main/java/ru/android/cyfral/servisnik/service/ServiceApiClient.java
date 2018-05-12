@@ -28,12 +28,12 @@ public interface ServiceApiClient {
     Call<OrderCard> getOrderCard(@Path("uid") String uid,
                                  @Header("Authorization") String token);
 
-    @PUT("repairRequests/{GUID}/viewed")
+    @PUT("api/repairRequests/{GUID}/viewed")
     Call<StandartAnswer> putViewed(@Path("GUID") String GUID,
                                    @Header("Authorization") String token);
 
 
-    @PUT("repairRequests/{GUID}/{agreedDate}")
+    @PUT("api/repairRequests/{GUID}/{agreedDate}")
     Call<StandartAnswer> putDateTimeAgreed(@Path("GUID") String GUID,
                                            @Path("agreedDate") String agreedDate,
                                            @Header("Authorization") String token);

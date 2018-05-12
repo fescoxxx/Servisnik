@@ -1,7 +1,9 @@
 package ru.android.cyfral.servisnik.remote;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,7 +18,8 @@ public class RetrofitClientServiseApi {
 
     public static Retrofit getClient(String url) {
         if (retrofitServise == null) {
-            final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
                     .readTimeout(60, TimeUnit.SECONDS)
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .build();
@@ -25,6 +28,7 @@ public class RetrofitClientServiseApi {
                     .baseUrl(url)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
+
                     .build();
         }
         return retrofitServise;
