@@ -95,9 +95,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         case 400:
                             snackbar = Snackbar
                                     .make(findViewById(android.R.id.content), "Введены не правильные логин или пароль", Snackbar.LENGTH_LONG)
-                                    .setAction("Скрыть", mOnClickListener);
-                            View snackbarView = snackbar.getView();
-                            snackbarView.setBackgroundColor(Color.WHITE);
+                                    .setAction("Скрыть", mOnClickListener)
+                                    .setActionTextColor(Color.WHITE);
                             snackbar.show();
                             break;
                         default:

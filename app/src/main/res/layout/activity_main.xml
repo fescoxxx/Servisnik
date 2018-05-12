@@ -52,16 +52,17 @@
         android:id="@+id/btn_login"
         android:layout_width="172dp"
         android:layout_height="40dp"
-        android:gravity="center"
+        android:layout_marginBottom="172dp"
         android:background="@drawable/btn_login"
         android:fontFamily="@font/roboto"
+        android:gravity="center"
         android:text="Войти"
         android:textColor="@drawable/text_color"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
 
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText2"
         app:layout_constraintVertical_bias="0.167" />
 
