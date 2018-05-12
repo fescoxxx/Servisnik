@@ -369,6 +369,8 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                 }
             @Override
             public void onFailure(Call<StandartAnswer> call, Throwable t) {
+                Toast toast2 = Toast.makeText(OrderCardActivity.this,
+                        t.getMessage(), Toast.LENGTH_SHORT);
             }
         });
         Log.d("dead_line_log", orderCard.getData().getDeadline());
