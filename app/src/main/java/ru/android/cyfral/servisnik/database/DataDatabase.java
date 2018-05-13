@@ -84,7 +84,7 @@ public class DataDatabase extends SQLiteOpenHelper {
 
     public void addDataRequest(Data data) {
 
-        Log.d(TAG, "Values Got " + data.getNumber());
+        Log.d(TAG, "Values Got " + data.toString());
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues valuesDatas = new ContentValues();
@@ -110,18 +110,21 @@ public class DataDatabase extends SQLiteOpenHelper {
 
         String phonesForSearch = "";
 
-        for (int i0=0; i0 <data.getContacts().size(); i0++) {
-            for(int i1 = 0; i1 < data.getContacts().get(i0).getPhones().size(); i1++) {
-                phonesForSearch = phonesForSearch + ","+data.getContacts().get(i0).getPhones().get(i1);
+        try {
+            for (int i0=0; i0 <data.getContacts().size(); i0++) {
+                for(int i1 = 0; i1 < data.getContacts().get(i0).getPhones().size(); i1++) {
+                    phonesForSearch = phonesForSearch + ","+data.getContacts().get(i0).getPhones().get(i1);
+                }
             }
-        }
+        } catch (Exception ex) {}
+
         valuesDatas.put(Constants.DATABASE.PHONEFORSEARCH, phonesForSearch);
 
 
         try {
             db.insert(Constants.DATABASE.TABLE_NAME_DATAS, null, valuesDatas);
         } catch (Exception e) {
-
+            Log.d("TABLE_NAME_DATAS_error", Constants.DATABASE.TABLE_NAME_DATAS);
         }
 
         //Вставляем контакты
@@ -142,8 +145,10 @@ public class DataDatabase extends SQLiteOpenHelper {
             }
             valuesContacts.put(Constants.DATABASE.PHONES,  phones);
             try {
+                Log.d("TABLE_NAME_CONTACTS", Constants.DATABASE.TABLE_NAME_CONTACTS);
                 db.insert(Constants.DATABASE.TABLE_NAME_CONTACTS, null, valuesContacts);
             } catch (Exception e) {
+                Log.d("TABLE_NAME_CONTACTS_ER", Constants.DATABASE.TABLE_NAME_CONTACTS);
             }
 
         }

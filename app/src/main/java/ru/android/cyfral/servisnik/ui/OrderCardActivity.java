@@ -371,7 +371,8 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
     private void getFeedFromDatabase(){
         mDatabase.fetchDatasForOrderCard(this, guid);
-        mDialog.cancel();
+        try {mDialog.cancel();} catch (java.lang.NullPointerException ex) {}
+
     }
 
     private void showErrorDialog(String code) {
