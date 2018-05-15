@@ -38,30 +38,43 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
         String apartment = "";
 
         try{
-            dom = data.getAddress().getNumber();
+            if(!data.getAddress().getNumber().equals("")) {
+                dom = "д."+data.getAddress().getNumber() + " ";
+            }
         } catch (java.lang.NullPointerException ex) {}
 
         try{
-            entrance = data.getAddress().getEntrance();
+            if (!data.getAddress().getEntrance().equals("")) {
+                entrance = "п."+data.getAddress().getEntrance()+ " ";
+            }
         } catch (java.lang.NullPointerException ex) {}
 
         try{
-            apartment = data.getAddress().getApartment();
+            if (!data.getAddress().getApartment().equals("")) {
+                apartment =  "кв."+ data.getAddress().getApartment();
+            }
         } catch (java.lang.NullPointerException ex) {}
 
         try{
-            litera = data.getAddress().getLetter();
+            if(!data.getAddress().getLetter().equals("")) {
+                litera =  "л."+data.getAddress().getLetter()+ " ";
+            }
         } catch (java.lang.NullPointerException ex) {}
         try{
-            building = data.getAddress().getBuilding();
+            if (!data.getAddress().getBuilding().equals("")) {
+                building = "к."+data.getAddress().getBuilding()+ " ";
+            }
+       } catch (java.lang.NullPointerException ex) {}
+        try{
+            if(!data.getAddress().getFloor().equals("")){
+                floor = "эт."+ data.getAddress().getFloor()+ " ";
+            }
         } catch (java.lang.NullPointerException ex) {}
         try{
-            floor = data.getAddress().getFloor();
+            if(!data.getAddress().getRoom().equals("")) {
+                room  = "к."+data.getAddress().getRoom()+ " ";
+            }
         } catch (java.lang.NullPointerException ex) {}
-        try{
-            room  = data.getAddress().getRoom();
-        } catch (java.lang.NullPointerException ex) {}
-
         try {
             if (!data.getWorks().getGroup().equals("")) {
                 mWorksStr = data.getWorks().getGroup();
@@ -73,7 +86,6 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
             if (!data.getWorks().getElement().equals("")) {
                 mWorksStr = mWorksStr + " | " + data.getWorks().getElement();
             }
-
         } catch (java.lang.NullPointerException ex){}
         try {
             if (!data.getWorks().getType().equals("")) {
@@ -88,10 +100,14 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
                 data.getAddress().getCity() + " "+
                 data.getAddress().getStreetType() + " " +
                 data.getAddress().getStreet() + " ");
-        mNumberhome.setText("д."+ dom +litera+ " п."+
-                entrance + " кв."+
-                apartment+ " корп."+building + " эт."+ floor + " ком."+room);
-
+        mNumberhome.setText(
+                        dom+
+                        litera+
+                        building+
+                        entrance +
+                        floor +
+                        apartment +
+                        room);
         selectDate = data;
     }
 

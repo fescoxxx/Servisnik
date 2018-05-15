@@ -21,8 +21,8 @@
         android:hint="Логин"
         android:inputType="textPersonName"
         android:textColor="@color/white"
-
-        android:textColorHint="#707071"
+        android:textColorHint="#9F9F9F"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -43,7 +43,8 @@
         android:hint="Пароль"
         android:inputType="textPassword"
         android:textColor="@color/white"
-        android:textColorHint="#707071"
+        android:textColorHint="#9F9F9F"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -53,8 +54,8 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="214dp"
-        android:layout_height="wrap_content"
+        android:layout_width="172dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -66,7 +67,6 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_password"
         app:layout_constraintVertical_bias="0.0" />

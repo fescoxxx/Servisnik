@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:paddingRight="2pt"
+            android:paddingRight="16dp"
             android:paddingTop="5pt"
             android:text="works"
             android:textColor="#3c3c3c"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:paddingRight="2pt"
+            android:paddingRight="16dp"
             android:text="citystreet"
             android:textColor="#979797"
             android:textSize="14dp" />
@@ -45,7 +45,7 @@
 
             <TextView
                 android:id="@+id/numberhome"
-                android:layout_width="533dp"
+                android:layout_width="398dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingBottom="5pt"
@@ -58,9 +58,8 @@
                 android:id="@+id/date_deadline_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingRight="16dp"
                 android:layout_weight="1"
-                android:paddingBottom="5pt"
-                android:paddingRight="4pt"
                 android:text="TextView"
                 android:textAlignment="textEnd" />
 
@@ -70,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_weight="1"
-            android:background="#dadada"
+            android:background="#0D3357"
             android:visibility="visible" />
 
     </LinearLayout>

@@ -18,12 +18,14 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:paddingLeft="16dp"
-            android:paddingRight="2pt"
+            android:paddingRight="16dp"
             android:paddingTop="5pt"
             android:text="works"
             android:textColor="#3c3c3c"
             android:textSize="16dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/citystreet"
@@ -31,10 +33,12 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:paddingLeft="16dp"
-            android:paddingRight="2pt"
+            android:paddingRight="16dp"
             android:text="citystreet"
             android:textColor="#979797"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/numberhome"
@@ -43,8 +47,11 @@
             android:fontFamily="@font/roboto"
             android:layout_marginBottom="5pt"
             android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="numberhome"
             android:textColor="#979797"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
     </LinearLayout>
 </LinearLayout>

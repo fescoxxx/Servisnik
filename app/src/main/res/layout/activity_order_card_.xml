@@ -70,7 +70,7 @@
                         android:fontFamily="@font/roboto"
                         android:paddingBottom="5pt"
                         android:paddingLeft="16dp"
-                        android:paddingRight="2pt"
+                        android:paddingRight="16dp"
                         android:paddingTop="5pt"
                         android:textColor="#3c3c3c"
                         android:textSize="16dp"
@@ -83,7 +83,7 @@
                         android:background="#FFFFFF"
                         android:fontFamily="@font/roboto"
                         android:paddingLeft="16dp"
-                        android:paddingRight="2pt"
+                        android:paddingRight="16dp"
                         android:textColor="#979797"
                         android:textSize="14dp" />
 
@@ -116,8 +116,8 @@
                             android:background="#FFFFFF"
                             android:fontFamily="@font/roboto"
                             android:paddingBottom="20dp"
-                            android:paddingLeft="4pt"
-                            android:paddingRight="4pt"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="16dp"
                             android:paddingTop="20dp"
                             android:textAlignment="center"
                             android:textSize="16sp"
