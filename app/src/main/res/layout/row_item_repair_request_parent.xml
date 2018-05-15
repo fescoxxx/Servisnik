@@ -18,25 +18,17 @@
         <TextView
             android:id="@+id/textview_section_header"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="16dp"
-            android:dividerHeight="10dp"
+            android:layout_height="40dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
             android:fontFamily="@font/roboto"
             android:textSize="14dp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/iv_arrow_expand"
             app:layout_constraintHorizontal_bias="0.02"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="#0D3357"
-            android:visibility="visible" />
 
     </LinearLayout>
 

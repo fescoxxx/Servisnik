@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -77,6 +79,8 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private TimePicker timePicker;
     private Dialog dialogAgreed;
     private String titleActivity = "Сервисник";
+    private LinearLayout mLinearLayout;
+    private ConstraintLayout mConstraintLayout;
 
 
     private static ProgressDialog mDialog;
@@ -98,6 +102,9 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         angreed_date_text =  (TextView) findViewById(R.id.agree_date);
         angreed_time_text = (TextView) findViewById(R.id.angree_time);
         btn_date_agreed = (ImageButton) findViewById(R.id.btn_date_agreed);
+        mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_order_card);
+        mConstraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout_order_card);
+       // mLinearLayout.setVisibility(View.INVISIBLE);
         Intent intent = getIntent();
         guid = intent.getStringExtra(Constants.SETTINGS.GUID);
 
