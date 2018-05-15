@@ -16,12 +16,14 @@
         <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.login" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,6 +33,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.repair" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -44,14 +47,17 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.search" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.OrderCardActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.card" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -63,9 +69,13 @@
         <activity android:name=".ui.TMCActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.tmc" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.ContactsActivity" />
+        <activity android:name=".ui.EquipmentActivity" />
+        <activity android:name=".ui.SafeHouseActivity"></activity>
     </application>
 
 </manifest>
