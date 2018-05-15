@@ -191,11 +191,12 @@
 
                         <ImageButton
                             android:id="@+id/btn_date_agreed"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:layout_gravity="center"
+                            android:layout_marginRight="16dp"
                             android:background="#FFFFFF"
-                            app:srcCompat="@drawable/pensil34" />
+                            app:srcCompat="@drawable/pencil" />
                     </LinearLayout>
 
                     <View
