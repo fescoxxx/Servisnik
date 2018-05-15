@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.SafeHouseActivity">
 
+    <ListView
+        android:id="@+id/safe_house"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+    </ListView>
+
+
+
 </android.support.constraint.ConstraintLayout>
