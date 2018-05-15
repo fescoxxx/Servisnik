@@ -63,19 +63,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void login() {
-        Call<Token> call = tokenClient.login("password",
+/*        Call<Token> call = tokenClient.login("password",
                 "mpservisnik",
                 "secret",
                 "s.sidorov",
                 "!Qwerty7",
-                "");
+                "");*/
 
-        //Call<Token> call = tokenClient.login("password",
-        //        "mpservisnik",
-      //          "secret",
-      //          username.getText().toString(),
-     ///           password.getText().toString(),
-     //           "");
+        Call<Token> call = tokenClient.login("password",
+                "mpservisnik",
+                "secret",
+                username.getText().toString(),
+                password.getText().toString(),
+        "");
 
         mDialog = new ProgressDialog(LoginActivity.this);
         mDialog.setMessage("Проверка данных...");
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     switch (sc) {
                         case 400:
                             snackbar = Snackbar
-                                    .make(findViewById(android.R.id.content), "Введены не правильные логин или пароль", Snackbar.LENGTH_LONG)
+                                    .make(findViewById(android.R.id.content), "Введены неправильные логин и пароль", Snackbar.LENGTH_LONG)
                                     .setAction("Скрыть", mOnClickListener)
                                     .setActionTextColor(Color.WHITE);
                             snackbar.show();

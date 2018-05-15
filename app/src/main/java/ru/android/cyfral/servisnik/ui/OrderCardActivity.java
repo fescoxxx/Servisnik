@@ -347,32 +347,32 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         } catch (Exception e) {
             e.printStackTrace();
         }
-        SharedPreferences sPref = getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
-        String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
+
         //Метка - ЗН просмотрен
-        isViewedCall = serviceApiClient.putViewed(guid, "Bearer " + token);
-
-        isViewedCall.enqueue(new Callback<StandartAnswer>() {
-            @Override
-            public void onResponse(Call<StandartAnswer> call, Response<StandartAnswer> response) {
-                if (response.isSuccessful()) {
+        if (!orderCard.getData().getIsViewed().equals("true")) {
+            SharedPreferences sPref = getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
+            String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
+            isViewedCall = serviceApiClient.putViewed(guid, "Bearer " + token);
+            isViewedCall.enqueue(new Callback<StandartAnswer>() {
+                @Override
+                public void onResponse(Call<StandartAnswer> call, Response<StandartAnswer> response) {
+                    if (response.isSuccessful()) {
                         if (response.body().getIsSuccess().equals("true")) {
-
                         }
                     }
                 }
-            @Override
-            public void onFailure(Call<StandartAnswer> call, Throwable t) {
+                @Override
+                public void onFailure(Call<StandartAnswer> call, Throwable t) {
+                }
+            });
+            Log.d("dead_line_log", orderCard.getData().getDeadline());
+        }
 
-            }
-        });
-        Log.d("dead_line_log", orderCard.getData().getDeadline());
     }
 
     private void getFeedFromDatabase(){
         mDatabase.fetchDatasForOrderCard(this, guid);
         try {mDialog.cancel();} catch (java.lang.NullPointerException ex) {}
-
     }
 
     private void showErrorDialog(String code) {
