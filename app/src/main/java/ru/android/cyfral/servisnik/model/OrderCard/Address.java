@@ -1,6 +1,8 @@
 package ru.android.cyfral.servisnik.model.OrderCard;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private String building;
     private String floor;
     private String letter;

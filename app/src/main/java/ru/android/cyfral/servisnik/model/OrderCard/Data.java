@@ -1,9 +1,10 @@
 package ru.android.cyfral.servisnik.model.OrderCard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Data
+public class Data implements Serializable
 {
     private String id;
     private String entranceId;

@@ -1,6 +1,8 @@
 package ru.android.cyfral.servisnik.model.OrderCard;
 
-public class OrderCard {
+import java.io.Serializable;
+
+public class OrderCard implements Serializable {
     private Errors errors;
     private Data data;
     private String isSuccess;

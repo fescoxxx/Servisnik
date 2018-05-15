@@ -18,9 +18,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -50,7 +52,7 @@ import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 
 //123
-public class OrderCardActivity extends AppCompatActivity implements DataFetchListener {
+public class OrderCardActivity extends AppCompatActivity implements DataFetchListener, View.OnClickListener {
 
     private SharedPreferences sPref;
     private String guid;
@@ -81,9 +83,10 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private String titleActivity = "Сервисник";
     private LinearLayout mLinearLayout;
     private ConstraintLayout mConstraintLayout;
+    private ProgressBar mProgressBar;
+    private OrderCard currentOrderCard;
 
-
-    private static ProgressDialog mDialog;
+    private Button tmc_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,12 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         btn_date_agreed = (ImageButton) findViewById(R.id.btn_date_agreed);
         mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_order_card);
         mConstraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout_order_card);
+        mProgressBar = (ProgressBar)  findViewById(R.id.progressBar_order_card);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mLinearLayout.setVisibility(View.INVISIBLE);
+
+        tmc_button = (Button) findViewById(R.id.tmc_button);
+        tmc_button.setOnClickListener(this);
        // mLinearLayout.setVisibility(View.INVISIBLE);
         Intent intent = getIntent();
         guid = intent.getStringExtra(Constants.SETTINGS.GUID);
@@ -141,6 +150,27 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        Log.d("onClick", v.toString());
+        switch (v.getId()) {
+            case R.id.tmc_button:
+                // тмц
+                try {
+                    if(!currentOrderCard.getData().getTmas().isEmpty()) {
+                        Intent intent = new Intent("ru.android.cyfral.servisnik.tmc");
+                        intent.putExtra("ordercard", currentOrderCard);
+                        startActivity(intent);
+                    }
+                } catch (NullPointerException ex) {}
+                break;
+            case R.id.contacts_button:
+                // контакты
+
+                break;
+        }
+    }
+
 
     public static class SaveIntoDatabaseOdrerCard extends AsyncTask<OrderCard, Void, Void> {
         private final String TAG = SaveIntoDatabaseOdrerCard.class.getSimpleName();
@@ -166,12 +196,6 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     }
 
     public void getFeed() {
-        mDialog = new ProgressDialog(this);
-        mDialog.setMessage("Отправляем данные...");
-        mDialog.setCancelable(true);
-        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mDialog.setIndeterminate(true);
-        mDialog.show();
         SharedPreferences sPref = getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
         String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
         orderCardCall = serviceApiClient.getOrderCard(guid, "Bearer " + token);
@@ -216,33 +240,35 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                                         finishAffinity();
                                     }
                                 });
-                                mDialog.cancel();
+                                mProgressBar.setVisibility(View.INVISIBLE);
                                 break;
                                 default:
-                                    mDialog.cancel();
+                                    mProgressBar.setVisibility(View.INVISIBLE);
                                     showErrorDialog(String.valueOf(sc));
                                     break;
                         }
-                        mDialog.cancel();
+                        mProgressBar.setVisibility(View.INVISIBLE);
                        // showErrorDialog(response.body().getErrors().getCode());
                      //   getFeedFromDatabase();
                     }
                 } else {
                     showErrorDialog(String.valueOf(response.code()));
-                    mDialog.cancel();
+                    mProgressBar.setVisibility(View.INVISIBLE);
                 }
             }
             @Override
             public void onFailure(Call<OrderCard> call, Throwable t) {
                 Log.d("orderCardCall", t.getMessage());
-                mDialog.cancel();
+                mProgressBar.setVisibility(View.INVISIBLE);
                 startActivity(new Intent("ru.android.cyfral.servisnik.login"));
                 finish();
             }
         });
     }
     private void showOrderCard(OrderCard orderCard) {
-        mDialog.cancel();
+        currentOrderCard = orderCard;
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mLinearLayout.setVisibility(View.VISIBLE);
         titleActivity = "№ ЗН - " +orderCard.getData().getNumber();
         setTitle(titleActivity);
         String str = "";
@@ -394,7 +420,10 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
     private void getFeedFromDatabase(){
         mDatabase.fetchDatasForOrderCard(this, guid);
-        try {mDialog.cancel();} catch (java.lang.NullPointerException ex) {}
+        try {
+            mProgressBar.setVisibility(View.INVISIBLE);
+            mLinearLayout.setVisibility(View.VISIBLE);
+        } catch (java.lang.NullPointerException ex) {}
     }
 
     private void showErrorDialog(String code) {

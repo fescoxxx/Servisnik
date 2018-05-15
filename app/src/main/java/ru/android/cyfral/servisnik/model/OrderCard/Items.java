@@ -1,6 +1,8 @@
 package ru.android.cyfral.servisnik.model.OrderCard;
 
-public class Items {
+import java.io.Serializable;
+
+public class Items implements Serializable {
     private String body;
     private String title;
     public String getBody ()

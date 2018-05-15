@@ -1,9 +1,10 @@
 package ru.android.cyfral.servisnik.model.OrderCard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contacts
+public class Contacts implements Serializable
 {
     private String middleName;
     private String name;

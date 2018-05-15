@@ -1,8 +1,9 @@
 package ru.android.cyfral.servisnik.model.OrderCard;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class SafeHome {
+public class SafeHome implements Serializable {
     private String title;
     private List<Items> items;
     public String getTitle ()

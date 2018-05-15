@@ -1,6 +1,8 @@
 package ru.android.cyfral.servisnik.model.OrderCard;
 
-public class Works {
+import java.io.Serializable;
+
+public class Works implements Serializable {
     private String element;
     private String type;
     private String group;
