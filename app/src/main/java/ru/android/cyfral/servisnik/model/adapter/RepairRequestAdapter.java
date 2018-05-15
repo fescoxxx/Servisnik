@@ -48,17 +48,21 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
         String entrance = "";
         String apartment = "";
 
+        String group = "";
+        String element = "";
+        String type = "";
+
         try{
             if (!mData.get(position).getAddress().getApartment().equals("")
                     &!mData.get(position).getAddress().getApartment().equals("null")) {
-                apartment = mData.get(position).getAddress().getApartment();
+                apartment = "кв."+mData.get(position).getAddress().getApartment()+" ";
             }
         } catch (java.lang.NullPointerException ex) {}
 
         try{
             if (!mData.get(position).getAddress().getEntrance().equals("")
                     &!mData.get(position).getAddress().getEntrance().equals("null")) {
-                entrance = mData.get(position).getAddress().getEntrance();
+                entrance = "п."+mData.get(position).getAddress().getEntrance()+" ";
             }
         } catch (java.lang.NullPointerException ex) {}
 
@@ -66,69 +70,74 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
         try{
             if (!mData.get(position).getAddress().getNumber().equals("")
                     &!mData.get(position).getAddress().getNumber().equals("null")) {
-                dom = mData.get(position).getAddress().getNumber();
+                dom = "д."+mData.get(position).getAddress().getNumber() +" ";
             }
         } catch (java.lang.NullPointerException ex) {}
 
         try{
             if (!mData.get(position).getAddress().getLetter().equals("")
                     &!mData.get(position).getAddress().getLetter().equals("null")) {
-                litera = mData.get(position).getAddress().getLetter();
+                litera = "л."+mData.get(position).getAddress().getLetter() +" ";
             }
         } catch (java.lang.NullPointerException ex) {}
 
         try{
             if (!mData.get(position).getAddress().getBuilding().equals("")
                     &!mData.get(position).getAddress().getBuilding().equals("null")) {
-                building = mData.get(position).getAddress().getBuilding();
+                building = "к" + mData.get(position).getAddress().getBuilding()+" ";
             }
         } catch (java.lang.NullPointerException ex) {}
 
         try{
             if (!mData.get(position).getAddress().getFloor().equals("")
                     &!mData.get(position).getAddress().getFloor().equals("null")) {
-                floor = mData.get(position).getAddress().getFloor();
+                floor = "эт."+ mData.get(position).getAddress().getFloor()+" ";
             }
         } catch (java.lang.NullPointerException ex) {}
 
         try{
             if (!mData.get(position).getAddress().getRoom().equals("")
                     &!mData.get(position).getAddress().getRoom().equals("null")) {
-                room  = mData.get(position).getAddress().getRoom();
+                room  = "к."+mData.get(position).getAddress().getRoom()+" ";
             }
         } catch (java.lang.NullPointerException ex) {}
 
-
         try {
-            if (!mData.get(position).getWorks().getElement().equals("")
-                    & !mData.get(position).getWorks().getElement().equals("null")) {
-                mWorksStr = mData.get(position).getWorks().getElement();
+            if (!mData.get(position).getWorks().getGroup().equals("")) {
+                group = mData.get(position).getWorks().getGroup();
             }
-        } catch (java.lang.NullPointerException ex){
-            mWorksStr = "";
+        } catch (java.lang.NullPointerException ex){}
+        try {
+            if (!mData.get(position).getWorks().getElement().equals("")) {
+                element = mData.get(position).getWorks().getElement();
+            }
+        } catch (java.lang.NullPointerException ex){}
+        try {
+            if (!mData.get(position).getWorks().getType().equals("")) {
+                type = mData.get(position).getWorks().getType();
+            }
+        } catch (java.lang.NullPointerException ex){}
+
+        if (!group.equals("") & !element.equals("") & !type.equals("")) {
+            mWorksStr = element + " | "+ type;
+        } else {
+
+            mWorksStr = group + " | "+element + " | "+ type;
         }
-        try {
-            if (!mData.get(position).getWorks().getGroup().equals("") &
-                    !mData.get(position).getWorks().getGroup().equals("null")) {
-                mWorksStr = mWorksStr + " | " + mData.get(position).getWorks().getGroup();
-            }
 
-        } catch (java.lang.NullPointerException ex){}
-        try {
-            if (!mData.get(position).getWorks().getType().equals("") &
-                    !mData.get(position).getWorks().getType().equals("null")) {
-                mWorksStr = mWorksStr + " | " + mData.get(position).getWorks().getType();
-            }
-        } catch (java.lang.NullPointerException ex){}
-
-        holder.mWorks.setText(mWorksStr);
+        holder.mWorks.setText(mWorksStr.replace(" |  | ", ""));
         holder.mCityStreet.setText(mData.get(position).getAddress().getCityType()+ " "+
                 mData.get(position).getAddress().getCity() + " "+
                 mData.get(position).getAddress().getStreetType() + " " +
                 mData.get(position).getAddress().getStreet() + " ");
-        holder.mNumberhome.setText("д."+ dom +litera+ " п."+
-                entrance + " кв."+
-                apartment+ " корп. "+building + " эт."+ floor + " ком."+room
+        holder.mNumberhome.setText(
+                        dom+
+                        litera+
+                        building+
+                        entrance +
+                        floor +
+                        apartment +
+                        room
         );
 
 

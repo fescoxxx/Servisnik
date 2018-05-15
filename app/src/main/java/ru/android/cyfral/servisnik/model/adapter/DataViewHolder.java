@@ -27,8 +27,6 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
     public void bind(Data data) {
 
         String mWorksStr ="";
-        String mCityStreetStr="";
-        String mNumberhomeStr="";
         String litera="";
         String building="";
         String floor="";
@@ -36,6 +34,10 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
         String dom = "";
         String entrance = "";
         String apartment = "";
+
+        String group = "";
+        String element = "";
+        String type = "";
 
         try{
             if(!data.getAddress().getNumber().equals("")) {
@@ -75,27 +77,33 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
                 room  = "к."+data.getAddress().getRoom()+ " ";
             }
         } catch (java.lang.NullPointerException ex) {}
+
+
         try {
             if (!data.getWorks().getGroup().equals("")) {
-                mWorksStr = data.getWorks().getGroup();
+                group = data.getWorks().getGroup();
             }
-        } catch (java.lang.NullPointerException ex){
-            mWorksStr = "";
-        }
+        } catch (java.lang.NullPointerException ex){}
         try {
             if (!data.getWorks().getElement().equals("")) {
-                mWorksStr = mWorksStr + " | " + data.getWorks().getElement();
+                element = data.getWorks().getElement();
             }
         } catch (java.lang.NullPointerException ex){}
         try {
             if (!data.getWorks().getType().equals("")) {
-                mWorksStr = mWorksStr + " | " + data.getWorks().getType();
+                type = data.getWorks().getType();
             }
         } catch (java.lang.NullPointerException ex){}
 
+        if (!group.equals("") & !element.equals("") & !type.equals("")) {
+            mWorksStr = element + " | "+ type;
+        } else {
+
+            mWorksStr = group + " | "+element + " | "+ type;
+        }
 
 
-        mWorks.setText(mWorksStr);
+        mWorks.setText(mWorksStr.replace(" |  | ", ""));
         mCityStreet.setText(data.getAddress().getCityType()+ " "+
                 data.getAddress().getCity() + " "+
                 data.getAddress().getStreetType() + " " +

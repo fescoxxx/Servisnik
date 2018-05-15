@@ -26,7 +26,9 @@
             android:text="works"
             android:textColor="#3c3c3c"
             android:textSize="16dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/citystreet"
@@ -36,7 +38,9 @@
             android:paddingRight="16dp"
             android:text="citystreet"
             android:textColor="#979797"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,7 +56,9 @@
                 android:paddingLeft="16dp"
                 android:text="numberhome"
                 android:textColor="#979797"
-                android:textSize="14dp" />
+                android:textSize="14dp"
+                android:maxLines="1"
+                android:ellipsize="end"/>
 
             <TextView
                 android:id="@+id/date_deadline_search"
@@ -61,7 +67,7 @@
                 android:paddingRight="16dp"
                 android:layout_weight="1"
                 android:text="TextView"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"/>
 
         </LinearLayout>
 
