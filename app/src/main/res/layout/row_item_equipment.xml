@@ -14,7 +14,7 @@
 
 
         <TextView
-            android:id="@+id/tmc_title"
+            android:id="@+id/equipment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
@@ -22,7 +22,7 @@
             android:paddingRight="16dp"
             android:paddingTop="5pt"
             android:paddingBottom="5pt"
-            android:text="tmc"
+            android:text="equipment"
             android:background="@drawable/button"
             android:textColor="#3c3c3c"
             android:textSize="16dp"

@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.EquipmentActivity">
 
+    <ListView
+        android:id="@+id/equipment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+    </ListView>
+
 </android.support.constraint.ConstraintLayout>
