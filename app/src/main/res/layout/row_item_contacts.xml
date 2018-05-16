@@ -20,7 +20,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/contacts_title"
+                android:id="@+id/contacts_fio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
