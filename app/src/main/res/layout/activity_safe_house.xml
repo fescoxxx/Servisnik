@@ -7,7 +7,7 @@
     tools:context=".ui.SafeHouseActivity">
 
     <ListView
-        android:id="@+id/safe_house"
+        android:id="@+id/lv_safe_house"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">

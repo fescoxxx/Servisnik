@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.SafeHouseActivity">
-
-
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="horizontal">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
         <TextView
-            android:id="@+id/Category_view"
+            android:id="@+id/safe_house_title"
             android:layout_width="match_parent"
-            android:layout_height="92dp"
-            android:layout_weight="1"
-            android:background="#F5F5F6"
-            android:text="TextView" />
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5pt"
+            android:paddingBottom="5pt"
+            android:text="safe_house_title"
+            android:background="@drawable/button"
+            android:textColor="#3c3c3c"
+            android:textSize="16dp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/safe_house_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:paddingLeft="16dp"
+            android:paddingBottom="16dp"
+            android:text="safe_house_comment"
+            android:textColor="#8A000000" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_weight="1"
             android:background="#E0E0E0"
             android:visibility="visible" />
-
-        <ListView
-            android:id="@+id/safe_house"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-        </ListView>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="#E0E0E0"
-            android:visibility="visible" />
-
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

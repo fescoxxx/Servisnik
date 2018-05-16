@@ -76,7 +76,7 @@ public class ContactsAdapter extends BaseAdapter {
         return view;
     }
 
-    // товар по позиции
+    // по позиции
     Contacts getContacts(int position) {
         return ((Contacts) getItem(position));
     }

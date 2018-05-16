@@ -89,6 +89,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private Button tmc_button;
     private Button contacts_button;
     private Button equipment_button;
+    private Button save_house_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,9 +118,11 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         tmc_button = (Button) findViewById(R.id.tmc_button);
         contacts_button =(Button) findViewById(R.id.contacts_button);
         equipment_button = (Button) findViewById(R.id.equipment_button);
+        save_house_button = (Button) findViewById(R.id.save_house_button);
         tmc_button.setOnClickListener(this);
         contacts_button.setOnClickListener(this);
         equipment_button.setOnClickListener(this);
+        save_house_button.setOnClickListener(this);
        // mLinearLayout.setVisibility(View.INVISIBLE);
         Intent intent = getIntent();
         guid = intent.getStringExtra(Constants.SETTINGS.GUID);
@@ -182,10 +185,20 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                 } catch (NullPointerException ex) {}
                 break;
             case R.id.equipment_button:
-                // контакты
+                // оборудование
                 try {
                     if(!currentOrderCard.getData().getInstalledEquipments().isEmpty()) {
                         Intent intent = new Intent("ru.android.cyfral.servisnik.equipment");
+                        intent.putExtra("ordercard", currentOrderCard);
+                        startActivity(intent);
+                    }
+                } catch (NullPointerException ex) {}
+                break;
+            case R.id.save_house_button:
+                // безопасный дом
+                try {
+                    if(!currentOrderCard.getData().getSafeHome().isEmpty()) {
+                        Intent intent = new Intent("ru.android.cyfral.servisnik.safehouse");
                         intent.putExtra("ordercard", currentOrderCard);
                         startActivity(intent);
                     }
