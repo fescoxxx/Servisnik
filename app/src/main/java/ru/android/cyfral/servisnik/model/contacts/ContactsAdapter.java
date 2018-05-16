@@ -1,16 +1,28 @@
 package ru.android.cyfral.servisnik.model.contacts;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.OrderCard.Contacts;
+import ru.android.cyfral.servisnik.ui.ContactsActivity;
 
 public class ContactsAdapter extends BaseAdapter {
     Context ctx;
@@ -46,10 +58,26 @@ public class ContactsAdapter extends BaseAdapter {
         if (view == null) {
             view = lInflater.inflate(R.layout.row_item_contacts, parent, false);
         }
-        Contacts contacts = getProduct(position);
+        final Contacts contacts = getProduct(position);
         ((TextView) view.findViewById(R.id.contacts_fio)).setText(contacts.getFamilyName()
                 + " " +contacts.getName() + " "+contacts.getMiddleName());
         ((TextView) view.findViewById(R.id.contacts_type)).setText(contacts.getType());
+
+        ImageButton btn = (ImageButton) view.findViewById(R.id.contacts_button);
+
+        final List<String> phonesClean = new ArrayList<>();
+        for(int i=0; i<contacts.getPhones().size(); i++) {
+            phonesClean.add(contacts.getPhones().get(i).replace("\"", ""));
+        }
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createTwoButtonsAlertDialog(contacts.getName() +
+                        " "+ contacts.getMiddleName(),phonesClean);
+
+            }
+        });
         return view;
     }
 
@@ -57,4 +85,46 @@ public class ContactsAdapter extends BaseAdapter {
     Contacts getProduct(int position) {
         return ((Contacts) getItem(position));
     }
+
+    // создает диалоговое
+    private void createTwoButtonsAlertDialog(String title, List<String>phones) {
+        AlertDialog.Builder builder;
+        final String[] selectedPhone = new String[1];
+        final String[] mChooseNumberPgone = phones.toArray(new String[phones.size()]);
+        builder = new AlertDialog.Builder(ctx);
+        builder.setTitle(title)
+                .setCancelable(false)
+
+                // добавляем одну кнопку для закрытия диалога
+                .setNegativeButton("Отмена",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                dialog.cancel();
+                            }
+                        })
+
+                .setPositiveButton("Звонок",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                Uri phoneCall = Uri.parse("tel:"  + selectedPhone[0]);
+                                Intent caller = new Intent(Intent.ACTION_DIAL, phoneCall);
+                                ctx.startActivity(caller);
+                            }
+                        })
+
+                // добавляем переключатели
+                .setSingleChoiceItems(mChooseNumberPgone, -1,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int item) {
+                                selectedPhone[0] = mChooseNumberPgone[item];
+                            }
+                        });
+        builder.show();
+    }
+
+
 }
