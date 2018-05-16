@@ -35,6 +35,8 @@
                 android:textColor="#3c3c3c"
                 android:textSize="16dp" />
 
+
+
             <ImageButton
                 android:id="@+id/phoneButton"
                 android:layout_width="80dp"
@@ -42,6 +44,16 @@
                 android:layout_weight="1"
                 app:srcCompat="@drawable/phone" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/abonent_contacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:paddingLeft="16dp"
+            android:paddingBottom="16dp"
+            android:text="Абонент"
+            android:textColor="#8A000000" />
 
         <View
             android:layout_width="match_parent"
