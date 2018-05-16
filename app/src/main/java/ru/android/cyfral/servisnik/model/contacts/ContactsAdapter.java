@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 
 import java.util.List;
 
+import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.OrderCard.Contacts;
 
 public class ContactsAdapter extends BaseAdapter {
@@ -41,8 +42,9 @@ public class ContactsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
 
-
-
+        if (view == null) {
+            view = lInflater.inflate(R.layout.row_item_contacts, parent, false);
+        }
 
         return view;
     }

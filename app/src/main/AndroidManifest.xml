@@ -73,7 +73,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ContactsActivity" />
+        <activity android:name=".ui.ContactsActivity">
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.contacts" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".ui.EquipmentActivity" />
         <activity android:name=".ui.SafeHouseActivity"></activity>
     </application>
