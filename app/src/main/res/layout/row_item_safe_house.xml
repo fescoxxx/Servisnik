@@ -21,9 +21,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="5pt"
-            android:paddingBottom="5pt"
             android:text="safe_house_title"
-            android:background="@drawable/button"
             android:textColor="#3c3c3c"
             android:textSize="16dp"
             android:maxLines="1"
@@ -35,7 +33,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:paddingLeft="16dp"
-            android:paddingBottom="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
             android:text="safe_house_comment"
             android:textColor="#8A000000" />
 
