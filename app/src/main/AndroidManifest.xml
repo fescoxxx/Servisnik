@@ -84,7 +84,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SafeHouseActivity"></activity>
+        <activity android:name=".ui.SafeHouseActivity">
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.safehouse" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
