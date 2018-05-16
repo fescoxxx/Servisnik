@@ -23,12 +23,17 @@
             android:paddingTop="5pt"
             android:paddingBottom="5pt"
             android:text="tmc"
-            android:background="@drawable/button"
             android:textColor="#3c3c3c"
             android:textSize="16dp"
             android:maxLines="1"
             android:ellipsize="end"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_weight="1"
+            android:background="#1F000000"
+            android:visibility="visible" />
 
     </LinearLayout>
 
