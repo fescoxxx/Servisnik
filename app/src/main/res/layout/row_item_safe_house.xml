@@ -17,15 +17,15 @@
             android:id="@+id/safe_house_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:fontFamily="@font/roboto"
+            android:maxLines="1"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="5pt"
             android:text="safe_house_title"
-            android:textColor="#3c3c3c"
-            android:textSize="16dp"
-            android:maxLines="1"
-            android:ellipsize="end"/>
+            android:textColor="#DE000000"
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/safe_house_body"
