@@ -1,28 +1,23 @@
 package ru.android.cyfral.servisnik.model.contacts;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.OrderCard.Contacts;
-import ru.android.cyfral.servisnik.ui.ContactsActivity;
 
 public class ContactsAdapter extends BaseAdapter {
     Context ctx;
@@ -58,7 +53,7 @@ public class ContactsAdapter extends BaseAdapter {
         if (view == null) {
             view = lInflater.inflate(R.layout.row_item_contacts, parent, false);
         }
-        final Contacts contacts = getProduct(position);
+        final Contacts contacts = getContacts(position);
         ((TextView) view.findViewById(R.id.contacts_fio)).setText(contacts.getFamilyName()
                 + " " +contacts.getName() + " "+contacts.getMiddleName());
         ((TextView) view.findViewById(R.id.contacts_type)).setText(contacts.getType());
@@ -82,7 +77,7 @@ public class ContactsAdapter extends BaseAdapter {
     }
 
     // товар по позиции
-    Contacts getProduct(int position) {
+    Contacts getContacts(int position) {
         return ((Contacts) getItem(position));
     }
 

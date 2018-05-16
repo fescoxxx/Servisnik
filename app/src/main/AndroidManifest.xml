@@ -61,18 +61,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <activity android:name=".ui.TMCActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.tmc" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.ContactsActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.contacts" />
@@ -80,7 +78,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.EquipmentActivity" />
+        <activity android:name=".ui.EquipmentActivity">
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.equipment" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.SafeHouseActivity"></activity>
     </application>
 

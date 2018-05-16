@@ -26,6 +26,7 @@ public class TMCActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tmc);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ActionBar actionBar =getSupportActionBar();
+        assert actionBar != null;
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         setTitle("Плановые затраты ТМЦ");
