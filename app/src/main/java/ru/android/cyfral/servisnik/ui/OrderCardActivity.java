@@ -87,6 +87,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private OrderCard currentOrderCard;
 
     private Button tmc_button;
+    private Button contacts_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,11 +109,14 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_order_card);
         mConstraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout_order_card);
         mProgressBar = (ProgressBar)  findViewById(R.id.progressBar_order_card);
+
         mProgressBar.setVisibility(View.VISIBLE);
         mLinearLayout.setVisibility(View.INVISIBLE);
 
         tmc_button = (Button) findViewById(R.id.tmc_button);
+        contacts_button =(Button) findViewById(R.id.contacts_button);
         tmc_button.setOnClickListener(this);
+        contacts_button.setOnClickListener(this);
        // mLinearLayout.setVisibility(View.INVISIBLE);
         Intent intent = getIntent();
         guid = intent.getStringExtra(Constants.SETTINGS.GUID);
@@ -166,7 +170,13 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                 break;
             case R.id.contacts_button:
                 // контакты
-
+                try {
+                    if(!currentOrderCard.getData().getContacts().isEmpty()) {
+                        Intent intent = new Intent("ru.android.cyfral.servisnik.contacts");
+                        intent.putExtra("ordercard", currentOrderCard);
+                        startActivity(intent);
+                    }
+                } catch (NullPointerException ex) {}
                 break;
         }
     }
