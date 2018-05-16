@@ -50,4 +50,6 @@ public class ContactsActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }

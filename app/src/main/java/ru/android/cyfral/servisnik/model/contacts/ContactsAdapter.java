@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -45,7 +46,15 @@ public class ContactsAdapter extends BaseAdapter {
         if (view == null) {
             view = lInflater.inflate(R.layout.row_item_contacts, parent, false);
         }
-
+        Contacts contacts = getProduct(position);
+        ((TextView) view.findViewById(R.id.contacts_fio)).setText(contacts.getFamilyName()
+                + " " +contacts.getName() + " "+contacts.getMiddleName());
+        ((TextView) view.findViewById(R.id.contacts_type)).setText(contacts.getType());
         return view;
+    }
+
+    // товар по позиции
+    Contacts getProduct(int position) {
+        return ((Contacts) getItem(position));
     }
 }
