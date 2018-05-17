@@ -13,4 +13,5 @@
     <string name="numberDesk">№ заказ-наряда</string>
     <string name="search">Поиск</string>
     <string name="search_">Search</string>
+    <string name="title_activity_execution_result_card">execution_result_card</string>
 </resources>
