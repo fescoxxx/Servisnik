@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
         android:id="@+id/header_safe_house"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:background="#F5F5F6"
         android:fontFamily="@font/roboto"
         android:paddingBottom="16dp"
@@ -16,5 +16,6 @@
         android:paddingTop="16dp"
         android:text="TextView"
         android:textColor="#8A000000" />
+
 
 </android.support.constraint.ConstraintLayout>
