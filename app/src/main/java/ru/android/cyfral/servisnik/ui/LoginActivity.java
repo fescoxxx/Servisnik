@@ -63,19 +63,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void login() {
-/*        Call<Token> call = tokenClient.login("password",
+        Call<Token> call = tokenClient.login("password",
                 "mpservisnik",
                 "secret",
                 "s.sidorov",
                 "!Qwerty7",
-                "");*/
+                "");
 
-        Call<Token> call = tokenClient.login("password",
+/*        Call<Token> call = tokenClient.login("password",
                 "mpservisnik",
                 "secret",
                 username.getText().toString(),
                 password.getText().toString(),
-        "");
+        "");*/
 
         mDialog = new ProgressDialog(LoginActivity.this);
         mDialog.setMessage("Проверка данных...");
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 showErrorDialog("");
             }
         });
-    }
+    }/**/
 
 
 

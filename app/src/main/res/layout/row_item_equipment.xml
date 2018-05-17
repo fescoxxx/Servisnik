@@ -24,9 +24,7 @@
             android:paddingBottom="16dp"
             android:text="equipment"
             android:textColor="#3c3c3c"
-            android:textSize="16dp"
-            android:maxLines="1"
-            android:ellipsize="end"/>
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/equipment_comment"

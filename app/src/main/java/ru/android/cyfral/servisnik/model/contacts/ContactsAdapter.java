@@ -65,12 +65,11 @@ public class ContactsAdapter extends BaseAdapter {
             phonesClean.add(contacts.getPhones().get(i).replace("\"", ""));
         }
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createTwoButtonsAlertDialog(contacts.getName() +
                         " "+ contacts.getMiddleName(),phonesClean);
-
             }
         });
         return view;
@@ -87,8 +86,8 @@ public class ContactsAdapter extends BaseAdapter {
         final String[] selectedPhone = new String[1];
         final String[] mChooseNumberPgone = phones.toArray(new String[phones.size()]);
         builder = new AlertDialog.Builder(ctx);
+        selectedPhone[0] = mChooseNumberPgone[0];
         builder.setTitle(title)
-                .setCancelable(false)
 
                 // добавляем одну кнопку для закрытия диалога
                 .setNegativeButton("Отмена",
@@ -110,7 +109,7 @@ public class ContactsAdapter extends BaseAdapter {
                         })
 
                 // добавляем переключатели
-                .setSingleChoiceItems(mChooseNumberPgone, -1,
+                .setSingleChoiceItems(mChooseNumberPgone, 0,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog,

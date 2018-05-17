@@ -48,12 +48,18 @@ public class TmcAdapter extends BaseAdapter {
         if (view == null) {
             view = lInflater.inflate(R.layout.row_item_tmc, parent, false);
         }
-        String tmc = getTMC(position);
+        String tmc = removeQuotes(getTMC(position));
+
         ((TextView) view.findViewById(R.id.tmc_title)).setText(tmc);
         return view;
     }
     // тмц по позиции
     String getTMC(int position) {
         return objects.get(position);
+    }
+
+    //удаление ковычек
+    private String removeQuotes(String str) {
+        return str.substring(1, str.length() - 1);
     }
 }
