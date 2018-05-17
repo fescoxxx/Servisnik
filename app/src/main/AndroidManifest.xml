@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -83,18 +84,22 @@
         <activity android:name=".ui.EquipmentActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.equipment" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.SafeHouseActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.safehouse" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ExecutionResultActivity" />
+        <activity android:name=".ui.ExecutionResultActivity">
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.executionresult" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".ui.ChoiceTMCActivity" />
         <activity android:name=".ui.ChoiceGroupActivity" />
         <activity android:name=".ui.ChoiceElementsActivity" />

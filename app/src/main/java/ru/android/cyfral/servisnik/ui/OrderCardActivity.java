@@ -90,6 +90,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private Button contacts_button;
     private Button equipment_button;
     private Button save_house_button;
+    private Button result_execution_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,10 +120,14 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         contacts_button =(Button) findViewById(R.id.contacts_button);
         equipment_button = (Button) findViewById(R.id.equipment_button);
         save_house_button = (Button) findViewById(R.id.save_house_button);
+        result_execution_button = (Button) findViewById(R.id.result_execution_button);
+
         tmc_button.setOnClickListener(this);
         contacts_button.setOnClickListener(this);
         equipment_button.setOnClickListener(this);
         save_house_button.setOnClickListener(this);
+        result_execution_button.setOnClickListener(this);
+
        // mLinearLayout.setVisibility(View.INVISIBLE);
         Intent intent = getIntent();
         guid = intent.getStringExtra(Constants.SETTINGS.GUID);
@@ -201,6 +206,18 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                         Intent intent = new Intent("ru.android.cyfral.servisnik.safehouse");
                         intent.putExtra("ordercard", currentOrderCard);
                         startActivity(intent);
+                    }
+                } catch (NullPointerException ex) {}
+                break;
+            case R.id.result_execution_button:
+                // Результат работ
+                try {
+                    if (Utils.isNetworkAvailable(this)) {
+                        Intent intent = new Intent("ru.android.cyfral.servisnik.executionresult");
+                        intent.putExtra("ordercard", currentOrderCard);
+                        startActivity(intent);
+                    } else {
+
                     }
                 } catch (NullPointerException ex) {}
                 break;

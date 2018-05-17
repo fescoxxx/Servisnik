@@ -284,7 +284,7 @@
             </ScrollView>
 
             <Button
-                android:id="@+id/result"
+                android:id="@+id/result_execution_button"
                 style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
