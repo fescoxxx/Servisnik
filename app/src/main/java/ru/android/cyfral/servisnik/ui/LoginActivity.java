@@ -15,10 +15,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.android.cyfral.servisnik.R;
+import ru.android.cyfral.servisnik.model.OrderCard.Contacts;
 import ru.android.cyfral.servisnik.model.Token;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
@@ -77,6 +81,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 password.getText().toString(),
         "");*/
 
+
+
         mDialog = new ProgressDialog(LoginActivity.this);
         mDialog.setMessage("Проверка данных...");
         mDialog.setCancelable(true);
@@ -93,6 +99,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     SharedPreferences.Editor ed = myPrefs.edit();
                     ed.putString("token",  response.body().getAccess_token());
                     ed.putString("token_refresh",  response.body().getRefresh_token());
+                    Calendar date = Calendar.getInstance();
+                    long t = date.getTimeInMillis();
+                    Date life_time_date_token =
+                            new Date(t+( Integer.valueOf(response.body().getExpires_in())));
+                    Log.d("life_time_date_token", life_time_date_token.toString());
+                    ed.putString(Constants.SETTINGS.DATE_TOKEN, life_time_date_token.toString());
                     ed.apply();
                     startActivity(new Intent("ru.android.cyfral.servisnik.repair"));
                     finish();

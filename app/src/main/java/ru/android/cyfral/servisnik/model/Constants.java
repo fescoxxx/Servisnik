@@ -122,6 +122,9 @@ public class Constants {
         public static final String MY_PREFS = "myPrefs";
         public static final String TOKEN = "token";
         public static final String REFRESH_TOKEN = "token_refresh";
+        public static final String DATE_TOKEN = "date_token";
+        public static final String DATE_REFRESH_TOKEN = "date_refresh_token";
+        public static final long ONE_SECUNDE_IN_MILLIS = 1000;
 
     }
 
