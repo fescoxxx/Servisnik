@@ -14,6 +14,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
+import ru.android.cyfral.servisnik.model.choicegroup.ChoiseGroup;
 import ru.android.cyfral.servisnik.model.repairRequests.RepairRequest;
 import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
 import ru.android.cyfral.servisnik.model.result.putResult.PutResult;
@@ -24,30 +25,39 @@ import ru.android.cyfral.servisnik.model.result.putResult.PutResult;
 
 public interface ServiceApiClient {
 
+    //Список ЗН
     @GET("api/repairRequests")
     Call<RepairRequest> repairRequests(@Header("Authorization") String token);
 
+    //получить карточку ЗН
     @GET("api/repairRequests/{uid}")
     Call<OrderCard> getOrderCard(@Path("uid") String uid,
                                  @Header("Authorization") String token);
 
+     //заказ просмотрен
     @PUT("api/repairRequests/{GUID}/viewed")
     Call<StandartAnswer> putViewed(@Path("GUID") String GUID,
                                    @Header("Authorization") String token);
 
-
+    //дата согласования
     @PUT("api/repairRequests/{GUID}/{agreedDate}")
     Call<StandartAnswer> putDateTimeAgreed(@Path("GUID") String GUID,
                                            @Path("agreedDate") String agreedDate,
                                            @Header("Authorization") String token);
 
+    //Результаты работ по ЗН
     @GET("api/repairRequests/{GUID}/result")
     Call<GetResult> getResult(@Path("GUID") String GUID,
                               @Header("Authorization") String token);
 
+    //Отправка работ по ЗН
     @PUT("api/repairRequests/{GUID}/result")
     Call<StandartAnswer> putResult(@Body PutResult putResult,
                                    @Header("Authorization") String token);
+
+    //Список групп работ
+    @GET("api/dictionaries/workGroups")
+    Call<ChoiseGroup> getCoiseGroup(@Header("Authorization") String token);
 
 
 

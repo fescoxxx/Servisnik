@@ -101,7 +101,13 @@
 
         </activity>
         <activity android:name=".ui.ChoiceTMCActivity" />
-        <activity android:name=".ui.ChoiceGroupActivity" />
+        <activity android:name=".ui.ChoiceGroupActivity">
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.choisegroup" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".ui.ChoiceElementsActivity" />
         <activity android:name=".ui.ChoiceTypeActivity"></activity>
     </application>

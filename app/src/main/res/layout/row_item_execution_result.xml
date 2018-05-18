@@ -9,7 +9,7 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/there_tmc"
+        android:id="@+id/tmc_execution_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -22,7 +22,7 @@
         android:textSize="16dp" />
 
     <ImageButton
-        android:id="@+id/imageclose"
+        android:id="@+id/imageclose_execution_result_button"
         android:layout_width="96dp"
         android:layout_height="48dp"
         android:layout_marginRight="16dp"

@@ -3,13 +3,20 @@ package ru.android.cyfral.servisnik.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -17,6 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,13 +33,15 @@ import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
+import ru.android.cyfral.servisnik.model.result.TmcResultAtapter;
 import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
+import ru.android.cyfral.servisnik.model.result.getResult.Tmas;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 
-public class ExecutionResultActivity extends AppCompatActivity {
+public class ExecutionResultActivity extends AppCompatActivity implements View.OnClickListener {
 
     private LinearLayout mLinearLayout;
     private ProgressBar mProgressBar;
@@ -47,6 +57,15 @@ public class ExecutionResultActivity extends AppCompatActivity {
             .getClient(Constants.HTTP.BASE_URL_REQUEST)
             .create(ServiceApiClient.class);
 
+    private TextView group_result;
+    private TextView element_result;
+    private TextView type_result;
+    private Button put_result_button;
+    private ImageButton works_result_button;
+
+    private GetResult currentResult;
+    private GetResult newResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +73,54 @@ public class ExecutionResultActivity extends AppCompatActivity {
         mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_execution_result);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar_execution_result);
         setTitle("Результаты выполнения ЗН");
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ActionBar actionBar =getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         mProgressBar.setVisibility(View.VISIBLE);
         mLinearLayout.setVisibility(View.INVISIBLE);
+
+        group_result = (TextView) findViewById(R.id.group_result);
+        element_result = (TextView)  findViewById(R.id.element_result);
+        type_result = (TextView)  findViewById(R.id.type_result);
+        put_result_button = (Button) findViewById(R.id.put_result_button);
+        works_result_button = (ImageButton) findViewById(R.id.works_result_button);
         Intent intent = getIntent();
         OrderCard orderCard = (OrderCard) intent.getExtras().getSerializable("ordercard");
         guid = orderCard.getData().getId();
         getResult(guid);
+        put_result_button.setOnClickListener(this);
+        works_result_button.setOnClickListener(this);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            //отправка результатов
+            case R.id.put_result_button:
+                for (int i = 0;i<currentResult.getData().getTmas().size(); i++) {
+                    Log.d("currentResult", currentResult.getData().getTmas().get(i).getName());
+                }
+                break;
+            //изменение работ
+            case R.id.works_result_button:
+                Intent intent = new Intent("ru.android.cyfral.servisnik.choisegroup");
+                intent.putExtra("currentResult", currentResult);
+                startActivity(intent);
+                break;
+        }
+
     }
 
     private String loadTextPref(String prefStr) {
@@ -81,10 +142,23 @@ public class ExecutionResultActivity extends AppCompatActivity {
             public void onResponse(Call<GetResult> call, Response<GetResult> response) {
                 if (response.isSuccessful()) {
                     if (response.body().getIsSuccess().equals("true")){
+                        currentResult = response.body();
                         mProgressBar.setVisibility(View.INVISIBLE);
                         mLinearLayout.setVisibility(View.VISIBLE);
                         //Log.d("loadResultm", response.body().getData().getTmas());
+                        group_result.setText(currentResult.getData().getWorks().getGroup().getName());
+                        element_result.setText(currentResult.getData().getWorks().getElement().getName());
+                        type_result.setText(currentResult.getData().getWorks().getType().getName());
 
+                        List<Tmas> listTmas =currentResult.getData().getTmas();
+                        TmcResultAtapter mAdapter = new TmcResultAtapter(ExecutionResultActivity.this, currentResult);
+                        ListView lv_tmc_result = (ListView) findViewById(R.id.lv_tmc_result);
+                        if (!listTmas.isEmpty()) {
+                            for (int i = 0; i<listTmas.size(); i++) {
+                                mAdapter.addItem(listTmas.get(i));
+                            }
+                        }
+                        lv_tmc_result.setAdapter(mAdapter);
 
                     } else {
                         //сервер вернул ошибку от АПИ
@@ -166,9 +240,6 @@ public class ExecutionResultActivity extends AppCompatActivity {
                 //токен живой
                 loadResult();
             }
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    guid, Toast.LENGTH_SHORT);
-            toast.show();
         }
     }
 

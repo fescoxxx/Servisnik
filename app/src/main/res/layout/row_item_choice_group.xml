@@ -9,13 +9,15 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/choice_group"
+        android:id="@+id/choice_group_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="@font/roboto"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:gravity="center_vertical"
         android:text="choice groupe"
         android:textColor="#3c3c3c"

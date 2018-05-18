@@ -21,9 +21,10 @@ public class SafeHomeAdapter extends BaseAdapter {
     private static final int TYPE_SEPARATOR = 1;
     Context ctx;
     LayoutInflater lInflater;
-    List<Items> objects = new ArrayList<Items>();;
+    List<Items> objects = new ArrayList<Items>();
 
     private TreeSet<Integer> sectionHeader = new TreeSet<Integer>();
+
     public SafeHomeAdapter(Context context) {
         ctx = context;
         lInflater = (LayoutInflater) ctx
@@ -32,6 +33,11 @@ public class SafeHomeAdapter extends BaseAdapter {
 
     public void addItem(final Items item) {
         objects.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void deleteItem(final Items item) {
+        objects.remove(item);
         notifyDataSetChanged();
     }
     public void addSectionHeaderItem(final Items item) {
