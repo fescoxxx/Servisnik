@@ -204,7 +204,6 @@ public class RepairRequestActivity extends AppCompatActivity {
                     mSwipeRefreshLayout.setRefreshing(false);
                     showErrorDialog("");
                     Log.d("repairRequests", t.getMessage());
-
                 }
             });
 

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -66,6 +67,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         password = findViewById(R.id.text_password);
     }
 
+    public static String getFormatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+    }
+
     private void login() {
         Call<Token> call = tokenClient.login("password",
                 "mpservisnik",
@@ -102,9 +108,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Calendar date = Calendar.getInstance();
                     long t = date.getTimeInMillis();
                     Date life_time_date_token =
-                            new Date(t+( Integer.valueOf(response.body().getExpires_in())));
-                    Log.d("life_time_date_token", life_time_date_token.toString());
-                    ed.putString(Constants.SETTINGS.DATE_TOKEN, life_time_date_token.toString());
+                            new Date(t+(Constants.SETTINGS.ONE_SECUNDE_IN_MILLIS
+                                    *Integer.valueOf(response.body().getExpires_in())));
+
+
+                    ed.putString(Constants.SETTINGS.DATE_TOKEN, getFormatDate(life_time_date_token));
+
                     ed.apply();
                     startActivity(new Intent("ru.android.cyfral.servisnik.repair"));
                     finish();
