@@ -212,7 +212,10 @@ public class RepairRequestActivity extends AppCompatActivity {
         private void showRepairRequest(List<Data> Listdata, Boolean saveDataBase) {
             datasCategories = new ArrayList<>();
             List<Data> mData = Listdata;
-            if (saveDataBase) {mDatabase.clearDataBase();}
+            if (saveDataBase) {
+                Log.d("Delete_db", Listdata.get(0).getAddress().getApartment());
+                mDatabase.clearDataBase();
+            }
             List<Data> overdueData = new ArrayList<>();
             List<Data> todayData  = new ArrayList<>();
             List<Data> manyday = new ArrayList<>();

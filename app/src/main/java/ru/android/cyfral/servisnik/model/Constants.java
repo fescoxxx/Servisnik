@@ -77,7 +77,7 @@ public class Constants {
         public static final String GET_DATAS_QUERY_FOR_PHONE = "SELECT * FROM " + TABLE_NAME_DATAS + " where "+PHONEFORSEARCH+ " like '%";
         public static final String GET_DATAS_QUERY_FOR_NUMBER_ZN = "SELECT * FROM " + TABLE_NAME_DATAS + " where "+NUMBER_+ " like '%";
 
-        public static final String DELETE_DATAS_ORDER_CARD = "DELETE "+TABLE_NAME_ORDER_CARD + " where "+ID_GUID_ORDER_CARD + " like '";
+        public static final String DELETE_DATAS_ORDER_CARD = "DELETE FROM "+TABLE_NAME_ORDER_CARD + " where "+ID_GUID_ORDER_CARD + " like '";
 
         public static final String CREATE_TABLE_QUERY_DATAS = "CREATE TABLE " + TABLE_NAME_DATAS + "" +
                 "(" + DATA_ID + " TEXT," +

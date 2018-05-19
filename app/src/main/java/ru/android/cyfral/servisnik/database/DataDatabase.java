@@ -66,10 +66,12 @@ public class DataDatabase extends SQLiteOpenHelper {
         Cursor cursorData = null;
         cursorData = db.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_ORDER_CARD+orderCard.getData().getId()+"' ", null);
         Log.d("addDataOrderCard", Constants.DATABASE.GET_DATAS_QUERY_ORDER_CARD+orderCard.getData().getId()+"' ");
-        //запись есть - обновляем
+        Log.d("cursorData.getCount()", String.valueOf(cursorData.getCount()));
+        //запись есть - удаляем
         if (cursorData.getCount() > 0) {
+            Log.d("addDataOrderCard_cur2", Constants.DATABASE.DELETE_DATAS_ORDER_CARD+orderCard.getData().getId()+ "'");
             db.execSQL(Constants.DATABASE.DELETE_DATAS_ORDER_CARD+orderCard.getData().getId()+ "'");
-            Log.d("addDataOrderCard_cur", cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.ID_GUID_ORDER_CARD)));
+
         }
             //записи нет - создаем
             ContentValues valuesDatas = new ContentValues();
@@ -77,9 +79,9 @@ public class DataDatabase extends SQLiteOpenHelper {
             valuesDatas.put(Constants.DATABASE.JSON_ORDER_CARD, orderCard.toString());
             try {
                 db.insert(Constants.DATABASE.TABLE_NAME_ORDER_CARD, null, valuesDatas);
-                Log.d("addDataOrderCard--", Constants.DATABASE.TABLE_NAME_ORDER_CARD);
+                Log.d("addDataOrderCard_insert", Constants.DATABASE.TABLE_NAME_ORDER_CARD);
             } catch (Exception e) {
-                Log.d("addDataOrderCard", e.fillInStackTrace().toString());
+                Log.d("addDataOrderCard_error", e.fillInStackTrace().toString());
             }
     }
 
