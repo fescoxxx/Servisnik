@@ -42,7 +42,7 @@ public class ChoiceGroupActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private ListView lv_choice_group;
     private GetResult currentResult;
-    SharedPreferences sPref;
+    private SharedPreferences sPref;
 
     TokenClient tokenClient = RetrofitClientToken
             .getClient(Constants.HTTP.BASE_URL_TOKEN)
@@ -106,7 +106,11 @@ public class ChoiceGroupActivity extends AppCompatActivity {
                     } else {
                         //сервер вернул ошибку
                         mProgressBar.setVisibility(View.INVISIBLE);
-                        showErrorDialog(String.valueOf(response.code()));
+                        int rc = response.code();
+                        if (rc == 401) {
+                            startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                            finish();
+                        }
                     }
                 }
 
@@ -165,7 +169,13 @@ public class ChoiceGroupActivity extends AppCompatActivity {
                                 ed.apply();
                                 loadChoiseGroup();
                             } else {
-                                showErrorDialog(String.valueOf(response.code()));
+                                //сервер вернул ошибку
+                                mProgressBar.setVisibility(View.INVISIBLE);
+                                int rc = response.code();
+                                if (rc == 401) {
+                                    startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                                    finish();
+                                }
                             }
                         }
 

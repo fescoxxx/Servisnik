@@ -108,7 +108,12 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.executionresult.ChoiceElementsActivity" />
+        <activity android:name=".ui.executionresult.ChoiceElementsActivity">
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.choiseelement" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.executionresult.ChoiceTypeActivity"></activity>
     </application>
 

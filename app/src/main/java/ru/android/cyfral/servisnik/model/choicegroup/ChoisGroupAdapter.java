@@ -1,6 +1,7 @@
 package ru.android.cyfral.servisnik.model.choicegroup;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,9 @@ public class ChoisGroupAdapter extends BaseAdapter {
                 group.setId(data.getId());
                 group.setName(data.getName());
                 currentResult.getData().getWorks().setGroup(group); //
+                Intent intent = new Intent("ru.android.cyfral.servisnik.choiseelement");
+                intent.putExtra("currentResult", currentResult);
+                ctx.startActivity(intent);
             }
         });
 
