@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.ui;
+package ru.android.cyfral.servisnik.ui.ordercard;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;

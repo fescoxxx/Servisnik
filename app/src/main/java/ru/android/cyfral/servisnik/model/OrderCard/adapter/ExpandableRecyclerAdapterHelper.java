@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.model.adapter;
+package ru.android.cyfral.servisnik.model.OrderCard.adapter;
 import java.util.ArrayList;
 import java.util.List;
 

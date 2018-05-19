@@ -1,8 +1,7 @@
-package ru.android.cyfral.servisnik.model.adapter;
+package ru.android.cyfral.servisnik.model.OrderCard.adapter;
 
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.repairRequests.Data;

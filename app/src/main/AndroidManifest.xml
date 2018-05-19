@@ -55,7 +55,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.OrderCardActivity">
+        <activity android:name=".ui.ordercard.OrderCardActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.card" />
 
@@ -67,49 +67,49 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".ui.TMCActivity">
+        <activity android:name=".ui.ordercard.TMCActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.tmc" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ContactsActivity">
+        <activity android:name=".ui.ordercard.ContactsActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.contacts" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.EquipmentActivity">
+        <activity android:name=".ui.ordercard.EquipmentActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.equipment" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SafeHouseActivity">
+        <activity android:name=".ui.ordercard.SafeHouseActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.safehouse" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ExecutionResultActivity">
+        <activity android:name=".ui.executionresult.ExecutionResultActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.executionresult" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.ChoiceTMCActivity" />
-        <activity android:name=".ui.ChoiceGroupActivity">
+        <activity android:name=".ui.executionresult.ChoiceTMCActivity" />
+        <activity android:name=".ui.executionresult.ChoiceGroupActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.choisegroup" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.ChoiceElementsActivity" />
-        <activity android:name=".ui.ChoiceTypeActivity"></activity>
+        <activity android:name=".ui.executionresult.ChoiceElementsActivity" />
+        <activity android:name=".ui.executionresult.ChoiceTypeActivity"></activity>
     </application>
 
 </manifest>

@@ -1,15 +1,15 @@
-package ru.android.cyfral.servisnik.ui;
+package ru.android.cyfral.servisnik.ui.executionresult;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import ru.android.cyfral.servisnik.R;
 
-public class ChoiceTypeActivity extends AppCompatActivity {
+public class ChoiceElementsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choice_type);
+        setContentView(R.layout.activity_choice_elements);
     }
 }

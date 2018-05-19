@@ -27,7 +27,7 @@ import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchListener;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
-import ru.android.cyfral.servisnik.model.adapter.RepairRequestAdapter;
+import ru.android.cyfral.servisnik.model.OrderCard.adapter.RepairRequestAdapter;
 import ru.android.cyfral.servisnik.model.repairRequests.Data;
 
 public class SearchActivity extends AppCompatActivity  implements  RepairRequestAdapter.RepairRequestClickListener, DataFetchListener {

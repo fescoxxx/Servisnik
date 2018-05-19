@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.SafeHouseActivity">
+    tools:context=".ui.ordercard.SafeHouseActivity">
 
     <ListView
         android:id="@+id/lv_safe_house"

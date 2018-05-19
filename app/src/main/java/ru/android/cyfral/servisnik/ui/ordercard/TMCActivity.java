@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.ui;
+package ru.android.cyfral.servisnik.ui.ordercard;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -8,39 +8,37 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
-import ru.android.cyfral.servisnik.model.OrderCard.Contacts;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
-import ru.android.cyfral.servisnik.model.contacts.ContactsAdapter;
 import ru.android.cyfral.servisnik.model.tmc.TmcAdapter;
 
-public class ContactsActivity extends AppCompatActivity {
+public class TMCActivity extends AppCompatActivity {
 
-    private List<Contacts> listContacts;
-    private ContactsAdapter contactsAdapter;
+    private List<String> listTmc;
+    private TmcAdapter tmcAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts);
+        setContentView(R.layout.activity_tmc);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ActionBar actionBar =getSupportActionBar();
         assert actionBar != null;
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        setTitle("Контакты");
+        setTitle("Плановые затраты ТМЦ");
         Intent intent = getIntent();
         OrderCard orderCard = (OrderCard) intent.getExtras().getSerializable("ordercard");
-
-        listContacts = orderCard.getData().getContacts();
-        contactsAdapter = new ContactsAdapter(this, listContacts);
+        listTmc = orderCard.getData().getTmas();
+         tmcAdapter = new TmcAdapter(this, listTmc);
         // настраиваем список
-        ListView lv_contacts = (ListView) findViewById(R.id.lv_contacts);
-        lv_contacts.setAdapter(contactsAdapter);
-    }
+         ListView lv_tmc = (ListView) findViewById(R.id.lv_tmc);
+         lv_tmc.setAdapter(tmcAdapter);
 
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -51,6 +49,5 @@ public class ContactsActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 }

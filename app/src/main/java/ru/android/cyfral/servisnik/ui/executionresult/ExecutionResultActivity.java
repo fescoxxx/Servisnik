@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.ui;
+package ru.android.cyfral.servisnik.ui.executionresult;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;

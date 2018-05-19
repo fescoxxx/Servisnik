@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.ui;
+package ru.android.cyfral.servisnik.ui.executionresult;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,7 +27,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.Constants;
-import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.choicegroup.ChoisGroupAdapter;
 import ru.android.cyfral.servisnik.model.choicegroup.ChoiseGroup;

@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.model.adapter;
+package ru.android.cyfral.servisnik.model.OrderCard.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,6 @@ import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.repairRequests.Data;
-import ru.android.cyfral.servisnik.model.repairRequests.RepairRequest;
 
 public class DataCategoryAdapter extends ExpandableRecyclerAdapter<RepairRequestCategoryViewHolder, DataViewHolder> {
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.EquipmentActivity">
+    tools:context=".ui.ordercard.EquipmentActivity">
 
     <ListView
         android:id="@+id/lv_equipment"

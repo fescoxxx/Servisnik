@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.model.adapter;
+package ru.android.cyfral.servisnik.model.OrderCard.adapter;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -1,7 +1,6 @@
-package ru.android.cyfral.servisnik.model.adapter;
+package ru.android.cyfral.servisnik.model.OrderCard.adapter;
 
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
