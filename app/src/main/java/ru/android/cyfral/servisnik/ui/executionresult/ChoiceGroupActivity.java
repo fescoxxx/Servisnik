@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -36,6 +38,7 @@ import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
+import ru.android.cyfral.servisnik.model.result.getResult.Group;
 
 public class ChoiceGroupActivity extends AppCompatActivity {
 
@@ -87,7 +90,7 @@ public class ChoiceGroupActivity extends AppCompatActivity {
                         lv_choice_group.setVisibility(View.VISIBLE);
                         List<Data> listData = new ArrayList<>();
                         listData = response.body().getData();
-                        ChoisGroupAdapter mAdapter = new ChoisGroupAdapter(ChoiceGroupActivity.this, currentResult);
+                        final ChoisGroupAdapter mAdapter = new ChoisGroupAdapter(ChoiceGroupActivity.this);
                         ListView lv_choice_group = (ListView) findViewById(R.id.lv_choice_group);
                         if (!listData.isEmpty()) {
                             for (int i =0; i<listData.size(); i++) {
@@ -95,6 +98,20 @@ public class ChoiceGroupActivity extends AppCompatActivity {
                             }
                         }
                         lv_choice_group.setAdapter(mAdapter);
+                        //обраотчик listView
+                        lv_choice_group.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            public void onItemClick(AdapterView<?> parent, View view,
+                                                    int position, long id) {
+                                Group group = new Group();
+                                group.setId(mAdapter.getItem(position).getId());
+                                group.setName(mAdapter.getItem(position).getName());
+                                currentResult.getData().getWorks().setGroup(group);
+
+                                Intent intent = new Intent("ru.android.cyfral.servisnik.choiseelement");
+                                intent.putExtra("currentResult", currentResult);
+                                startActivityForResult(intent, 2);
+                            }
+                        });
 
                     } else {
                             //сервер вернул ошибку от АПИ
@@ -121,10 +138,18 @@ public class ChoiceGroupActivity extends AppCompatActivity {
         });
     }
 
-    private void getChoiseGroup() {
 
-        //mProgressBar.setVisibility(View.INVISIBLE);
-        //mLinearLayout.setVisibility(View.VISIBLE);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("onActivityResult", "onActivityResultGROUP");
+        if (data == null) {return;}
+        GetResult getResult = (GetResult) data.getExtras().getSerializable("currentResult");
+        Intent intent = new Intent();
+        intent.putExtra("currentResult", getResult);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+    private void getChoiseGroup() {
 
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         String token_ref = loadTextPref(Constants.SETTINGS.REFRESH_TOKEN);
@@ -218,4 +243,5 @@ public class ChoiceGroupActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(date);
     }
+
 }

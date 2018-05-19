@@ -12,9 +12,11 @@ import retrofit2.http.Header;
 import retrofit2.http.PATCH;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
 import ru.android.cyfral.servisnik.model.choicegroup.ChoiseGroup;
+import ru.android.cyfral.servisnik.model.choiseelement.ChoiseElement;
 import ru.android.cyfral.servisnik.model.repairRequests.RepairRequest;
 import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
 import ru.android.cyfral.servisnik.model.result.putResult.PutResult;
@@ -59,6 +61,10 @@ public interface ServiceApiClient {
     @GET("api/dictionaries/workGroups")
     Call<ChoiseGroup> getCoiseGroup(@Header("Authorization") String token);
 
+    //Список элементов
+    @GET("api/dictionaries/workElements")
+    Call<ChoiseElement> getCoiseElement(@Query("workGroup") String GUID,
+                                        @Header("Authorization") String token);
 
 
 }

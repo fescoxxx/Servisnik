@@ -18,18 +18,17 @@ import ru.android.cyfral.servisnik.model.OrderCard.Items;
 import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
 import ru.android.cyfral.servisnik.model.result.getResult.Group;
 import ru.android.cyfral.servisnik.model.result.getResult.Tmas;
+import ru.android.cyfral.servisnik.ui.executionresult.ChoiceElementsActivity;
 
 public class ChoisGroupAdapter extends BaseAdapter {
     Context ctx;
     LayoutInflater lInflater;
     List<Data> objects = new ArrayList<Data>();
-    GetResult currentResult;
 
-    public ChoisGroupAdapter(Context context, GetResult getResult) {
+    public ChoisGroupAdapter(Context context) {
         ctx = context;
         lInflater = (LayoutInflater) ctx
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        currentResult = getResult;
     }
 
     public void addData(final Data data) {
@@ -45,7 +44,7 @@ public class ChoisGroupAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Data getItem(int position) {
         return objects.get(position);
     }
 
@@ -64,18 +63,21 @@ public class ChoisGroupAdapter extends BaseAdapter {
         }
         ((TextView) view.findViewById(R.id.choice_group_text)).setText(data.getName());
 
-        view.setOnClickListener(new View.OnClickListener() {
+/*        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Group group = new Group();
                 group.setId(data.getId());
                 group.setName(data.getName());
                 currentResult.getData().getWorks().setGroup(group); //
+
+
                 Intent intent = new Intent("ru.android.cyfral.servisnik.choiseelement");
                 intent.putExtra("currentResult", currentResult);
                 ctx.startActivity(intent);
+
             }
-        });
+        });*/
 
 
 

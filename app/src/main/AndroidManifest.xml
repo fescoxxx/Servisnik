@@ -93,7 +93,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.executionresult.ExecutionResultActivity">
+        <activity android:name=".ui.executionresult.ExecutionResultActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.executionresult" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -114,7 +115,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.executionresult.ChoiceTypeActivity"></activity>
+        <activity android:name=".ui.executionresult.ChoiceTypeActivity">
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.choisetype" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

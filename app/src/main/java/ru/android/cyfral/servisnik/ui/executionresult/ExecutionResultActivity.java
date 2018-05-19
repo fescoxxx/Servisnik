@@ -66,6 +66,15 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
     private GetResult newResult;
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("onActivityResult", "onActivityResultEXE");
+        if (data == null) {return;}
+        GetResult getResult = (GetResult) data.getExtras().getSerializable("currentResult");
+        group_result.setText(getResult.getData().getWorks().getGroup().getName());
+        element_result.setText(getResult.getData().getWorks().getElement().getName());
+        type_result.setText(getResult.getData().getWorks().getType().getName());
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_execution_result);
@@ -85,9 +94,16 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         put_result_button = (Button) findViewById(R.id.put_result_button);
         works_result_button = (ImageButton) findViewById(R.id.works_result_button);
         Intent intent = getIntent();
+
+        try {
+            Intent intent0 = getIntent();
+            GetResult getResult = (GetResult) intent0.getExtras().getSerializable("currentResult");
+            Log.d("onResume_ex", "MainActivity: onResume()" + getResult.getData().getWorks().getGroup());
+        } catch (NullPointerException ex){}
+
         OrderCard orderCard = (OrderCard) intent.getExtras().getSerializable("ordercard");
-        guid = orderCard.getData().getId();
-        getResult(guid);
+            guid = orderCard.getData().getId();
+            getResult(guid);
         put_result_button.setOnClickListener(this);
         works_result_button.setOnClickListener(this);
     }
@@ -101,6 +117,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -116,7 +133,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
             case R.id.works_result_button:
                 Intent intent = new Intent("ru.android.cyfral.servisnik.choisegroup");
                 intent.putExtra("currentResult", currentResult);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 break;
         }
 
