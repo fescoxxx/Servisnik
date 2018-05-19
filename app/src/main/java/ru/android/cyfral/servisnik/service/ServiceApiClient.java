@@ -17,6 +17,7 @@ import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
 import ru.android.cyfral.servisnik.model.choicegroup.ChoiseGroup;
 import ru.android.cyfral.servisnik.model.choiseelement.ChoiseElement;
+import ru.android.cyfral.servisnik.model.choisetype.ChoiseType;
 import ru.android.cyfral.servisnik.model.repairRequests.RepairRequest;
 import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
 import ru.android.cyfral.servisnik.model.result.putResult.PutResult;
@@ -59,12 +60,17 @@ public interface ServiceApiClient {
 
     //Список групп работ
     @GET("api/dictionaries/workGroups")
-    Call<ChoiseGroup> getCoiseGroup(@Header("Authorization") String token);
+    Call<ChoiseGroup> getChoiseGroup(@Header("Authorization") String token);
 
     //Список элементов
     @GET("api/dictionaries/workElements")
-    Call<ChoiseElement> getCoiseElement(@Query("workGroup") String GUID,
-                                        @Header("Authorization") String token);
+    Call<ChoiseElement> getChoiseElement(@Query("workGroup") String GUID,
+                                         @Header("Authorization") String token);
+
+    //Список видов работ
+    @GET("api/dictionaries/workTypes")
+    Call<ChoiseType> getChoiseType(@Query("workElement") String GUID,
+                                   @Header("Authorization") String token);
 
 
 }

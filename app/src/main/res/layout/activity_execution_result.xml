@@ -64,7 +64,7 @@
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:paddingTop="8dp"
-                    android:text="header1"
+                    android:hint="Группа работ"
                     android:textColor="#3c3c3c"
                     android:background="#FFFFFF"
                     android:textSize="16dp" />
@@ -79,7 +79,7 @@
                     android:maxLines="1"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:text="header2"
+                    android:hint="Элемент работ"
                     android:background="#FFFFFF"
                     android:textColor="#3c3c3c"
                     android:textSize="16dp" />
@@ -96,7 +96,7 @@
                     android:paddingRight="16dp"
                     android:paddingBottom="8dp"
                     android:background="#FFFFFF"
-                    android:text="header3"
+                    android:hint="Вид работ"
                     android:textColor="#3c3c3c"
                     android:textSize="16dp" />
 

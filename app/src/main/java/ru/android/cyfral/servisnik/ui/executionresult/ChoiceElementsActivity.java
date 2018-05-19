@@ -39,7 +39,7 @@ import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 import ru.android.cyfral.servisnik.model.result.getResult.Element;
 
-public class ChoiceElementsActivity extends AppCompatActivity implements View.OnClickListener {
+public class ChoiceElementsActivity extends AppCompatActivity  {
 
     private ProgressBar mProgressBar;
     private ListView lv_choice_element;
@@ -102,7 +102,7 @@ public class ChoiceElementsActivity extends AppCompatActivity implements View.On
                 .getGroup()
                 .getId());
         getChoiseElement = serviceApiClient
-                .getCoiseElement(
+                .getChoiseElement(
                         currentResult
                                 .getData()
                                 .getWorks()
@@ -171,9 +171,11 @@ public class ChoiceElementsActivity extends AppCompatActivity implements View.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) {return;}
-
-        // String name = data.getStringExtra("name");
-        // tvName.setText("Your name is " + name);
+        GetResult getResult = (GetResult) data.getExtras().getSerializable("currentResult");
+        Intent intent = new Intent();
+        intent.putExtra("currentResult", getResult);
+        setResult(RESULT_OK, intent);
+        finish();
     }
     private void getChoiseElement() {
 
@@ -251,11 +253,6 @@ public class ChoiceElementsActivity extends AppCompatActivity implements View.On
                     }
                 });
         builder.show();
-    }
-
-    @Override
-    public void onClick(View view) {
-
     }
 
 

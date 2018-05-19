@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -80,7 +79,7 @@ public class ChoiceGroupActivity extends AppCompatActivity {
 
     private void loadChoiseGroup(){
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
-        getChoiseGroup = serviceApiClient.getCoiseGroup("Bearer " + token);
+        getChoiseGroup = serviceApiClient.getChoiseGroup("Bearer " + token);
         getChoiseGroup.enqueue(new Callback<ChoiseGroup>() {
             @Override
             public void onResponse(Call<ChoiseGroup> call, Response<ChoiseGroup> response) {
@@ -141,7 +140,6 @@ public class ChoiceGroupActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("onActivityResult", "onActivityResultGROUP");
         if (data == null) {return;}
         GetResult getResult = (GetResult) data.getExtras().getSerializable("currentResult");
         Intent intent = new Intent();

@@ -161,10 +161,17 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                         currentResult = response.body();
                         mProgressBar.setVisibility(View.INVISIBLE);
                         mLinearLayout.setVisibility(View.VISIBLE);
-                        //Log.d("loadResultm", response.body().getData().getTmas());
-                        group_result.setText(currentResult.getData().getWorks().getGroup().getName());
-                        element_result.setText(currentResult.getData().getWorks().getElement().getName());
-                        type_result.setText(currentResult.getData().getWorks().getType().getName());
+                        try {
+                            group_result.setText(currentResult.getData().getWorks().getGroup().getName());
+                        } catch (java.lang.NullPointerException ex) {}
+
+                        try {
+                            element_result.setText(currentResult.getData().getWorks().getElement().getName());
+                        } catch (java.lang.NullPointerException ex) {}
+
+                        try {
+                            type_result.setText(currentResult.getData().getWorks().getType().getName());
+                        } catch (java.lang.NullPointerException ex) {}
 
                         List<Tmas> listTmas =currentResult.getData().getTmas();
                         TmcResultAtapter mAdapter = new TmcResultAtapter(ExecutionResultActivity.this, currentResult);
