@@ -2,6 +2,7 @@ package ru.android.cyfral.servisnik.model.choicegroup;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +25,13 @@ public class ChoisGroupAdapter extends BaseAdapter {
     Context ctx;
     LayoutInflater lInflater;
     List<Data> objects = new ArrayList<Data>();
+    GetResult currentResult;
 
-    public ChoisGroupAdapter(Context context) {
+    public ChoisGroupAdapter(Context context, GetResult getResult) {
         ctx = context;
         lInflater = (LayoutInflater) ctx
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        currentResult = getResult;
     }
 
     public void addData(final Data data) {
@@ -61,25 +64,18 @@ public class ChoisGroupAdapter extends BaseAdapter {
         if (view == null) {
             view = lInflater.inflate(R.layout.row_item_choice_group, null);
         }
-        ((TextView) view.findViewById(R.id.choice_group_text)).setText(data.getName());
 
-/*        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Group group = new Group();
-                group.setId(data.getId());
-                group.setName(data.getName());
-                currentResult.getData().getWorks().setGroup(group); //
-
-
-                Intent intent = new Intent("ru.android.cyfral.servisnik.choiseelement");
-                intent.putExtra("currentResult", currentResult);
-                ctx.startActivity(intent);
-
-            }
-        });*/
-
-
+        try {
+            if (currentResult.getData().getWorks().getGroup().getName().equals(data.getName())) {
+                TextView textView = (TextView) view.findViewById(R.id.choice_group_text);
+                textView.setText(data.getName());
+                textView.setTextColor(Color.parseColor("#6288AD"));
+             } else {
+                ((TextView) view.findViewById(R.id.choice_group_text)).setText(data.getName());
+             }
+        } catch (NullPointerException ex) {
+                ((TextView) view.findViewById(R.id.choice_group_text)).setText(data.getName());
+        }
 
         return view;
     }

@@ -77,6 +77,7 @@ public class DataDatabase extends SQLiteOpenHelper {
             valuesDatas.put(Constants.DATABASE.JSON_ORDER_CARD, orderCard.toString());
             try {
                 db.insert(Constants.DATABASE.TABLE_NAME_ORDER_CARD, null, valuesDatas);
+                Log.d("addDataOrderCard--", Constants.DATABASE.TABLE_NAME_ORDER_CARD);
             } catch (Exception e) {
                 Log.d("addDataOrderCard", e.fillInStackTrace().toString());
             }

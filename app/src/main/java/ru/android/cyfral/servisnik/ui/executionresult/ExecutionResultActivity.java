@@ -47,7 +47,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
     private static Call<GetResult> getResultCall;
     private String guid;
     SharedPreferences sPref;
-
+    private TmcResultAtapter mAdapter;
     TokenClient tokenClient = RetrofitClientToken
             .getClient(Constants.HTTP.BASE_URL_TOKEN)
             .create(TokenClient.class);
@@ -73,6 +73,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         group_result.setText(getResult.getData().getWorks().getGroup().getName());
         element_result.setText(getResult.getData().getWorks().getElement().getName());
         type_result.setText(getResult.getData().getWorks().getType().getName());
+        mAdapter.removeAll();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +175,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                         } catch (java.lang.NullPointerException ex) {}
 
                         List<Tmas> listTmas =currentResult.getData().getTmas();
-                        TmcResultAtapter mAdapter = new TmcResultAtapter(ExecutionResultActivity.this, currentResult);
+                        mAdapter = new TmcResultAtapter(ExecutionResultActivity.this, currentResult);
                         ListView lv_tmc_result = (ListView) findViewById(R.id.lv_tmc_result);
                         if (!listTmas.isEmpty()) {
                             for (int i = 0; i<listTmas.size(); i++) {

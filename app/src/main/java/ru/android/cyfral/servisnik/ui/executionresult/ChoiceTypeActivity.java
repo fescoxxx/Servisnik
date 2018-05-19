@@ -77,7 +77,24 @@ public class ChoiceTypeActivity extends AppCompatActivity {
 
     }
 
-
+    private List<Data> getSortArray(List<Data> listData) {
+        try {
+            List<Data> newArray = new ArrayList<>();
+            for (int i=0; i<listData.size(); i++) {
+                if(listData.get(i).getName().equals(currentResult.getData().getWorks().getType().getName())) {
+                    newArray.add(listData.get(i));
+                }
+            }
+            for (int i=0; i<listData.size(); i++) {
+                if(!listData.get(i).getName().equals(currentResult.getData().getWorks().getType().getName())) {
+                    newArray.add(listData.get(i));
+                }
+            }
+            return newArray;
+        } catch (NullPointerException ex) {
+            return listData;
+        }
+    }
 
     private void loadChoiseType() {
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
@@ -100,8 +117,8 @@ public class ChoiceTypeActivity extends AppCompatActivity {
                         lv_choice_type.setVisibility(View.VISIBLE);
 
                         List<Data> listData = new ArrayList<>();
-                        listData = response.body().getData();
-                        final ChoiseTypeAdapter mAdapter = new ChoiseTypeAdapter(ChoiceTypeActivity.this);
+                        listData = getSortArray(response.body().getData());
+                        final ChoiseTypeAdapter mAdapter = new ChoiseTypeAdapter(ChoiceTypeActivity.this, currentResult);
                         ListView lv_choice_type = (ListView) findViewById(R.id.lv_choice_type);
                         if (!listData.isEmpty()) {
                             for (int i =0; i<listData.size(); i++) {

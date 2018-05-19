@@ -34,7 +34,10 @@ public class TmcResultAtapter  extends BaseAdapter {
         objects.add(tmas);
         notifyDataSetChanged();
     }
-
+    public void removeAll() {
+        objects.clear();
+        notifyDataSetChanged();
+    }
     public void deleteItem(final int position) {
         objects.remove(position);
         notifyDataSetChanged();

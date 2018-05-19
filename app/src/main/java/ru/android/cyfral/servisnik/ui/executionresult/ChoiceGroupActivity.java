@@ -77,6 +77,25 @@ public class ChoiceGroupActivity extends AppCompatActivity {
         return sPref.getString(prefStr, "");
     }
 
+    private List<Data> getSortArray(List<Data> listData) {
+        try {
+            List<Data> newArray = new ArrayList<>();
+            for (int i=0; i<listData.size(); i++) {
+                if(listData.get(i).getName().equals(currentResult.getData().getWorks().getGroup().getName())) {
+                    newArray.add(listData.get(i));
+                }
+            }
+            for (int i=0; i<listData.size(); i++) {
+                if(!listData.get(i).getName().equals(currentResult.getData().getWorks().getGroup().getName())) {
+                    newArray.add(listData.get(i));
+                }
+            }
+            return newArray;
+        } catch (NullPointerException ex) {
+            return listData;
+        }
+    }
+
     private void loadChoiseGroup(){
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         getChoiseGroup = serviceApiClient.getChoiseGroup("Bearer " + token);
@@ -88,8 +107,8 @@ public class ChoiceGroupActivity extends AppCompatActivity {
                         mProgressBar.setVisibility(View.INVISIBLE);
                         lv_choice_group.setVisibility(View.VISIBLE);
                         List<Data> listData = new ArrayList<>();
-                        listData = response.body().getData();
-                        final ChoisGroupAdapter mAdapter = new ChoisGroupAdapter(ChoiceGroupActivity.this);
+                        listData = getSortArray(response.body().getData());
+                        final ChoisGroupAdapter mAdapter = new ChoisGroupAdapter(ChoiceGroupActivity.this, currentResult);
                         ListView lv_choice_group = (ListView) findViewById(R.id.lv_choice_group);
                         if (!listData.isEmpty()) {
                             for (int i =0; i<listData.size(); i++) {

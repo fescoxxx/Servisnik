@@ -438,7 +438,6 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
             angreed_date_text.setText(format_data.format(angree_date));
             angreed_time_text.setText(format_time.format(angree_date));
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
         //Метка - ЗН просмотрен

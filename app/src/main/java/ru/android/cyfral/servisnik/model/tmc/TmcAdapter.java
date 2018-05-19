@@ -30,6 +30,10 @@ public class TmcAdapter extends BaseAdapter {
         return objects.size();
     }
 
+    public void removeAll() {
+        objects.clear();
+        notifyDataSetChanged();
+    }
     // элемент по позиции
     @Override
     public String getItem(int position) {

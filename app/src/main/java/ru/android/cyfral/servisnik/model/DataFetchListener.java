@@ -6,11 +6,10 @@ import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.repairRequests.Data;
 
 public interface DataFetchListener {
-    void onDeliverAllDatas(List<Data> datas);
 
+    void onDeliverAllDatas(List<Data> datas);
     void onDeliverData(Data data);
     void onDeliverOrderCard(OrderCard orderCard);
-
     void onHideDialog();
 
 }
