@@ -7,6 +7,22 @@
     android:layout_height="match_parent"
     android:background="#F5F5F6"
     tools:context=".ui.executionresult.ExecutionResultActivity">
+
+    <Button
+        android:id="@+id/put_result_button"
+        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="0dp"
+        android:layout_weight="1"
+        android:background="#154E85"
+        android:fontFamily="@font/roboto_medium"
+        android:text="ОТПРАВИТЬ РЕЗУЛЬТАТЫ НЗ"
+        android:textColor="@android:color/background_light"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <ProgressBar
         android:id="@+id/progressBar_execution_result"
         style="?android:attr/progressBarStyle"
@@ -20,177 +36,175 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-<LinearLayout
-
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#F5F5F6"
-    android:orientation="horizontal">
 
     <LinearLayout
+
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:id="@+id/linearLayout_execution_result"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="#E0E0E0"
-            android:layout_marginTop="8dp"
-            android:visibility="visible" />
+        android:background="#F5F5F6"
+        android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/linearLayout_execution_result"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/group_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/roboto"
-                    android:maxLines="1"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="8dp"
-                    android:hint="Группа работ"
-                    android:textColor="#3c3c3c"
-                    android:background="#FFFFFF"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/element_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/roboto"
-                    android:maxLines="1"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:hint="Элемент работ"
-                    android:background="#FFFFFF"
-                    android:textColor="#3c3c3c"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/type_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/roboto"
-                    android:maxLines="1"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="8dp"
-                    android:background="#FFFFFF"
-                    android:hint="Вид работ"
-                    android:textColor="#3c3c3c"
-                    android:textSize="16dp" />
-
-            </LinearLayout>
-
-
-            <ImageButton
-                android:id="@+id/works_result_button"
-                android:layout_width="96dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:background="@color/white"
-                android:layout_marginRight="16dp"
-                app:srcCompat="@drawable/pencil" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="#E0E0E0"
-            android:visibility="visible" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="#E0E0E0"
-            android:layout_marginTop="16dp"
-            android:visibility="visible" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="#E0E0E0"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/header_choice_tmc"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#FFFFFF"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/roboto_medium"
-                    android:maxLines="1"
-                    android:paddingTop="8dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="8dp"
-                    android:text="Израсходованные ТМЦ"
-                    android:textColor="#3c3c3c"
-                    android:textSize="16dp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/group_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto"
+                        android:maxLines="1"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="8dp"
+                        android:text="header1"
+                        android:textColor="#3c3c3c"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/element_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto"
+                        android:maxLines="1"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:text="header2"
+                        android:textColor="#3c3c3c"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/type_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto"
+                        android:maxLines="1"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:text="header3"
+                        android:textColor="#3c3c3c"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
+
 
                 <ImageButton
-                    android:id="@+id/image_plus"
+                    android:id="@+id/works_result_button"
                     android:layout_width="96dp"
                     android:layout_height="48dp"
+                    android:layout_gravity="center"
                     android:layout_marginRight="16dp"
                     android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:background="#FFFFFF"
-                    app:srcCompat="@drawable/plus" />
-
+                    android:background="@color/white"
+                    app:srcCompat="@drawable/pencil" />
 
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/lv_tmc_result"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#E0E0E0"
+                android:visibility="visible" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="#E0E0E0"
+                android:visibility="visible" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FFFFFF"
-                android:layout_weight="1" >
+                android:layout_marginBottom="48dp"
+                android:orientation="vertical">
 
-            </ListView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/header_choice_tmc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto_medium"
+                        android:maxLines="1"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="8dp"
+                        android:text="Израсходованные ТМЦ"
+                        android:textColor="#3c3c3c"
+                        android:textSize="16dp" />
+
+                    <ImageButton
+                        android:id="@+id/image_plus"
+                        android:layout_width="96dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="16dp"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        app:srcCompat="@drawable/plus" />
+
+
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/lv_tmc_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF">
+
+                </ListView>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
-    <Button
-        android:id="@+id/put_result_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
 </android.support.constraint.ConstraintLayout>
