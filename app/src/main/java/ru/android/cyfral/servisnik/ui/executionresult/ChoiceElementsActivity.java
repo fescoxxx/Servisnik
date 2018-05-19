@@ -32,6 +32,7 @@ public class ChoiceElementsActivity extends AppCompatActivity {
             .getClient(Constants.HTTP.BASE_URL_REQUEST)
             .create(ServiceApiClient.class);
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,5 +48,10 @@ public class ChoiceElementsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         GetResult getResult = (GetResult) intent.getExtras().getSerializable("currentResult");
         currentResult = getResult;
+        getChoiseElement();
     }
+
+    private void getChoiseElement() {
+    }
+
 }

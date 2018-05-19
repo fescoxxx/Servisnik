@@ -92,9 +92,7 @@ public class ChoiceGroupActivity extends AppCompatActivity {
                         if (!listData.isEmpty()) {
                             for (int i =0; i<listData.size(); i++) {
                                 mAdapter.addData(listData.get(i));
-
                             }
-
                         }
                         lv_choice_group.setAdapter(mAdapter);
 
