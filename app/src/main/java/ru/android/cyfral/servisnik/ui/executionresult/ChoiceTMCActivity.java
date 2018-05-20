@@ -191,6 +191,7 @@ public class ChoiceTMCActivity extends AppCompatActivity {
                             public void onItemClick(AdapterView<?> parent, View view,
                                                     int position, long id) {
 
+                                View convertView =view;
                                 Tmas tmas = new Tmas();
                                 tmas.setId(mAdapter.getItem(position).getId());
                                 tmas.setName(mAdapter.getItem(position).getName());

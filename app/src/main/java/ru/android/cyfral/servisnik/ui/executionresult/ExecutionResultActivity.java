@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -62,6 +63,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
     private Button put_result_button;
     private ImageButton works_result_button;
     private ImageButton choise_tmc_button;
+   // private ImageButton imageclose_execution_result_button;
 
     private GetResult currentResult;
     private GetResult newResult;
@@ -83,6 +85,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         else if (requestCode == 4) {
             if (data == null) {return;}
             currentResult = (GetResult) data.getExtras().getSerializable("currentResult");
+            mAdapter.setCurrentResult(currentResult);
             mAdapter.removeAll();
             for (int i=0; i<currentResult.getData().getTmas().size(); i++) {
                 mAdapter.addItem(currentResult.getData().getTmas().get(i));
@@ -110,6 +113,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         put_result_button = (Button) findViewById(R.id.put_result_button);
         works_result_button = (ImageButton) findViewById(R.id.works_result_button);
         choise_tmc_button = (ImageButton)  findViewById(R.id.choise_tmc_button);
+       // imageclose_execution_result_button = (ImageButton) findViewById(R.id.imageclose_execution_result_button);
         Intent intent = getIntent();
 
         try {
@@ -124,6 +128,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         put_result_button.setOnClickListener(this);
         works_result_button.setOnClickListener(this);
         choise_tmc_button.setOnClickListener(this);
+        //imageclose_execution_result_button.setOnClickListener(this);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -200,6 +205,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                         List<Tmas> listTmas =currentResult.getData().getTmas();
                         mAdapter = new TmcResultAtapter(ExecutionResultActivity.this, currentResult);
                         ListView lv_tmc_result = (ListView) findViewById(R.id.lv_tmc_result);
+
                         if (!listTmas.isEmpty()) {
                             for (int i = 0; i<listTmas.size(); i++) {
                                 mAdapter.addItem(listTmas.get(i));

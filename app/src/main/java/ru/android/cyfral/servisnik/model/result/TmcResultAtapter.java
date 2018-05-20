@@ -30,6 +30,14 @@ public class TmcResultAtapter  extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public GetResult getCurrentResult() {
+        return currentGetResult;
+    }
+
+    public void setCurrentResult(GetResult getResult) {
+        this.currentGetResult = getResult;
+    }
+
     public void addItem(final Tmas tmas) {
         objects.add(tmas);
         notifyDataSetChanged();
@@ -38,8 +46,8 @@ public class TmcResultAtapter  extends BaseAdapter {
         objects.clear();
         notifyDataSetChanged();
     }
-    public void deleteItem(final int position) {
-        objects.remove(position);
+    public void deleteItem(Tmas tm) {
+        objects.remove(tm);
         notifyDataSetChanged();
     }
 
@@ -72,23 +80,16 @@ public class TmcResultAtapter  extends BaseAdapter {
             convertView.findViewById(R.id.imageclose_execution_result_button).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        objects.remove(tmas);
+                        deleteItem(tmas);
                         currentGetResult.getData().getTmas().remove(tmas);
-                        notifyDataSetChanged();
-                        Toast toast2 = Toast.makeText(ctx,
-                                String.valueOf(currentGetResult.getData().getTmas().toArray()), Toast.LENGTH_SHORT);
-                        toast2.show();
                     }
                 });
-
-
-
 
         return convertView;
     }
 
     // по позиции
-    Tmas getTmas(int position) {
+    public Tmas getTmas(int position) {
         return ((Tmas) getItem(position));
     }
 }
