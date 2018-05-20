@@ -166,56 +166,17 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
     @Override
     protected void onResume() {
         super.onResume();
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return  ;
-        }
-
         try {
-            this.longitude = 0.0;
-            this.latitude = 0.0;
-            this.locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
-
-            boolean  isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            boolean  isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-            Log.d("isGPSEnabled", String.valueOf(isGPSEnabled));
-            Log.d("isNetworkEnabled", String.valueOf(isNetworkEnabled));
-            if (forceNetwork) isGPSEnabled = false;
-
-            if (!isNetworkEnabled && !isGPSEnabled)    {
-                // cannot get location
-
-            } else {
-                if (isNetworkEnabled) {
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, (LocationListener) this);
-                    if (locationManager != null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        showLocation(location);
-                    }
-
-                }
-                if (isGPSEnabled)  {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, (LocationListener) this);
-
-                    if (locationManager != null)  {
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        showLocation(location);
-                    }
-                }
-            }} catch (Exception ex) {
-                Log.d("locationManager" , ex.getMessage());
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                1000 * 10, 10, locationListener);
+            locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER, 1000 * 10, 10,
+                    locationListener);
+            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        } catch (SecurityException e) {
+           Log.d("onResume", e.getMessage());
         }
 
-    /*    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000 * 10, 10, locationListener);
-        locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 1000 * 10, 10,
-                locationListener);*/
 
 
         // checkEnabled();
@@ -234,7 +195,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         }
     }
 
-/*    private LocationListener locationListener = new LocationListener() {
+    private LocationListener locationListener = new LocationListener() {
 
         @Override
         public void onLocationChanged(Location location) {
@@ -273,7 +234,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
               //  tvStatusNet.setText("Status: " + String.valueOf(status));
             }
         }
-    };*/
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
