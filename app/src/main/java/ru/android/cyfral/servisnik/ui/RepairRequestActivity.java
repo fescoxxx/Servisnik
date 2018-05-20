@@ -100,7 +100,6 @@ public class RepairRequestActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -319,6 +318,23 @@ public class RepairRequestActivity extends AppCompatActivity {
             }
         }
 
+        public void refreshList() {
+            if (Utils.isNetworkAvailable(getActivity())) {
+                linearNoConnectionInternet.removeView(mTexrView);
+                getFeed();
+            } else {
+                mSwipeRefreshLayout.setRefreshing(false);
+                linearNoConnectionInternet.removeView(mTexrView);
+                mTexrView.setText("Нет доступа к сети.\n" +
+                        "Проверьте, есть ли доступ к Интернет через Ваше мобильное устройство");
+                mTexrView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                mTexrView.setPadding(7,7,7,7);
+                mTexrView.setTextSize(15);
+                linearNoConnectionInternet.addView(mTexrView);
+                getFeedFromDatabase();
+            }
+        }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -329,20 +345,7 @@ public class RepairRequestActivity extends AppCompatActivity {
                 mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        if (Utils.isNetworkAvailable(getActivity())) {
-                            linearNoConnectionInternet.removeView(mTexrView);
-                            getFeed();
-                        } else {
-                            mSwipeRefreshLayout.setRefreshing(false);
-                            linearNoConnectionInternet.removeView(mTexrView);
-                            mTexrView.setText("Нет доступа к сети.\n" +
-                                    "Проверьте, есть ли доступ к Интернет через Ваше мобильное устройство");
-                            mTexrView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                            mTexrView.setPadding(7,7,7,7);
-                            mTexrView.setTextSize(15);
-                            linearNoConnectionInternet.addView(mTexrView);
-                            getFeedFromDatabase();
-                        }
+                        refreshList();
                     }
                 });
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_list);
@@ -358,10 +361,19 @@ public class RepairRequestActivity extends AppCompatActivity {
             if (itemClickListener != null) {
                 Intent intent = new Intent("ru.android.cyfral.servisnik.card");
                 intent.putExtra(Constants.SETTINGS.GUID, data.getId());
-                startActivity(intent);
+                startActivityForResult(intent, 10);
             }
         }
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (data == null) {return;}
+            if(requestCode == 10) {
+                Log.d("onActivityResult_10", "All ok");
+                refreshList();
+            }
 
+
+        }
         @Override
         public void onDeliverAllDatas(List<Data> datas) {
             showRepairRequest(datas, false);

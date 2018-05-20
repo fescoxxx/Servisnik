@@ -179,7 +179,7 @@
                         android:textSize="16dp" />
 
                     <ImageButton
-                        android:id="@+id/choise_tmc_button"
+                        android:id="@+id/image_plus"
                         android:layout_width="96dp"
                         android:layout_height="48dp"
                         android:layout_gravity="center"

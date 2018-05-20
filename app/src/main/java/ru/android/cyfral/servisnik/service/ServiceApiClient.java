@@ -57,7 +57,8 @@ public interface ServiceApiClient {
     //Отправка работ по ЗН
     @PUT("api/repairRequests/{GUID}/result")
     Call<StandartAnswer> putResult(@Body PutResult putResult,
-                                   @Header("Authorization") String token);
+                                   @Header("Authorization") String token,
+                                   @Path("GUID") String GUID);
 
     //Список групп работ
     @GET("api/dictionaries/workGroups")

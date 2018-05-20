@@ -158,6 +158,14 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {return;}
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
     public void onClick(View v) {
         Log.d("onClick", v.toString());
         switch (v.getId()) {
@@ -207,7 +215,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                     if (Utils.isNetworkAvailable(this)) {
                         Intent intent = new Intent("ru.android.cyfral.servisnik.executionresult");
                         intent.putExtra("ordercard", currentOrderCard);
-                        startActivity(intent);
+                        startActivityForResult(intent, 15);
                     } else {
 
                     }

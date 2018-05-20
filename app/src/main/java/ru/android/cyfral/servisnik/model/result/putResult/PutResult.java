@@ -7,9 +7,9 @@ public class PutResult implements Serializable {
 
     private Works works;
     private List<String> TMAs;
-    private Long latitude;
-    private Long longitude;
-    private boolean isClosed;
+    private String latitude;
+    private String longitude;
+    private String isClosed;
 
     public Works getWorks() {
         return works;
@@ -27,27 +27,27 @@ public class PutResult implements Serializable {
         this.TMAs = TMAs;
     }
 
-    public Long getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Long latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public Long getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Long longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
-    public boolean isClosed() {
+    public String isClosed() {
         return isClosed;
     }
 
-    public void setClosed(boolean closed) {
+    public void setClosed(String closed) {
         isClosed = closed;
     }
 }
