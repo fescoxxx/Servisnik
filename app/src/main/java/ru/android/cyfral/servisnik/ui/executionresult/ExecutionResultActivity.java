@@ -237,6 +237,14 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
             Log.d("isGPSEnabled", String.valueOf(isGPSEnabled));
             Log.d("isNetworkEnabled", String.valueOf(isNetworkEnabled));
 
+            if (loadTextPref(Constants.SETTINGS.LATITUDE).equals("") |
+                    loadTextPref(Constants.SETTINGS.LONGITUDE).equals("")) {
+                SharedPreferences myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor ed = myPrefs.edit();
+                ed.putString(Constants.SETTINGS.LATITUDE, "0.0");
+                ed.putString(Constants.SETTINGS.LONGITUDE, "0.0");
+                ed.apply();
+            }
 
 
             if (isNetworkEnabled) {
@@ -379,8 +387,8 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
 
                             putResult.setLatitude(loadTextPref(Constants.SETTINGS.LATITUDE));
                             putResult.setLongitude(loadTextPref(Constants.SETTINGS.LATITUDE));
-                            Log.d("res_log",String.valueOf(latitude));
-                            Log.d("res_log",String.valueOf(longitude));
+                            Log.d("res_log",loadTextPref(Constants.SETTINGS.LATITUDE));
+                            Log.d("res_log",loadTextPref(Constants.SETTINGS.LATITUDE));
                             String token = loadTextPref(Constants.SETTINGS.TOKEN);
                             putResultCall = serviceApiClient.putResult(putResult,"Bearer " + token, guid);
                             putResultCall.enqueue(new Callback<StandartAnswer>() {
