@@ -104,7 +104,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.executionresult.ChoiceTMCActivity" />
+        <activity android:name=".ui.executionresult.ChoiceTMCActivity" >
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.choistmc" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.executionresult.ChoiceGroupActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.choisegroup" />

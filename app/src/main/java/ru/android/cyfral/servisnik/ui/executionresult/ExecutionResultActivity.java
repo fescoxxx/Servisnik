@@ -61,19 +61,34 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
     private TextView type_result;
     private Button put_result_button;
     private ImageButton works_result_button;
+    private ImageButton choise_tmc_button;
 
     private GetResult currentResult;
     private GetResult newResult;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("onActivityResult", "onActivityResultEXE");
-        if (data == null) {return;}
-        GetResult getResult = (GetResult) data.getExtras().getSerializable("currentResult");
-        group_result.setText(getResult.getData().getWorks().getGroup().getName());
-        element_result.setText(getResult.getData().getWorks().getElement().getName());
-        type_result.setText(getResult.getData().getWorks().getType().getName());
-        mAdapter.removeAll();
+        //изменение работ
+        if (requestCode == 1){
+
+            if (data == null) {return;}
+            currentResult = (GetResult) data.getExtras().getSerializable("currentResult");
+            group_result.setText(currentResult.getData().getWorks().getGroup().getName());
+            element_result.setText(currentResult.getData().getWorks().getElement().getName());
+            type_result.setText(currentResult.getData().getWorks().getType().getName());
+            currentResult.getData().getTmas().clear();
+            mAdapter.removeAll();
+        }
+        //выбор ТМЦ
+        else if (requestCode == 4) {
+            if (data == null) {return;}
+            currentResult = (GetResult) data.getExtras().getSerializable("currentResult");
+            mAdapter.removeAll();
+            for (int i=0; i<currentResult.getData().getTmas().size(); i++) {
+                mAdapter.addItem(currentResult.getData().getTmas().get(i));
+            }
+
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +109,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         type_result = (TextView)  findViewById(R.id.type_result);
         put_result_button = (Button) findViewById(R.id.put_result_button);
         works_result_button = (ImageButton) findViewById(R.id.works_result_button);
+        choise_tmc_button = (ImageButton)  findViewById(R.id.choise_tmc_button);
         Intent intent = getIntent();
 
         try {
@@ -107,6 +123,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
             getResult(guid);
         put_result_button.setOnClickListener(this);
         works_result_button.setOnClickListener(this);
+        choise_tmc_button.setOnClickListener(this);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -135,6 +152,12 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                 Intent intent = new Intent("ru.android.cyfral.servisnik.choisegroup");
                 intent.putExtra("currentResult", currentResult);
                 startActivityForResult(intent, 1);
+                break;
+            //Выбор ТМЦ
+            case R.id.choise_tmc_button:
+                Intent intenttmc = new Intent("ru.android.cyfral.servisnik.choistmc");
+                intenttmc.putExtra("currentResult", currentResult);
+                startActivityForResult(intenttmc, 4);
                 break;
         }
 
