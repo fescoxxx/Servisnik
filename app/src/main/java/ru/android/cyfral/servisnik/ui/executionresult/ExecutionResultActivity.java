@@ -2,6 +2,7 @@ package ru.android.cyfral.servisnik.ui.executionresult;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -27,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -84,13 +87,15 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
     private GetResult newResult;
     private LocationManager locationManager;
     Call<StandartAnswer> putResultCall;
-    private final static boolean forceNetwork = false;
+    private static final int PERMISSION_REQUEST = 1;
+    public Location location;
+    Context mContext;
+
     //The minimum distance to change updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 5; // 10 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
 
     //The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;//1000 * 60 * 1; // 1 minute
-    public Location location;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -126,6 +131,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_execution_result);
+        mContext = this;
         mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_execution_result);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar_execution_result);
         setTitle("Результаты выполнения ЗН");
@@ -143,7 +149,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         works_result_button = (ImageButton) findViewById(R.id.works_result_button);
         choise_tmc_button = (ImageButton) findViewById(R.id.choise_tmc_button);
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
 
         Intent intent = getIntent();
 
@@ -159,82 +165,122 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
     @Override
     protected void onPause() {
         super.onPause();
-        //locationManager.removeUpdates(locationListener);
+        try {
+            locationManager.removeUpdates(locationListener);
+        } catch (NullPointerException ex) {}
+
     }
 
+    private void isLocationEnabled() {
 
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            AlertDialog.Builder alertDialog=new AlertDialog.Builder(mContext);
+            alertDialog.setTitle("Геолокация отключена");
+            alertDialog.setMessage("Параметры местоположения не включены. Пожалуйста, включите их в меню настроек.");
+            alertDialog.setPositiveButton("Перейти в настройки", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    Intent intent=new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                }
+            });
+            alertDialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alert=alertDialog.create();
+            alert.show();
+        }
+
+    }
+
+    private LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            latitude=location.getLatitude();
+            longitude=location.getLongitude();
+            SharedPreferences myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor ed = myPrefs.edit();
+            ed.putString(Constants.SETTINGS.LATITUDE, String.valueOf(latitude));
+            ed.putString(Constants.SETTINGS.LONGITUDE, String.valueOf(longitude));
+            ed.apply();
+            String msg="New Latitude: "+latitude + "New Longitude: "+longitude;
+            //Toast.makeText(mContext,msg,Toast.LENGTH_LONG).show();
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            Log.d("loc_", provider);
+        }
+        @Override
+        public void onProviderEnabled(String provider) {
+            Log.d("loc_", provider);
+
+        }
+        @Override
+        public void onProviderDisabled(String provider) {
+            Log.d("loc_", provider);
+        }
+    };
     @Override
     protected void onResume() {
         super.onResume();
-        try {
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                ){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        } else {
+            locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
+            isLocationEnabled();
+            boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            Log.d("isGPSEnabled", String.valueOf(isGPSEnabled));
+            Log.d("isNetworkEnabled", String.valueOf(isNetworkEnabled));
+
+
+
+            if (isNetworkEnabled) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                        10000,
+                        0, locationListener);
+                if (locationManager != null)   {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                }
+            }//end if
+
+            if (isGPSEnabled)  {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                        10000,
+                        0, locationListener);
+
+                if (locationManager != null)  {
+
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    //   latitude = location.getLatitude();
+                    //  longitude = location.getLongitude();
+                }
+            }
+
+        }
+
+
+            /*Log.d("isGPSEnabled", String.valueOf(isGPSEnabled));
+            Log.d("isNetworkEnabled", String.valueOf(isNetworkEnabled));
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000 * 10, 10, locationListener);
+                    1000 * 10, 10, locationListener);
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, 1000 * 10, 10,
                     locationListener);
             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } catch (SecurityException e) {
-           Log.d("onResume", e.getMessage());
-        }
+            showLocation(location);*/
+
+
 
 
 
         // checkEnabled();
     }
 
-    private void showLocation(Location location) {
-        if (location == null)
-            return;
-        if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-        } else if (location.getProvider().equals(
-                LocationManager.NETWORK_PROVIDER)) {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-        }
-    }
-
-    private LocationListener locationListener = new LocationListener() {
-
-        @Override
-        public void onLocationChanged(Location location) {
-            showLocation(location);
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            //   checkEnabled();
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            //  checkEnabled();
-
-            showLocation(locationManager.getLastKnownLocation(provider));
-        }
-
-        private void showLocation(Location location) {
-            if (location == null)
-                return;
-            if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-            } else if (location.getProvider().equals(
-                    LocationManager.NETWORK_PROVIDER)) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-            }
-        }
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            if (provider.equals(LocationManager.GPS_PROVIDER)) {
-               // tvStatusGPS.setText("Status: " + String.valueOf(status));
-            } else if (provider.equals(LocationManager.NETWORK_PROVIDER)) {
-              //  tvStatusNet.setText("Status: " + String.valueOf(status));
-            }
-        }
-    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -331,12 +377,12 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                             }
                             putResult.setTMAs(listtmas);
 
-                            putResult.setLatitude("0.0");
-                            putResult.setLongitude("0.0");
+                            putResult.setLatitude(loadTextPref(Constants.SETTINGS.LATITUDE));
+                            putResult.setLongitude(loadTextPref(Constants.SETTINGS.LATITUDE));
                             Log.d("res_log",String.valueOf(latitude));
                             Log.d("res_log",String.valueOf(longitude));
                             String token = loadTextPref(Constants.SETTINGS.TOKEN);
-/*                            putResultCall = serviceApiClient.putResult(putResult,"Bearer " + token, guid);
+                            putResultCall = serviceApiClient.putResult(putResult,"Bearer " + token, guid);
                             putResultCall.enqueue(new Callback<StandartAnswer>() {
                                 @Override
                                 public void onResponse(Call<StandartAnswer> call, Response<StandartAnswer> response) {
@@ -354,7 +400,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                                 public void onFailure(Call<StandartAnswer> call, Throwable t) {
                                     Log.d("res_log_error", t.toString());
                                 }
-                            });*/
+                            });
 
                         }
                     });
@@ -528,6 +574,5 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                 });
         builder.show();
     }
-
 
 }
