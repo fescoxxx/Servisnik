@@ -15,7 +15,7 @@
 
 
         <TextView
-            android:id="@+id/equipment_title"
+            android:id="@+id/special_subscriber_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
@@ -23,27 +23,20 @@
             android:paddingRight="16dp"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
-            android:text="equipment"
+            android:text="special_subscriber"
             android:textColor="#3c3c3c"
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/equipment_comment"
+            android:id="@+id/special_subscriber_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:paddingLeft="16dp"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
-            android:text="descr"
+            android:text="special_subscriber_comment"
             android:textColor="#8A000000" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_weight="1"
-            android:background="#E0E0E0"
-            android:visibility="visible" />
 
     </LinearLayout>
 

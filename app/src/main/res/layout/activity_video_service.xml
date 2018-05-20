@@ -6,4 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.infoentrance.VideoServiceActivity">
 
+    <ListView
+        android:id="@+id/list_video_service"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:layout_marginTop="8dp"
+        tools:ignore="MissingConstraints" />
+
 </android.support.constraint.ConstraintLayout>

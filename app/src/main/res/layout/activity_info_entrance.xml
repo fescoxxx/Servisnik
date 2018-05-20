@@ -6,4 +6,168 @@
     android:layout_height="match_parent"
     tools:context=".ui.infoentrance.InfoEntranceActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#E0E0E0" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="TextView"
+            android:textColor="#DE000000"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:background="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="TextView"
+            android:textColor="#8A000000" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#E0E0E0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:background="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Дата последних ППР"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:textColor="#DE000000"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:background="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ДАТА"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:textColor="#8A000000"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="8dp"
+            android:background="#E0E0E0" />
+
+
+        <Button
+            android:id="@+id/call_block_button"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingLeft="16dp"
+            android:text="Вызывной блок"
+            android:textAlignment="textStart"
+            android:textSize="16sp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/video_dervice_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingLeft="16dp"
+            android:text="Видеообслуживание"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/access_equipment_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingLeft="16dp"
+            android:text="Получить доступ к оборудованию"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/list_special_subscriber_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingLeft="16dp"
+            android:text="Списки особых абонентов"
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="1"
+        android:background="#154E85"
+        android:fontFamily="@font/roboto_medium"
+        android:text="СООБЩИТЬ О ВЫПОЛНЕНИИ ППР"
+        android:textColor="@android:color/background_light"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

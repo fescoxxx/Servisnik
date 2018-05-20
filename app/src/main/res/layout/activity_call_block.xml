@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.infoentrance.CallBlockActivity">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:layout_marginTop="8dp"/>
+
 </android.support.constraint.ConstraintLayout>

@@ -6,4 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.infoentrance.AccessEquipmentActivity">
 
+    <ListView
+        android:id="@+id/lv_access_equipment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1">
+    </ListView>
+
 </android.support.constraint.ConstraintLayout>
