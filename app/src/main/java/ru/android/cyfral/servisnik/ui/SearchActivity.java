@@ -63,6 +63,7 @@ public class SearchActivity extends AppCompatActivity  implements  RepairRequest
         }*/
     }
 
+
     private void getFeedFromDatabase() {
         mDatabase.fetchDatas(this);
     }
@@ -82,6 +83,12 @@ public class SearchActivity extends AppCompatActivity  implements  RepairRequest
                     searchView.setQuery(text.get(0), true);
                     searchView.requestFocus(SearchView.FOCUS_RIGHT);
                 }
+                break;
+            }
+            case 15: {
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
                 break;
             }
         }
@@ -177,11 +184,13 @@ public class SearchActivity extends AppCompatActivity  implements  RepairRequest
 
     }
 
+
     @Override
     public void onClick(int position) {
         Data selectedData = mRepairRequestAdapter.getSelectedData(position);
         Intent intent = new Intent("ru.android.cyfral.servisnik.card");
         intent.putExtra(Constants.SETTINGS.GUID, selectedData.getId());
-        startActivity(intent);
+        startActivityForResult(intent, 10);
     }
+
 }

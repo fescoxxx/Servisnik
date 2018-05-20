@@ -266,9 +266,6 @@ public class RepairRequestActivity extends AppCompatActivity {
             });
             mRecyclerView.setAdapter(mAdapter);
             mSwipeRefreshLayout.setRefreshing(false);
-
-
-
         }
 
         private void showErrorDialog(String code) {
