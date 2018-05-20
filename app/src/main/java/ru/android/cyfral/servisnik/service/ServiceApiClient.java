@@ -17,6 +17,7 @@ import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
 import ru.android.cyfral.servisnik.model.choicegroup.ChoiseGroup;
 import ru.android.cyfral.servisnik.model.choiseelement.ChoiseElement;
+import ru.android.cyfral.servisnik.model.choisetmc.ChoiseTmc;
 import ru.android.cyfral.servisnik.model.choisetype.ChoiseType;
 import ru.android.cyfral.servisnik.model.repairRequests.RepairRequest;
 import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
@@ -71,6 +72,11 @@ public interface ServiceApiClient {
     @GET("api/dictionaries/workTypes")
     Call<ChoiseType> getChoiseType(@Query("workElement") String GUID,
                                    @Header("Authorization") String token);
+
+    //Выбор ТМЦ
+    @GET("api/dictionaries/TMAs")
+    Call<ChoiseTmc> getChoiseTmc(@Query("workType") String workType,
+                                 @Header("Authorization") String token);
 
 
 }

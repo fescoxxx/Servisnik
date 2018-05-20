@@ -1,6 +1,8 @@
 package ru.android.cyfral.servisnik.model.choicegroup;
 
-public class Errors {
+import java.io.Serializable;
+
+public class Errors implements Serializable {
 
     private String code;
     private String message;

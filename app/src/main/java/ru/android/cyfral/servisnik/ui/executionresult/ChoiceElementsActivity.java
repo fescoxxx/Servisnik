@@ -115,11 +115,6 @@ public class ChoiceElementsActivity extends AppCompatActivity  {
 
     private void loadChoiseElement(){
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
-        Log.d("getChoiseElement", currentResult
-                .getData()
-                .getWorks()
-                .getGroup()
-                .getId());
         getChoiseElement = serviceApiClient
                 .getChoiseElement(
                         currentResult
