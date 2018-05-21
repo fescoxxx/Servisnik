@@ -165,12 +165,15 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         try {
             locationManager.removeUpdates(locationListener);
         } catch (NullPointerException ex) {}
-
     }
-
     private void isLocationEnabled() {
 
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
