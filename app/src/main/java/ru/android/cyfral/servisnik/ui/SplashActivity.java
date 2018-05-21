@@ -53,6 +53,7 @@ public class SplashActivity extends AppCompatActivity {
         progressBar.setVisibility(ProgressBar.VISIBLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Log.d("Splash_log", "Запуск splash");
+        setTitle("");
         checkToken();
     }
 

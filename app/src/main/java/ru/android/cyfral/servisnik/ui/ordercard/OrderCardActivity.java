@@ -22,8 +22,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -248,7 +250,74 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         return sPref.getString(prefStr, "");
     }
 
-    public void getFeed() {
+
+    public static String getFormatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+    }
+
+    private void getFeed() {
+        //mProgressBar.setVisibility(View.INVISIBLE);
+        //mLinearLayout.setVisibility(View.VISIBLE);
+
+        String token = loadTextPref(Constants.SETTINGS.TOKEN);
+        String token_ref = loadTextPref(Constants.SETTINGS.REFRESH_TOKEN);
+        String life_time_token = loadTextPref(Constants.SETTINGS.DATE_TOKEN);
+        if (token.equals("")) {
+            startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+            finish();
+        } else {
+            String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT_NOW);
+            Date date_ltt = null;
+            try {
+                date_ltt = df.parse(life_time_token);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Date date_now = new Date();
+            if (date_now.after(date_ltt)) {
+                Log.d("life_time_date_token4", " Новая дата позже"+date_now.toString() + "      "+ date_ltt.toString());
+                //Токен просрочен, пробуем получить новый
+                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                        "mpservisnik",
+                        "secret",
+                        loadTextPref("token_refresh"));
+                callRedresh.enqueue(new Callback<RefreshToken>() {
+                    @Override
+                    public void onResponse(Call<RefreshToken> call, Response<RefreshToken> response) {
+                        if (response.isSuccessful()) {
+                            SharedPreferences myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor ed = myPrefs.edit();
+                            ed.putString(Constants.SETTINGS.TOKEN,  response.body().getAccess_token());
+                            ed.putString(Constants.SETTINGS.REFRESH_TOKEN,  response.body().getRefresh_token());
+                            Calendar date = Calendar.getInstance();
+                            long t = date.getTimeInMillis();
+                            Date life_time_date_token =
+                                    new Date(t+(Constants.SETTINGS.ONE_SECUNDE_IN_MILLIS
+                                            *Integer.valueOf(response.body().getExpires_in())));
+                            ed.putString(Constants.SETTINGS.DATE_TOKEN, getFormatDate(life_time_date_token));
+                            ed.apply();
+                            loadFeed();
+                        } else {
+                            showErrorDialog(String.valueOf(response.code()));
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<RefreshToken> call, Throwable t) {
+                        showErrorDialog("");
+
+                    }
+                });
+
+            } else {
+                //токен живой
+                loadFeed();
+            }
+        }
+    }
+
+    public void loadFeed() {
         SharedPreferences sPref = getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
         String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
         orderCardCall = serviceApiClient.getOrderCard(guid, "Bearer " + token);
