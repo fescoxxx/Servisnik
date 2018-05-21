@@ -9,7 +9,7 @@
         android:id="@+id/button2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@drawable/button_P"
+        android:background="@drawable/buttonp"
         android:text="1"
         android:textColor="#FFFFFF" />
 </android.support.constraint.ConstraintLayout>
