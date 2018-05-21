@@ -140,6 +140,12 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
                         room
         );
 
+        if(mData.get(position).getIsViewed().equals("true")) {
+            holder.mLine_is_view.setVisibility(View.VISIBLE);
+        } else if(mData.get(position).getIsViewed().equals("false")) {
+            holder.mLine_is_view.setVisibility(View.INVISIBLE);
+        }
+
 
         Date dateToday = new Date();
         Date deadLine = null;
@@ -180,13 +186,14 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mWorks, mCityStreet, mNumberhome, mDateDeadLine;
-
+        private View mLine_is_view;
         public Holder(View itemView) {
             super(itemView);
             mWorks = (TextView) itemView.findViewById(R.id.works);
             mCityStreet = (TextView) itemView.findViewById(R.id.citystreet);
             mNumberhome = (TextView) itemView.findViewById(R.id.numberhome);
             mDateDeadLine = (TextView)  itemView.findViewById(R.id.date_deadline_search);
+            mLine_is_view = (View)  itemView.findViewById(R.id.line_is_view);
             itemView.setOnClickListener(this);
         }
         @Override
