@@ -2,6 +2,7 @@ package ru.android.cyfral.servisnik.ui.executionresult;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -61,6 +62,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
 
     private LinearLayout mLinearLayout;
     private ProgressBar mProgressBar;
+    private ProgressDialog mDialog; //анимация загрузки
     private static Call<GetResult> getResultCall;
     private String guid;
     SharedPreferences sPref;
@@ -359,7 +361,12 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                     ad.setMessage("Вы уверены, что хотите отправить результаты выполнения заказ-наряда?"); // сообщение
                     ad.setPositiveButton("Отправить", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int arg1) {
-
+                            mDialog = new ProgressDialog(ExecutionResultActivity.this);
+                            mDialog.setMessage("Отправка данных...");
+                            mDialog.setCancelable(true);
+                            mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                            mDialog.setIndeterminate(true);
+                            mDialog.show();
                             PutResult putResult = new PutResult();
                             Works works = new Works();
                             works.setGroupID(
@@ -398,17 +405,19 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                                 @Override
                                 public void onResponse(Call<StandartAnswer> call, Response<StandartAnswer> response) {
                                     if (response.isSuccessful()) {
+                                        mDialog.dismiss();
                                         if(response.body().getIsSuccess().equals("true")){
                                             Intent intent = new Intent();
                                             setResult(RESULT_OK, intent);
                                             finish();
                                         } else {
-
+                                            mDialog.dismiss();
                                         }
                                     }
                                 }
                                 @Override
                                 public void onFailure(Call<StandartAnswer> call, Throwable t) {
+                                    mDialog.dismiss();
                                     Log.d("res_log_error", t.toString());
                                 }
                             });
