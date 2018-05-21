@@ -213,7 +213,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     }
 
     public static String toISO8601UTC(Date date) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ");
         return df.format(date);
 
     }
