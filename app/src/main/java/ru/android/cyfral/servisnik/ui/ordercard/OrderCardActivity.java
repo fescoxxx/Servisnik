@@ -172,7 +172,11 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             calendarBeg = new GregorianCalendar(datePicker.getYear(),
                                     datePicker.getMonth(),datePicker.getDayOfMonth(), timePicker.getHour(), timePicker.getMinute());
+                        } else {
+                            calendarBeg = new GregorianCalendar(datePicker.getYear(),
+                                    datePicker.getMonth(),datePicker.getDayOfMonth(), timePicker.getCurrentHour(), timePicker.getCurrentMinute());
                         }
+
                         Date begin=calendarBeg.getTime();
                         SharedPreferences sPref = getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
                         String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
