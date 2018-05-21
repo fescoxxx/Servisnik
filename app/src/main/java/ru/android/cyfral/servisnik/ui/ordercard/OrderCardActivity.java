@@ -1,17 +1,20 @@
 package ru.android.cyfral.servisnik.ui.ordercard;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,14 +24,19 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +44,7 @@ import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchListener;
+import ru.android.cyfral.servisnik.model.OrderCard.AgreedDate;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
@@ -52,6 +61,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private String guid;
     private static Call<OrderCard> orderCardCall;
     private static Call<StandartAnswer> isViewedCall;
+    private static  Call<StandartAnswer> putDateTimeAgreedCall;
     private static DataDatabase mDatabase;
     TokenClient tokenClient = RetrofitClientToken
             .getClient(Constants.HTTP.BASE_URL_TOKEN)
@@ -85,11 +95,13 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private Button equipment_button;
     private Button save_house_button;
     private Button result_execution_button;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_card_);
+        context = OrderCardActivity.this;
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ActionBar actionBar =getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
@@ -136,17 +148,71 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         btn_date_agreed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogAgreed = new Dialog(OrderCardActivity.this);
-                dialogAgreed.setContentView(R.layout.date_time_agreed_picker);
-                dialogAgreed.setTitle("Назначить дату и время");
-                timePicker = (TimePicker) dialogAgreed.findViewById(R.id.timePicker_agreed);
-                datePicker = (DatePicker) dialogAgreed.findViewById(R.id.datePicker_argeed);
+                AlertDialog.Builder ad;
+                ad = new AlertDialog.Builder(context);
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.date_time_agreed_picker,null);
+
+                timePicker = (TimePicker) dialogView.findViewById(R.id.timePicker_agreed);
+                datePicker = (DatePicker) dialogView.findViewById(R.id.datePicker_argeed);
                 timePicker.setIs24HourView(true);
-                dialogAgreed.show();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    timePicker.setMinute(timePicker.getMinute()+6);
+                }
+                ad.setView(dialogView);
+                ad.setTitle("Назначить дату и врем");  // заголовок
+                ad.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+
+                    }
+                });
+                ad.setPositiveButton("Сохранить", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        GregorianCalendar calendarBeg= null;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            calendarBeg = new GregorianCalendar(datePicker.getYear(),
+                                    datePicker.getMonth(),datePicker.getDayOfMonth(), timePicker.getHour(), timePicker.getMinute());
+                        }
+                        Date begin=calendarBeg.getTime();
+                        SharedPreferences sPref = getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
+                        String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
+                        AgreedDate agreedDate = new AgreedDate();
+                        agreedDate.setAgreedDate(toISO8601UTC(begin));
+                        putDateTimeAgreedCall = serviceApiClient.putDateTimeAgreed(guid, agreedDate, "Bearer " + token);
+                        putDateTimeAgreedCall.enqueue(new Callback<StandartAnswer>() {
+                            @Override
+                            public void onResponse(Call<StandartAnswer> call, Response<StandartAnswer> response) {
+                                if(response.isSuccessful()) {
+                                    if (response.body().getIsSuccess().equals("true")) {
+                                        getFeed();
+                                    }
+                                    else {
+                                        showErrorDialog(response.body().getErrors().getCode());
+                                    }
+                                } else {
+                                    showErrorDialog(String.valueOf(response.code()));
+
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<StandartAnswer> call, Throwable t) {
+                                Log.d("StandartAnswer", t.toString());
+                                showErrorDialog("");
+                            }
+                        });
+                    }
+                });
+                ad.show();
             }
         });
     }
 
+    public static String toISO8601UTC(Date date) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+        return df.format(date);
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

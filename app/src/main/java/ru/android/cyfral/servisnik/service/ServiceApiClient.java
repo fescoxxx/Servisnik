@@ -1,5 +1,6 @@
 package ru.android.cyfral.servisnik.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -13,6 +14,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import ru.android.cyfral.servisnik.model.OrderCard.AgreedDate;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
 import ru.android.cyfral.servisnik.model.choicegroup.ChoiseGroup;
@@ -44,10 +46,10 @@ public interface ServiceApiClient {
                                    @Header("Authorization") String token);
 
     //дата согласования
-    @PUT("api/repairRequests/{GUID}/{agreedDate}")
+    @PUT("api/repairRequests/{GUID}/agreedDate")
     Call<StandartAnswer> putDateTimeAgreed(@Path("GUID") String GUID,
-                                           @Path("agreedDate") String agreedDate,
-                                           @Header("Authorization") String token);
+                                         @Body AgreedDate agreedDate,
+                                         @Header("Authorization") String token);
 
     //Результаты работ по ЗН
     @GET("api/repairRequests/{GUID}/result")
