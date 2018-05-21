@@ -65,13 +65,28 @@ public class ContactsAdapter extends BaseAdapter {
             phonesClean.add(contacts.getPhones().get(i).replace("\"", ""));
         }
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createTwoButtonsAlertDialog(contacts.getName() +
-                        " "+ contacts.getMiddleName(),phonesClean);
-            }
-        });
+        if(phonesClean.isEmpty()) {
+            btn.setVisibility(View.INVISIBLE);
+        } else {
+            btn.setVisibility(View.VISIBLE);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    createTwoButtonsAlertDialog(contacts.getName() +
+                            " "+ contacts.getMiddleName(),phonesClean);
+                }
+            });
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    createTwoButtonsAlertDialog(contacts.getName() +
+                            " "+ contacts.getMiddleName(),phonesClean);
+                }
+            });
+        }
+
+
         return view;
     }
 

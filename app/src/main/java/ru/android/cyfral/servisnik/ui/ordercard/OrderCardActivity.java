@@ -45,7 +45,10 @@ import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchListener;
 import ru.android.cyfral.servisnik.model.OrderCard.AgreedDate;
+import ru.android.cyfral.servisnik.model.OrderCard.Contacts;
+import ru.android.cyfral.servisnik.model.OrderCard.InstalledEquipments;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
+import ru.android.cyfral.servisnik.model.OrderCard.SafeHome;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
 import ru.android.cyfral.servisnik.model.Utils;
@@ -457,8 +460,44 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
             }
         });
     }
+
+    private void chehVisibleButton(OrderCard orderCard) {
+
+        List<String> listTmas = orderCard.getData().getTmas();
+        List<Contacts> listContacts = orderCard.getData().getContacts();
+        List<InstalledEquipments> listInstalledEquipments = orderCard.getData().getInstalledEquipments();
+        List<SafeHome> listSafeHome = orderCard.getData().getSafeHome();
+
+        if (listTmas.isEmpty()) {
+            tmc_button.setVisibility(View.INVISIBLE);
+        } else {
+            tmc_button.setVisibility(View.VISIBLE);
+        }
+
+        if(listContacts.isEmpty()) {
+            contacts_button.setVisibility(View.INVISIBLE);
+        } else  {
+            contacts_button.setVisibility(View.VISIBLE);
+        }
+
+        if(listInstalledEquipments.isEmpty()) {
+            equipment_button.setVisibility(View.INVISIBLE);
+        } else {
+            equipment_button.setVisibility(View.VISIBLE);
+        }
+
+        if(listSafeHome.isEmpty()) {
+            save_house_button.setVisibility(View.INVISIBLE);
+        } else {
+            save_house_button.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void showOrderCard(OrderCard orderCard) {
         currentOrderCard = orderCard;
+        chehVisibleButton(currentOrderCard);
+
+
         mProgressBar.setVisibility(View.INVISIBLE);
         mLinearLayout.setVisibility(View.VISIBLE);
         titleActivity = "№ ЗН - " +orderCard.getData().getNumber();

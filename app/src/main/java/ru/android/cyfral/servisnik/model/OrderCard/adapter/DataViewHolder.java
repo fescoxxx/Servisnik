@@ -115,6 +115,9 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
                         floor +
                         apartment +
                         room);
+
+
+
         selectDate = data;
     }
 

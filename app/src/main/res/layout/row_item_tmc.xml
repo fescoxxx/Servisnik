@@ -24,9 +24,7 @@
             android:paddingBottom="5pt"
             android:text="tmc"
             android:textColor="#3c3c3c"
-            android:textSize="16dp"
-            android:maxLines="1"
-            android:ellipsize="end"/>
+            android:textSize="16dp" />
 
         <View
             android:layout_width="match_parent"
