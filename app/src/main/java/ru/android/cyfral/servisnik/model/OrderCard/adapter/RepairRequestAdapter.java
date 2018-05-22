@@ -140,9 +140,9 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
                         room
         );
 
-        if(mData.get(position).getIsViewed().equals("true")) {
+        if(mData.get(position).getIsViewed().equals("false")) {
             holder.mLine_is_view.setVisibility(View.VISIBLE);
-        } else if(mData.get(position).getIsViewed().equals("false")) {
+        } else if(mData.get(position).getIsViewed().equals("true")) {
             holder.mLine_is_view.setVisibility(View.INVISIBLE);
         }
 

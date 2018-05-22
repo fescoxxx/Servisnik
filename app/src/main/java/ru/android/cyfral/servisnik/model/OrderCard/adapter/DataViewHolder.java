@@ -118,9 +118,9 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
                         apartment +
                         room);
 
-        if(data.getIsViewed().equals("true")) {
+        if(data.getIsViewed().equals("false")) {
             mLine_is_view.setVisibility(View.VISIBLE);
-        } else if(data.getIsViewed().equals("false")) {
+        } else if(data.getIsViewed().equals("true")) {
             mLine_is_view.setVisibility(View.INVISIBLE);
         }
 
