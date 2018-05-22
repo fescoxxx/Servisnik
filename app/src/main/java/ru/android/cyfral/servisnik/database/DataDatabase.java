@@ -65,11 +65,8 @@ public class DataDatabase extends SQLiteOpenHelper {
 
         Cursor cursorData = null;
         cursorData = db.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_ORDER_CARD+orderCard.getData().getId()+"' ", null);
-        Log.d("addDataOrderCard", Constants.DATABASE.GET_DATAS_QUERY_ORDER_CARD+orderCard.getData().getId()+"' ");
-        Log.d("cursorData.getCount()", String.valueOf(cursorData.getCount()));
         //запись есть - удаляем
         if (cursorData.getCount() > 0) {
-            Log.d("addDataOrderCard_cur2", Constants.DATABASE.DELETE_DATAS_ORDER_CARD+orderCard.getData().getId()+ "'");
             db.execSQL(Constants.DATABASE.DELETE_DATAS_ORDER_CARD+orderCard.getData().getId()+ "'");
 
         }
@@ -79,7 +76,6 @@ public class DataDatabase extends SQLiteOpenHelper {
             valuesDatas.put(Constants.DATABASE.JSON_ORDER_CARD, orderCard.toString());
             try {
                 db.insert(Constants.DATABASE.TABLE_NAME_ORDER_CARD, null, valuesDatas);
-                Log.d("addDataOrderCard_insert", Constants.DATABASE.TABLE_NAME_ORDER_CARD);
             } catch (Exception e) {
                 Log.d("addDataOrderCard_error", e.fillInStackTrace().toString());
             }
@@ -87,7 +83,7 @@ public class DataDatabase extends SQLiteOpenHelper {
 
     public void addDataRequest(Data data) {
 
-        Log.d(TAG, "Values Got " + data.toString());
+        //Log.d(TAG, "Values Got " + data.toString());
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues valuesDatas = new ContentValues();
@@ -148,7 +144,6 @@ public class DataDatabase extends SQLiteOpenHelper {
             }
             valuesContacts.put(Constants.DATABASE.PHONES,  phones);
             try {
-                Log.d("TABLE_NAME_CONTACTS", Constants.DATABASE.TABLE_NAME_CONTACTS);
                 db.insert(Constants.DATABASE.TABLE_NAME_CONTACTS, null, valuesContacts);
             } catch (Exception e) {
                 Log.d("TABLE_NAME_CONTACTS_ER", Constants.DATABASE.TABLE_NAME_CONTACTS);
@@ -201,9 +196,9 @@ public class DataDatabase extends SQLiteOpenHelper {
                         Gson gson = new Gson();
                         // Convert JSON to Java Object
                         orderCard = gson.fromJson(cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.JSON_ORDER_CARD)), OrderCard.class);
-                        Log.d("orderCard_json_sss", cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.JSON_ORDER_CARD)));
+/*                        Log.d("orderCard_json_sss", cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.JSON_ORDER_CARD)));
                         Log.d("orderCard_json_xxx",orderCard.toString());
-                        Log.d("orderCard_json_xxx_uid",cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.ID_GUID_ORDER_CARD)));
+                        Log.d("orderCard_json_xxx_uid",cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.ID_GUID_ORDER_CARD)));*/
                        // Convert JSON to JsonElement, and later to String
                         publishData(orderCard);
 
@@ -264,7 +259,7 @@ public class DataDatabase extends SQLiteOpenHelper {
                         +Constants.DATABASE.STREET +" desc", null);
             }
 
-            Log.d("Constants.DATABASE",Constants.DATABASE.GET_DATAS_QUERY_FOR_STREET+filtr+"'");
+           // Log.d("Constants.DATABASE",Constants.DATABASE.GET_DATAS_QUERY_FOR_STREET+filtr+"'");
             final List<Data> dataList = new ArrayList<>();
             final List<Contacts> constantsList = new ArrayList<>();
             if (cursorData.getCount() > 0) {
@@ -309,9 +304,9 @@ public class DataDatabase extends SQLiteOpenHelper {
                                     contacts.setType(cursorContacts.getString(cursorContacts.getColumnIndex(Constants.DATABASE.TYPE)));
                                     String[] phones = cursorContacts.getString(cursorContacts.getColumnIndex
                                             (Constants.DATABASE.PHONES)).split(",");
-                                    Log.d("getPOst_number", phones.toString());
+                             //   Log.d("getPOst_number", phones.toString());
                                     List<String> itemListPhone = Arrays.asList(phones);
-                                    Log.d("getPOst_number", itemListPhone.toString());
+                           //         Log.d("getPOst_number", itemListPhone.toString());
                                     contacts.setPhones(itemListPhone);
                                     constantsList.add(contacts);
                                 } while (cursorContacts.moveToNext());
@@ -406,9 +401,9 @@ public class DataDatabase extends SQLiteOpenHelper {
                                     contacts.setType(cursorContacts.getString(cursorContacts.getColumnIndex(Constants.DATABASE.TYPE)));
                                     String[] phones = cursorContacts.getString(cursorContacts.getColumnIndex
                                             (Constants.DATABASE.PHONES)).split(",");
-                                    Log.d("getPOst_number", phones.toString());
+                               //     Log.d("getPOst_number", phones.toString());
                                     List<String> itemListPhone = Arrays.asList(phones);
-                                    Log.d("getPOst_number", itemListPhone.toString());
+                               //     Log.d("getPOst_number", itemListPhone.toString());
                                     contacts.setPhones(itemListPhone);
                                     constantsList.add(contacts);
                                 } while (cursorContacts.moveToNext());

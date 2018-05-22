@@ -396,9 +396,9 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                             putResult.setTMAs(listtmas);
 
                             putResult.setLatitude(loadTextPref(Constants.SETTINGS.LATITUDE));
-                            putResult.setLongitude(loadTextPref(Constants.SETTINGS.LATITUDE));
+                            putResult.setLongitude(loadTextPref(Constants.SETTINGS.LONGITUDE));
                             Log.d("res_log",loadTextPref(Constants.SETTINGS.LATITUDE));
-                            Log.d("res_log",loadTextPref(Constants.SETTINGS.LATITUDE));
+                            Log.d("res_log",loadTextPref(Constants.SETTINGS.LONGITUDE));
                             String token = loadTextPref(Constants.SETTINGS.TOKEN);
                             putResultCall = serviceApiClient.putResult(putResult,"Bearer " + token, guid);
                             putResultCall.enqueue(new Callback<StandartAnswer>() {

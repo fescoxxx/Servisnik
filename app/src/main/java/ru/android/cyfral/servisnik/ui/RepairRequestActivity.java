@@ -81,6 +81,7 @@ public class RepairRequestActivity extends AppCompatActivity {
     private static Call<RepairRequest> repairRequestCall;
     private static Call<OrderCard> orderCardCall;
     private static ProgressDialog mDialog;
+    private static RepairRequestFragment.SaveIntoDatabaseRequest task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +143,7 @@ public class RepairRequestActivity extends AppCompatActivity {
         }
 
         public void getFeed() {
+
             mSwipeRefreshLayout.setRefreshing(true);
             SharedPreferences sPref = getActivity().getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
             String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
@@ -240,8 +242,17 @@ public class RepairRequestActivity extends AppCompatActivity {
                 }
 
                 if (saveDataBase) {
-                    SaveIntoDatabaseRequest task = new SaveIntoDatabaseRequest();
-                    task.execute(data);
+                    try {
+
+                        task = new SaveIntoDatabaseRequest();
+                        task.execute(data);
+                        if (i == mData.size()-1) {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        }
+                    } catch (Exception ex) {
+
+                    }
+
                 }
             }
             RepairRequestCategory one_cat = new RepairRequestCategory("Просроченные ("+overdueData.size()+")", overdueData);
@@ -265,10 +276,11 @@ public class RepairRequestActivity extends AppCompatActivity {
                 }
             });
             mRecyclerView.setAdapter(mAdapter);
-            mSwipeRefreshLayout.setRefreshing(false);
+
         }
 
         private void showErrorDialog(String code) {
+            try{
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Ошибка "+code);
             builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");
@@ -279,6 +291,9 @@ public class RepairRequestActivity extends AppCompatActivity {
                         }
                     });
             builder.show();
+            } catch (java.lang.NullPointerException ex) {
+
+            }
 
         }
         /**
@@ -298,6 +313,7 @@ public class RepairRequestActivity extends AppCompatActivity {
         }
 
         public static class SaveIntoDatabaseRequest extends AsyncTask<Data, Void, Void> {
+
             private final String TAG = SaveIntoDatabaseRequest.class.getSimpleName();
             @Override
             protected void onPreExecute() {
