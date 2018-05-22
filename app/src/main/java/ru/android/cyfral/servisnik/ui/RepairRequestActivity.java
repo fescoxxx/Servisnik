@@ -314,6 +314,7 @@ public class RepairRequestActivity extends AppCompatActivity {
             mDatabase.fetchDatas(this);
         }
 
+        //запись списка в БД
         public static class SaveIntoDatabaseRequest extends AsyncTask<List<Data>, Void, Integer> {
 
             private final String TAG = SaveIntoDatabaseRequest.class.getSimpleName();

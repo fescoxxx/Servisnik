@@ -85,7 +85,6 @@ public class DataDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
       //  Log.d(TAG, "Values Got " + data.size());
         for (int z =0; z<data.size(); z ++) {
-
             ContentValues valuesDatas = new ContentValues();
             //Вставляем Data
             valuesDatas.put(Constants.DATABASE.DATA_ID, data.get(z).getId());
@@ -119,9 +118,6 @@ public class DataDatabase extends SQLiteOpenHelper {
             } catch (Exception ex) {
 
             }
-
-
-
 
             try {
                 db.insert(Constants.DATABASE.TABLE_NAME_DATAS, null, valuesDatas);
