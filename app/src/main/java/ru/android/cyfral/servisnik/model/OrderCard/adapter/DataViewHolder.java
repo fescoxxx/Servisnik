@@ -9,6 +9,7 @@ import ru.android.cyfral.servisnik.model.repairRequests.Data;
 public class DataViewHolder extends ChildViewHolder implements View.OnClickListener {
 
     private TextView mWorks, mCityStreet, mNumberhome;
+    private View mLine_is_view;
     private DataCategoryAdapter.ItemClickListener clickListener;
     private Data selectDate;
     public DataViewHolder(View itemView,
@@ -18,6 +19,7 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
         mWorks = (TextView) itemView.findViewById(R.id.works);
         mCityStreet = (TextView) itemView.findViewById(R.id.citystreet);
         mNumberhome = (TextView) itemView.findViewById(R.id.numberhome);
+        mLine_is_view = (View) itemView.findViewById(R.id.line_is_view_child);
         itemView.setOnClickListener(this); // bind the listener
         this.clickListener = clickListener;
         this.selectDate = selectDate;
@@ -116,6 +118,11 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
                         apartment +
                         room);
 
+        if(data.getIsViewed().equals("true")) {
+            mLine_is_view.setVisibility(View.VISIBLE);
+        } else if(data.getIsViewed().equals("false")) {
+            mLine_is_view.setVisibility(View.INVISIBLE);
+        }
 
 
         selectDate = data;

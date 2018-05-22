@@ -65,7 +65,7 @@
     </LinearLayout>
 
     <View
-    android:id="@+id/line_is_view1"
+    android:id="@+id/line_is_view_child"
     android:layout_width="5dp"
     android:layout_height="match_parent"
     android:layout_weight="1"
