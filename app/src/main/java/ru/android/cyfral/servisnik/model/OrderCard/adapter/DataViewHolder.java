@@ -54,7 +54,7 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
 
         try{
             if (!data.getAddress().getApartment().equals("")) {
-                apartment =  "кв."+ data.getAddress().getApartment();
+                apartment =  "кв."+ data.getAddress().getApartment()+ " ";
             }
         } catch (java.lang.NullPointerException ex) {}
 
