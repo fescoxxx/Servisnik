@@ -139,6 +139,7 @@ public class RepairRequestActivity extends AppCompatActivity {
             super.onDestroy();
             try {repairRequestCall.cancel(); } catch (java.lang.NullPointerException ex) {}
             try {callRedresh.cancel();} catch (java.lang.NullPointerException ex) {}
+            try {mDatabase.close();} catch (Exception ex) {}
 
         }
 
@@ -215,7 +216,9 @@ public class RepairRequestActivity extends AppCompatActivity {
             List<Data> mData = Listdata;
             if (saveDataBase) {
                 Log.d("Delete_db", Listdata.get(0).getAddress().getApartment());
-                mDatabase.clearDataBase();
+                if(mDatabase != null) {
+                    mDatabase.clearDataBase();
+                }
             }
             List<Data> overdueData = new ArrayList<>();
             List<Data> todayData  = new ArrayList<>();
@@ -241,20 +244,19 @@ public class RepairRequestActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                if (saveDataBase) {
-                    try {
+            }
 
-                        task = new SaveIntoDatabaseRequest();
-                        task.execute(data);
-                        if (i == mData.size()-1) {
-                            mSwipeRefreshLayout.setRefreshing(false);
-                        }
-                    } catch (Exception ex) {
+            if (saveDataBase) {
+                try {
 
-                    }
+                    task = new SaveIntoDatabaseRequest();
+                    task.execute(mData);
+                } catch (Exception ex) {
 
                 }
+
             }
+
             RepairRequestCategory one_cat = new RepairRequestCategory("Просроченные ("+overdueData.size()+")", overdueData);
             RepairRequestCategory two_cat = new RepairRequestCategory("Выполнить сегодня ("+todayData.size()+")", todayData);
             RepairRequestCategory tree_cat = new RepairRequestCategory("Более одного дня ("+manyday.size()+")", manyday);
@@ -312,22 +314,32 @@ public class RepairRequestActivity extends AppCompatActivity {
             mDatabase.fetchDatas(this);
         }
 
-        public static class SaveIntoDatabaseRequest extends AsyncTask<Data, Void, Void> {
+        public static class SaveIntoDatabaseRequest extends AsyncTask<List<Data>, Void, Integer> {
 
             private final String TAG = SaveIntoDatabaseRequest.class.getSimpleName();
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                mSwipeRefreshLayout.setRefreshing(true);
             }
             @Override
-            protected Void doInBackground(Data... params) {
-                Data data = params[0];
+            protected Integer doInBackground(List<Data>... params) {
+                List<Data> data = params[0];
                 try {
-                    mDatabase.addDataRequest(data);
+                    if (mDatabase != null) {
+                        mDatabase.addDataRequest(data);
+                    }
                 } catch (Exception e) {
-                    Log.d(TAG, e.getMessage());
+                    return 1;
                 }
-                return null;
+                return 1;
+            }
+            @Override
+            protected void onPostExecute(Integer result) {
+                super.onPostExecute(result);
+                if (result == 1) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         }
 

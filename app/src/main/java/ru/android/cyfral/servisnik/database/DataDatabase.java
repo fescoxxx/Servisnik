@@ -81,76 +81,87 @@ public class DataDatabase extends SQLiteOpenHelper {
             }
     }
 
-    public void addDataRequest(Data data) {
-
-        //Log.d(TAG, "Values Got " + data.toString());
-
+    public void addDataRequest(List<Data> data) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues valuesDatas = new ContentValues();
-        //Вставляем Data
-        valuesDatas.put(Constants.DATABASE.DATA_ID, data.getId());
-        valuesDatas.put(Constants.DATABASE.BUILDING, data.getAddress().getBuilding());
-        valuesDatas.put(Constants.DATABASE.FLOOR, data.getAddress().getFloor());
-        valuesDatas.put(Constants.DATABASE.LETTER, data.getAddress().getLetter());
-        valuesDatas.put(Constants.DATABASE.CITYTYPE, data.getAddress().getCityType());
-        valuesDatas.put(Constants.DATABASE.STREET, data.getAddress().getStreet());
-        valuesDatas.put(Constants.DATABASE.APARTMENT, data.getAddress().getApartment());
-        valuesDatas.put(Constants.DATABASE.NUMBER, data.getAddress().getNumber());
-        valuesDatas.put(Constants.DATABASE.STREETTYPE, data.getAddress().getStreetType());
-        valuesDatas.put(Constants.DATABASE.ENTRANCE, data.getAddress().getEntrance());
-        valuesDatas.put(Constants.DATABASE.ROOM, data.getAddress().getRoom());
-        valuesDatas.put(Constants.DATABASE.CITY, data.getAddress().getCity());
-        valuesDatas.put(Constants.DATABASE.ISVIEWED, data.getIsViewed());
-        valuesDatas.put(Constants.DATABASE.NUMBER_, data.getNumber());
-        valuesDatas.put(Constants.DATABASE.DEADLINE, data.getDeadline());
-        valuesDatas.put(Constants.DATABASE.ELEMENT, data.getWorks().getElement());
-        valuesDatas.put(Constants.DATABASE.TYPE_WORKS, data.getWorks().getType());
-        valuesDatas.put(Constants.DATABASE.GROUP, data.getWorks().getGroup());
+      //  Log.d(TAG, "Values Got " + data.size());
+        for (int z =0; z<data.size(); z ++) {
 
-        String phonesForSearch = "";
+            ContentValues valuesDatas = new ContentValues();
+            //Вставляем Data
+            valuesDatas.put(Constants.DATABASE.DATA_ID, data.get(z).getId());
+            valuesDatas.put(Constants.DATABASE.BUILDING, data.get(z).getAddress().getBuilding());
+            valuesDatas.put(Constants.DATABASE.FLOOR, data.get(z).getAddress().getFloor());
+            valuesDatas.put(Constants.DATABASE.LETTER, data.get(z).getAddress().getLetter());
+            valuesDatas.put(Constants.DATABASE.CITYTYPE, data.get(z).getAddress().getCityType());
+            valuesDatas.put(Constants.DATABASE.STREET, data.get(z).getAddress().getStreet());
+            valuesDatas.put(Constants.DATABASE.APARTMENT, data.get(z).getAddress().getApartment());
+            valuesDatas.put(Constants.DATABASE.NUMBER, data.get(z).getAddress().getNumber());
+            valuesDatas.put(Constants.DATABASE.STREETTYPE, data.get(z).getAddress().getStreetType());
+            valuesDatas.put(Constants.DATABASE.ENTRANCE, data.get(z).getAddress().getEntrance());
+            valuesDatas.put(Constants.DATABASE.ROOM, data.get(z).getAddress().getRoom());
+            valuesDatas.put(Constants.DATABASE.CITY, data.get(z).getAddress().getCity());
+            valuesDatas.put(Constants.DATABASE.ISVIEWED, data.get(z).getIsViewed());
+            valuesDatas.put(Constants.DATABASE.NUMBER_, data.get(z).getNumber());
+            valuesDatas.put(Constants.DATABASE.DEADLINE, data.get(z).getDeadline());
+            valuesDatas.put(Constants.DATABASE.ELEMENT, data.get(z).getWorks().getElement());
+            valuesDatas.put(Constants.DATABASE.TYPE_WORKS, data.get(z).getWorks().getType());
+            valuesDatas.put(Constants.DATABASE.GROUP, data.get(z).getWorks().getGroup());
 
-        try {
-            for (int i0=0; i0 <data.getContacts().size(); i0++) {
-                for(int i1 = 0; i1 < data.getContacts().get(i0).getPhones().size(); i1++) {
-                    phonesForSearch = phonesForSearch + ","+data.getContacts().get(i0).getPhones().get(i1);
-                }
-            }
-        } catch (Exception ex) {}
+            String phonesForSearch = "";
 
-        valuesDatas.put(Constants.DATABASE.PHONEFORSEARCH, phonesForSearch);
-
-
-        try {
-            db.insert(Constants.DATABASE.TABLE_NAME_DATAS, null, valuesDatas);
-        } catch (Exception e) {
-            Log.d("TABLE_NAME_DATAS_error", Constants.DATABASE.TABLE_NAME_DATAS);
-        }
-
-        //Вставляем контакты
-        for (int i = 0; i< data.getContacts().size(); i++) {
-            ContentValues valuesContacts = new ContentValues();
-            valuesContacts.put(Constants.DATABASE.CONTACTS_ID,  data.getId());
-            valuesContacts.put(Constants.DATABASE.MIDDLENAME,  data.getContacts().get(i).getMiddleName());
-            valuesContacts.put(Constants.DATABASE.NAME,  data.getContacts().get(i).getName());
-            valuesContacts.put(Constants.DATABASE.FAMILYNAME,  data.getContacts().get(i).getFamilyName());
-            valuesContacts.put(Constants.DATABASE.TYPE,  data.getContacts().get(i).getType());
-            String phones = "";
-            for (int x=0; x<data.getContacts().get(i).getPhones().size(); x++) {
-                if (x == 0) {
-                    phones = data.getContacts().get(i).getPhones().get(x);
-                } else {
-                    phones = phones + "," + data.getContacts().get(i).getPhones().get(x);
-                }
-            }
-            valuesContacts.put(Constants.DATABASE.PHONES,  phones);
             try {
-                db.insert(Constants.DATABASE.TABLE_NAME_CONTACTS, null, valuesContacts);
+                for (int i0=0; i0 <data.get(z).getContacts().size(); i0++) {
+                    for(int i1 = 0; i1 < data.get(z).getContacts().get(i0).getPhones().size(); i1++) {
+                        phonesForSearch = phonesForSearch + ","+data.get(z).getContacts().get(i0).getPhones().get(i1);
+                    }
+                }
+                valuesDatas.put(Constants.DATABASE.PHONEFORSEARCH, phonesForSearch);
+            } catch (Exception ex) {
+
+            }
+
+
+
+
+            try {
+                db.insert(Constants.DATABASE.TABLE_NAME_DATAS, null, valuesDatas);
             } catch (Exception e) {
-                Log.d("TABLE_NAME_CONTACTS_ER", Constants.DATABASE.TABLE_NAME_CONTACTS);
+                Log.d("TABLE_NAME_DATAS_error", Constants.DATABASE.TABLE_NAME_DATAS);
+            }
+
+            //Вставляем контакты
+            try {
+
+                for (int i = 0; i< data.get(z).getContacts().size(); i++) {
+                    ContentValues valuesContacts = new ContentValues();
+                    valuesContacts.put(Constants.DATABASE.CONTACTS_ID,  data.get(z).getId());
+                    valuesContacts.put(Constants.DATABASE.MIDDLENAME,  data.get(z).getContacts().get(i).getMiddleName());
+                    valuesContacts.put(Constants.DATABASE.NAME,  data.get(z).getContacts().get(i).getName());
+                    valuesContacts.put(Constants.DATABASE.FAMILYNAME,  data.get(z).getContacts().get(i).getFamilyName());
+                    valuesContacts.put(Constants.DATABASE.TYPE,  data.get(z).getContacts().get(i).getType());
+                    String phones = "";
+                    for (int x=0; x<data.get(z).getContacts().get(i).getPhones().size(); x++) {
+                        if (x == 0) {
+                            phones = data.get(z).getContacts().get(i).getPhones().get(x);
+                        } else {
+                            phones = phones + "," + data.get(z).getContacts().get(i).getPhones().get(x);
+                        }
+                    }
+                    valuesContacts.put(Constants.DATABASE.PHONES,  phones);
+                    try {
+                        db.insert(Constants.DATABASE.TABLE_NAME_CONTACTS, null, valuesContacts);
+                    } catch (Exception e) {
+                        Log.d("TABLE_NAME_CONTACTS_ER", Constants.DATABASE.TABLE_NAME_CONTACTS);
+                    }
+
+                }
+            } catch (Exception ex) {
+                Log.d("CONTACT", "Отсутсвует контакт");
             }
 
         }
-        db.close();
+
+       // db.close();
     }
 
 
