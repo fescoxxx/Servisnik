@@ -163,7 +163,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                     timePicker.setMinute(timePicker.getMinute()+6);
                 }
                 ad.setView(dialogView);
-                ad.setTitle("Назначить дату и врем");  // заголовок
+                ad.setTitle("Назначить дату и время");  // заголовок
                 ad.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
 
