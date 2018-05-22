@@ -25,7 +25,6 @@
         android:id="@+id/imageclose_execution_result_button"
         android:layout_width="96dp"
         android:layout_height="48dp"
-        android:layout_marginRight="16dp"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:background="#FFFFFF"
