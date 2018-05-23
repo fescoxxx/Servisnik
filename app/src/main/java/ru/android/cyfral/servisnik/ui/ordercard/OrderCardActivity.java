@@ -469,27 +469,27 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         List<SafeHome> listSafeHome = orderCard.getData().getSafeHome();
 
         if (listTmas.isEmpty()) {
-            tmc_button.setVisibility(View.INVISIBLE);
+            tmc_button.setVisibility(View.GONE);
         } else {
-            tmc_button.setVisibility(View.VISIBLE);
+          //  tmc_button.setVisibility(View.VISIBLE);
         }
 
         if(listContacts.isEmpty()) {
-            contacts_button.setVisibility(View.INVISIBLE);
+            contacts_button.setVisibility(View.GONE);
         } else  {
-            contacts_button.setVisibility(View.VISIBLE);
+          //  contacts_button.setVisibility(View.VISIBLE);
         }
 
         if(listInstalledEquipments.isEmpty()) {
-            equipment_button.setVisibility(View.INVISIBLE);
+            equipment_button.setVisibility(View.GONE);
         } else {
-            equipment_button.setVisibility(View.VISIBLE);
+           // equipment_button.setVisibility(View.VISIBLE);
         }
 
         if(listSafeHome.isEmpty()) {
-            save_house_button.setVisibility(View.INVISIBLE);
+            save_house_button.setVisibility(View.GONE);
         } else {
-            save_house_button.setVisibility(View.VISIBLE);
+            //save_house_button.setVisibility(View.VISIBLE);
         }
     }
 
