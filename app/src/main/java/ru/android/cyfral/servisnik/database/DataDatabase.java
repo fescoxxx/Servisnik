@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.model.Constants;
+import ru.android.cyfral.servisnik.model.DataFetchInfoEntranceListener;
 import ru.android.cyfral.servisnik.model.DataFetchListener;
 import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
@@ -87,6 +88,7 @@ public class DataDatabase extends SQLiteOpenHelper {
             Log.d("TABLE_INFO_ENTRANCE", e.fillInStackTrace().toString());
         }
     }
+
 
     //сохранние в БД одного объекта ORDER CARD
     public void addDataOrderCard(OrderCard orderCard) {
@@ -197,6 +199,12 @@ public class DataDatabase extends SQLiteOpenHelper {
         fetcher.start();
     }
 
+    //получение объета INFO ENTRANCE по ID
+    public void fethcDatasForInfoEntrance() {
+
+
+    }
+
 
     //получение списка repair request с фильтром
     public void fetchDatasForFiltr(DataFetchListener listener, String filtr, String filtrType) {
@@ -210,6 +218,56 @@ public class DataDatabase extends SQLiteOpenHelper {
         fetcher.start();
     }
 
+    public class DataFetcherInfoEntrance extends Thread {
+        DataFetchInfoEntranceListener mListener;
+        private final SQLiteDatabase mDb;
+        private String guid = "";
+
+        public DataFetcherInfoEntrance(DataFetchInfoEntranceListener listener, SQLiteDatabase db, String guid) {
+            mListener = listener;
+            mDb = db;
+            this.guid = guid;
+        }
+        @Override
+        public void run(){
+            Cursor cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_INFO_ENTRANCE+guid+"'", null);
+            InfoEntrance infoEntrance = new InfoEntrance();
+            if (cursorData.getCount() > 0) {
+                if (cursorData.getCount() > 0) {
+                    if (cursorData.moveToFirst()) {
+                        do {
+                            Gson gson = new Gson();
+                            // Convert JSON to Java Object
+                            infoEntrance = gson.fromJson(cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.JSON_INFO_ENTRANCE)), InfoEntrance.class);
+                            // Convert JSON to JsonElement, and later to String
+                            publishData(infoEntrance);
+
+                        } while (cursorData.moveToNext());
+                    }
+                }
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //      mListener.onDeliverAllDatas(dataList);
+                        //       mListener.onHideDialog();
+                    }
+                });
+            }
+        }
+        public void publishData(final InfoEntrance data) {
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mListener.onDeliverData(data);
+                }
+            });
+        }
+    }
+
+
+    //палучение объекта ORDER CARD
     public class DataFetcherForOrderCard extends Thread {
 
         private final DataFetchListener mListener;
