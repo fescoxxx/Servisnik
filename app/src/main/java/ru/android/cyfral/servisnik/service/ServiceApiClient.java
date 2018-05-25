@@ -14,6 +14,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.OrderCard.AgreedDate;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
@@ -80,6 +81,11 @@ public interface ServiceApiClient {
     @GET("api/dictionaries/TMAs")
     Call<ChoiseTmc> getChoiseTmc(@Query("workType") String workType,
                                  @Header("Authorization") String token);
+
+    //Получить инфориацию о подъезде
+    @GET("/api/entrances/{GUID}")
+    Call<InfoEntrance> getInfoEntrance(@Path("GUID") String GUID,
+                                       @Header("Authorization") String token);
 
 
 }

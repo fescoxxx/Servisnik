@@ -34,7 +34,7 @@
             android:background="#E0E0E0" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/header_sity_info_entrance"
             android:background="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/decr_home_info_entrance"
             android:background="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/date_ppr_text"
                 android:background="#FFFFFF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
