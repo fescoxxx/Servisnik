@@ -30,6 +30,6 @@ public class SpecialApartments implements Serializable {
     @Override
     public String toString()
     {
-        return "ClassPojo [body = "+body+", title = "+title+"]";
+        return "{\"body\" : "+"\""+body+"\""+", \"title\" : "+"\""+title+"\""+"}";
     }
 }

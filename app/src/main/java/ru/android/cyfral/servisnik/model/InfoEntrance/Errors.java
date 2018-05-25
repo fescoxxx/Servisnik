@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Errors implements Serializable {
 
     private String code;
-    private String message;
+    private String message; //
     private String description;
 
     public String getCode() {

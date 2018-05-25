@@ -102,6 +102,6 @@ public class Address implements Serializable {
     @Override
     public String toString()
     {
-        return "ClassPojo [building = "+building+", letter = "+letter+", cityType = "+cityType+", street = "+street+", number = "+number+", streetType = "+streetType+", entrance = "+entrance+", city = "+city+"]";
+        return "{\"building\" : "+"\""+building+"\""+", \"letter\" : "+"\""+letter+"\""+", \"cityType\" : "+"\""+cityType+"\""+", \"street\" : "+"\""+street+"\""+", \"number\" : "+"\""+number+"\""+", \"streetType\" : "+"\""+streetType+"\""+", \"entrance\" : "+"\""+entrance+"\""+", \"city\" : "+"\""+city+"\""+"}";
     }
 }
