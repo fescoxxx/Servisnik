@@ -19,6 +19,7 @@ import java.util.List;
 
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchListener;
+import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.repairRequests.Address;
 import ru.android.cyfral.servisnik.model.repairRequests.Contacts;
@@ -33,38 +34,67 @@ public class DataDatabase extends SQLiteOpenHelper {
         super(context, Constants.DATABASE.DB_NAME, null, Constants.DATABASE.DB_VERSION);
     }
 
+    //создание БД
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         try {
             sqLiteDatabase.execSQL(Constants.DATABASE.CREATE_TABLE_QUERY_DATAS);
             sqLiteDatabase.execSQL(Constants.DATABASE.CREATE_TABLE_QUERY_CONTACST);
             sqLiteDatabase.execSQL(Constants.DATABASE.CREATE_TABLE_QUERY_ORDER_CARD);
+            sqLiteDatabase.execSQL(Constants.DATABASE.CREATE_TABLE_QUERY_INFO_ENTRANCE);
         } catch (SQLException ex) {
             Log.d(TAG, ex.getMessage());
         }
     }
 
+    //обновление БД
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL(Constants.DATABASE.DROP_QUERY_DATAS);
         sqLiteDatabase.execSQL(Constants.DATABASE.DROP_QUERY_CONTACTS);
         sqLiteDatabase.execSQL(Constants.DATABASE.DROP_QUERY_ORDER_CARD);
+        sqLiteDatabase.execSQL(Constants.DATABASE.DROP_QUERY_INFO_ENTRANCE);
         this.onCreate(sqLiteDatabase);
     }
 
+    //Отчистка БД
     public void clearDataBase() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(Constants.DATABASE.DROP_QUERY_DATAS);
         db.execSQL(Constants.DATABASE.DROP_QUERY_CONTACTS);
         db.execSQL(Constants.DATABASE.DROP_QUERY_ORDER_CARD);
+        db.execSQL(Constants.DATABASE.DROP_QUERY_INFO_ENTRANCE);
         this.onCreate(db);
     }
 
+    //сохранение в БД одного объекта InfoEntrance
+    public void addDataInfoEntrance(InfoEntrance infoEntrance) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursorData = null;
+        cursorData = db.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_INFO_ENTRANCE
+                +infoEntrance.getData().getId()+"' ", null);
+        //Если запись есть - удаляем
+        if (cursorData.getCount() > 0) {
+            db.execSQL(Constants.DATABASE.DELETE_DATAS_INFO_ENTRANCE+infoEntrance.getData().getId()+ "'");
+        }
+        //записи нет - создаем
+        ContentValues valuesDatas = new ContentValues();
+        valuesDatas.put(Constants.DATABASE.ID_GUID_INFO_ENTRANCE, infoEntrance.getData().getId());
+        valuesDatas.put(Constants.DATABASE.JSON_INFO_ENTRANCE, infoEntrance.toString());
+        try {
+            db.insert(Constants.DATABASE.TABLE_NAME_INFO_ENTRANCE, null, valuesDatas);
+        } catch (Exception e) {
+            Log.d("TABLE_INFO_ENTRANCE", e.fillInStackTrace().toString());
+        }
+    }
+
+    //сохранние в БД одного объекта ORDER CARD
     public void addDataOrderCard(OrderCard orderCard) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor cursorData = null;
-        cursorData = db.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_ORDER_CARD+orderCard.getData().getId()+"' ", null);
+        cursorData = db.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_ORDER_CARD
+                +orderCard.getData().getId()+"' ", null);
         //запись есть - удаляем
         if (cursorData.getCount() > 0) {
             db.execSQL(Constants.DATABASE.DELETE_DATAS_ORDER_CARD+orderCard.getData().getId()+ "'");
@@ -77,10 +107,11 @@ public class DataDatabase extends SQLiteOpenHelper {
             try {
                 db.insert(Constants.DATABASE.TABLE_NAME_ORDER_CARD, null, valuesDatas);
             } catch (Exception e) {
-                Log.d("addDataOrderCard_error", e.fillInStackTrace().toString());
+                Log.d("TABLE_ORDER_CARD", e.fillInStackTrace().toString());
             }
     }
 
+    //Сохранения всего списка Request Query
     public void addDataRequest(List<Data> data) {
         SQLiteDatabase db = this.getWritableDatabase();
       //  Log.d(TAG, "Values Got " + data.size());
@@ -160,19 +191,20 @@ public class DataDatabase extends SQLiteOpenHelper {
        // db.close();
     }
 
-
+    //получение объекта Order CArd по ID
     public void fetchDatasForOrderCard(DataFetchListener listener, String guid) {
         DataFetcherForOrderCard fetcher = new DataFetcherForOrderCard(listener, this.getWritableDatabase(), guid);
         fetcher.start();
     }
 
 
+    //получение списка repair request с фильтром
     public void fetchDatasForFiltr(DataFetchListener listener, String filtr, String filtrType) {
         DataFetcherForFiltr fetcher = new DataFetcherForFiltr(listener, this.getWritableDatabase(), filtr, filtrType);
         fetcher.start();
     }
 
-
+    //получение кешированного списка Repair Request для главного экрана список ЗН
     public void fetchDatas(DataFetchListener listener) {
         DataFetcher fetcher = new DataFetcher(listener, this.getWritableDatabase());
         fetcher.start();

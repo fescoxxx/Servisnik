@@ -17,10 +17,12 @@ public class Constants {
         public static final String TABLE_NAME_DATAS = "data";
         public static final String TABLE_NAME_CONTACTS = "contacts";
         public static final String TABLE_NAME_ORDER_CARD = "order_card";
+        public static final String TABLE_NAME_INFO_ENTRANCE = "info_entrance";
 
         public static final String DROP_QUERY_DATAS = "DROP TABLE IF EXISTS " + TABLE_NAME_DATAS;
         public static final String DROP_QUERY_CONTACTS = "DROP TABLE IF EXISTS " + TABLE_NAME_CONTACTS;
         public static final String DROP_QUERY_ORDER_CARD = "DROP TABLE IF EXISTS " + TABLE_NAME_ORDER_CARD;
+        public static final String DROP_QUERY_INFO_ENTRANCE = "DROP TABLE IF EXISTS " + TABLE_NAME_INFO_ENTRANCE;
 
         public static final String GET_DATAS_QUERY = "SELECT * FROM " + TABLE_NAME_DATAS;
 
@@ -60,24 +62,43 @@ public class Constants {
         public static final String PHONES = "phones";
 
 
-        //OrderCard
+        //Order Card
         public static final String ID_GUID_ORDER_CARD = "id_guid";
         public static final String JSON_ORDER_CARD = "json_body";
 
+        //Info Entrance
+        public static final String ID_GUID_INFO_ENTRANCE = "id_guid";
+        public static final String JSON_INFO_ENTRANCE = "json_body";
 
+        //создание таблицы для Info Entrance
+        public static final String CREATE_TABLE_QUERY_INFO_ENTRANCE = "CREATE TABLE "
+                + TABLE_NAME_INFO_ENTRANCE
+                + "(" + ID_GUID_INFO_ENTRANCE+" TEXT, " +
+                " " +JSON_INFO_ENTRANCE+" TEXT)";
+
+        //создание таблицы для Order Card
         public static final String CREATE_TABLE_QUERY_ORDER_CARD = "CREATE TABLE "
                 + TABLE_NAME_ORDER_CARD
                 + "(" + ID_GUID_ORDER_CARD+" TEXT, " +
                 " " +JSON_ORDER_CARD+" TEXT)";
 
+        //получить объект Order Card по ID
         public static final String GET_DATAS_QUERY_ORDER_CARD = "SELECT * FROM "+TABLE_NAME_ORDER_CARD+" where "+ID_GUID_ORDER_CARD+ " like '";
+
+        //получить объект Info Entrance по ID
+        public static final String GET_DATAS_QUERY_INFO_ENTRANCE = "SELECT * FROM "+TABLE_NAME_INFO_ENTRANCE+" where "+ID_GUID_INFO_ENTRANCE+ " like '";
 
         public static final String GET_CONTACTS_QUERY = "SELECT * FROM " + TABLE_NAME_CONTACTS + " WHERE "+CONTACTS_ID+" like '";
         public static final String GET_DATAS_QUERY_FOR_STREET = "SELECT * FROM " + TABLE_NAME_DATAS + " where "+STREET+ " like '%";
         public static final String GET_DATAS_QUERY_FOR_PHONE = "SELECT * FROM " + TABLE_NAME_DATAS + " where "+PHONEFORSEARCH+ " like '%";
         public static final String GET_DATAS_QUERY_FOR_NUMBER_ZN = "SELECT * FROM " + TABLE_NAME_DATAS + " where "+NUMBER_+ " like '%";
 
+        //удаление объекта ORDER CARD
         public static final String DELETE_DATAS_ORDER_CARD = "DELETE FROM "+TABLE_NAME_ORDER_CARD + " where "+ID_GUID_ORDER_CARD + " like '";
+
+        //удаление объекта INFO ENTRANCE
+        public static final String DELETE_DATAS_INFO_ENTRANCE = "DELETE FROM "+TABLE_NAME_INFO_ENTRANCE + " where "+ID_GUID_INFO_ENTRANCE + " like '";
+
 
         public static final String CREATE_TABLE_QUERY_DATAS = "CREATE TABLE " + TABLE_NAME_DATAS + "" +
                 "(" + DATA_ID + " TEXT," +
