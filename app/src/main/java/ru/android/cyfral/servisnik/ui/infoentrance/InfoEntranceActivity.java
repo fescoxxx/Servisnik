@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,17 +25,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.android.cyfral.servisnik.R;
+import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
+import ru.android.cyfral.servisnik.model.DataFetchInfoEntranceListener;
 import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
+import ru.android.cyfral.servisnik.model.Utils;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 
 
-public class InfoEntranceActivity extends AppCompatActivity {
+public class InfoEntranceActivity extends AppCompatActivity implements DataFetchInfoEntranceListener {
     private ProgressBar mProgressBar;
     private OrderCard currentOrderCard;
     private SharedPreferences sPref;
@@ -43,6 +47,9 @@ public class InfoEntranceActivity extends AppCompatActivity {
     private TextView date_ppr_text; //дата ппр
     private TextView header_sity_info_entrance; //город улица
     private TextView decr_home_info_entrance; //дом литера крвартира
+    private String guid;
+
+    private static DataDatabase mDatabase; //База данных
 
     TokenClient tokenClient = RetrofitClientToken
             .getClient(Constants.HTTP.BASE_URL_TOKEN)
@@ -63,6 +70,8 @@ public class InfoEntranceActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        mDatabase = new DataDatabase(this);
+
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar_info_entrance);
         mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_info_entrance);
         ppr_ok_button = (Button) findViewById(R.id.ppr_ok_button);
@@ -76,8 +85,23 @@ public class InfoEntranceActivity extends AppCompatActivity {
         Intent intent = getIntent();
         OrderCard orderCard = (OrderCard) intent.getExtras().getSerializable("ordercard");
         currentOrderCard = orderCard;
-        getInfoEntrance();
+        guid = currentOrderCard.getData().getEntranceId(); //текущай guid
 
+        if (Utils.isNetworkAvailable(this)) {
+            getInfoEntrance();
+        } else {
+            getInfoEntranceDataBase();
+        }
+
+    }
+
+    private void getInfoEntranceDataBase() {
+        mDatabase.fethcDatasForInfoEntrance(this, guid);
+        try {
+            mProgressBar.setVisibility(View.INVISIBLE);
+            mLinearLayout.setVisibility(View.VISIBLE);
+            ppr_ok_button.setVisibility(View.VISIBLE);
+        } catch (java.lang.NullPointerException ex) {}
     }
 
     private void getInfoEntrance() {
@@ -226,6 +250,9 @@ public class InfoEntranceActivity extends AppCompatActivity {
                         //корректное получение объекта
                         InfoEntrance currentInfoEntrance = response.body();
                         showInfoEntrance(currentInfoEntrance);
+                        //сохранение объекта в БД
+                        SaveIntoDatabaseOdrerCard task = new SaveIntoDatabaseOdrerCard();
+                        task.execute(currentInfoEntrance);
                     } else {
                         //сервер вернул ошибку от АПИ
                         mProgressBar.setVisibility(View.INVISIBLE);
@@ -284,6 +311,29 @@ public class InfoEntranceActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onDeliverData(InfoEntrance infoEntrance) {
+        showInfoEntrance(infoEntrance);
+    }
+
+    public static class SaveIntoDatabaseOdrerCard extends AsyncTask<InfoEntrance, Void, Void> {
+        private final String TAG = SaveIntoDatabaseOdrerCard.class.getSimpleName();
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override
+        protected Void doInBackground(InfoEntrance... params) {
+            InfoEntrance infoEntrance = params[0];
+            try {
+                mDatabase.addDataInfoEntrance(infoEntrance);
+            } catch (Exception e) {
+                Log.d(TAG, e.getMessage());
+            }
+            return null;
         }
     }
 }

@@ -200,9 +200,9 @@ public class DataDatabase extends SQLiteOpenHelper {
     }
 
     //получение объета INFO ENTRANCE по ID
-    public void fethcDatasForInfoEntrance() {
-
-
+    public void fethcDatasForInfoEntrance(DataFetchInfoEntranceListener listener,String guid) {
+        DataFetcherInfoEntrance fetcher = new DataFetcherInfoEntrance(listener, this.getWritableDatabase(), guid);
+        fetcher.start();
     }
 
 
