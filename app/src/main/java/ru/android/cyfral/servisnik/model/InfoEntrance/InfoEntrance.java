@@ -43,6 +43,6 @@ public class InfoEntrance implements Serializable {
     @Override
     public String toString()
     {
-        return "{\"errors\" : "+"\""+errors+"\""+", \"data\" : "+"\""+data+"\""+", \"isSuccess\" : "+"\""+isSuccess+"\""+"}";
+        return "{\"errors\": "+errors+", \"data\": "+data+", \"isSuccess\" : "+isSuccess+"}";
     }
 }

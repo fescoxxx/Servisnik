@@ -91,6 +91,6 @@ public class Data implements Serializable {
     @Override
     public String toString()
     {
-        return "{\"id\" : "+"\""+id+"\""+", \"videoService\" : "+"\""+videoService+"\""+", \"lastPprDate\" : "+"\""+lastPprDate+"\""+", \"address\" : "+"\""+address+"\""+", \"specialApartments\" : "+"\""+specialApartments+"\""+", \"contacts\" : "+"\""+contacts+"\""+", \"callingDevice\" : "+"\""+callingDevice+"\""+"}";
+        return "{\"id\" : "+"\""+id+"\""+", \"videoService\" : "+videoService+", \"lastPprDate\" : "+"\""+lastPprDate+"\""+", \"address\" : "+address+", \"specialApartments\" : "+specialApartments+", \"contacts\" : "+contacts+", \"callingDevice\" : "+callingDevice+"}";
     }
 }

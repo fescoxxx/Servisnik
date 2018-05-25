@@ -82,7 +82,9 @@ public class DataDatabase extends SQLiteOpenHelper {
         ContentValues valuesDatas = new ContentValues();
         valuesDatas.put(Constants.DATABASE.ID_GUID_INFO_ENTRANCE, infoEntrance.getData().getId());
         valuesDatas.put(Constants.DATABASE.JSON_INFO_ENTRANCE, infoEntrance.toString());
+
         try {
+
             db.insert(Constants.DATABASE.TABLE_NAME_INFO_ENTRANCE, null, valuesDatas);
         } catch (Exception e) {
             Log.d("TABLE_INFO_ENTRANCE", e.fillInStackTrace().toString());
@@ -238,6 +240,7 @@ public class DataDatabase extends SQLiteOpenHelper {
                         do {
                             Gson gson = new Gson();
                             // Convert JSON to Java Object
+
                             infoEntrance = gson.fromJson(cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.JSON_INFO_ENTRANCE)), InfoEntrance.class);
                             // Convert JSON to JsonElement, and later to String
                             publishData(infoEntrance);

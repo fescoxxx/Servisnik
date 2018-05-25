@@ -301,13 +301,11 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
             case R.id.PDInfo_button:
                 //  информация о подъезде
                 try {
-                    if (Utils.isNetworkAvailable(this)) {
+
                         Intent intent = new Intent("ru.android.cyfral.servisnik.infoentrance");
                         intent.putExtra("ordercard", currentOrderCard);
-                        startActivityForResult(intent, 15);
-                    } else {
+                        startActivityForResult(intent, 20);
 
-                    }
                 } catch (NullPointerException ex) {}
                 break;
 
@@ -488,6 +486,17 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         } else {
           //  tmc_button.setVisibility(View.VISIBLE);
         }
+
+
+        try{
+            if (orderCard.getData().getEntranceId().equals("null") |
+                    orderCard.getData().getEntranceId() == null ) {
+                PDInfo_button.setVisibility(View.GONE);
+            }
+        } catch (NullPointerException ex) {
+            PDInfo_button.setVisibility(View.GONE);
+        }
+
 
         if(listContacts.isEmpty()) {
             contacts_button.setVisibility(View.GONE);

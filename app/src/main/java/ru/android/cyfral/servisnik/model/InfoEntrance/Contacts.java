@@ -10,7 +10,8 @@ public class Contacts implements Serializable
     private String name;
     private String familyName;
     private String type;
-    private List<String> phones;
+    private List<PhoneNumbers> phoneNumbers;
+
 
     public String getMiddleName ()
     {
@@ -52,27 +53,19 @@ public class Contacts implements Serializable
         this.type = type;
     }
 
-    public List<String> getPhones ()
-    {
-        return phones;
+
+    public List<PhoneNumbers> getPhoneNumbers() {
+        return phoneNumbers;
     }
 
-    public void setPhones (List<String>  phones)
-    {
-        this.phones = phones;
+    public void setPhoneNumbers(List<PhoneNumbers> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
     }
 
     @Override
     public String toString()
     {
-        //
-        final char dm = (char) 34;
-        List<String> newPhones = new ArrayList<>();
-        for (int i =0; i<phones.size(); i++) {
-            newPhones.add(dm+phones.get(i)+dm);
-        }
-        setPhones(newPhones);
-
-        return "{\"middleName\" : "+"\""+middleName+"\""+", \"name\" : "+"\""+name+"\""+", \"familyName\" : "+"\""+familyName+"\""+", \"type\" : "+"\""+type+"\""+", \"phones\" : "+phones+"}";
+        return "{\"middleName\" : "+"\""+middleName+"\""+", \"name\" : "+"\""+name+"\""+", \"familyName\" : "+"\""+familyName+"\""+", \"type\" : "+"\""+type+"\""+", \"phoneNumbers\" : "+phoneNumbers+"}";
     }
+
 }
