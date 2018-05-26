@@ -38,18 +38,6 @@ public class AccessEquipmentActivity extends AppCompatActivity {
 
         listContacts = infoEntrance.getData().getContacts();
         Log.d("listContacts", String.valueOf(listContacts.size()));
-        for(int i = 0; i<listContacts.size(); i++) {
-            Log.d("listContacts", listContacts.get(i).getFamilyName());
-            Log.d("listContacts", listContacts.get(i).getMiddleName());
-            Log.d("listContacts", listContacts.get(i).getName());
-            Log.d("listContacts", listContacts.get(i).getType());
-            List<PhoneNumbers> phoneNumbersList =  listContacts.get(i).getPhoneNumbers();
-            for (int x = 0; x<phoneNumbersList.size(); x++) {
-                Log.d("listContacts", phoneNumbersList.get(x).getNumber());
-
-            }
-
-        }
         accessEquipmentAdapter = new AccessEquipmentAdapter(this, listContacts);
 
         ListView lv_access_equipment = (ListView) findViewById(R.id.lv_access_equipment);

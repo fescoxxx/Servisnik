@@ -51,7 +51,7 @@ public class TmcAdapter extends BaseAdapter {
         if (view == null) {
             view = lInflater.inflate(R.layout.row_item_tmc, parent, false);
         }
-        String tmc = removeQuotes(getTMC(position));
+        String tmc = getTMC(position).replace("\"","");
 
         ((TextView) view.findViewById(R.id.tmc_title)).setText(tmc);
         return view;

@@ -60,8 +60,8 @@ public class AccessEquipmentAdapter extends BaseAdapter {
         ImageButton btn = (ImageButton) view.findViewById(R.id.contacts_button);
 
         final List<String> phonesClean = new ArrayList<>();
-        for(int i=0; i<contacts.getPhoneNumbers().size(); i++) {
-            phonesClean.add(contacts.getPhoneNumbers().get(i).getNumber());
+        for(int i=0; i<contacts.getPhones().size(); i++) {
+            phonesClean.add(contacts.getPhones().get(i).replace("\"" ,""));
         }
 
         if(phonesClean.isEmpty()) {

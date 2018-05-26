@@ -1,6 +1,7 @@
 package ru.android.cyfral.servisnik.model.orderCard;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Contacts implements Serializable
@@ -64,12 +65,12 @@ public class Contacts implements Serializable
     @Override
     public String toString()
     {
-        /*final char dm = (char) 34;
+        final char dm = (char) 34;
         List<String> newPhones = new ArrayList<>();
         for (int i =0; i<phones.size(); i++) {
             newPhones.add(dm+phones.get(i)+dm);
         }
-        setPhones(newPhones);*/
+        setPhones(newPhones);
 
         return "{\"middleName\" : "+"\""+middleName+"\""+", \"name\" : "+"\""+name+"\""+", \"familyName\" : "+"\""+familyName+"\""+", \"type\" : "+"\""+type+"\""+", \"phones\" : "+phones+"}";
     }

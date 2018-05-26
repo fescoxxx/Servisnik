@@ -1,6 +1,7 @@
 package ru.android.cyfral.servisnik.model.infoEntrance;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Contacts implements Serializable
@@ -9,7 +10,7 @@ public class Contacts implements Serializable
     private String name;
     private String familyName;
     private String type;
-    private List<PhoneNumbers> phoneNumbers;
+    private List<String> phones;
 
 
     public String getMiddleName ()
@@ -52,19 +53,26 @@ public class Contacts implements Serializable
         this.type = type;
     }
 
-
-    public List<PhoneNumbers> getPhoneNumbers() {
-        return phoneNumbers;
+    public List<String> getPhones() {
+        return phones;
     }
 
-    public void setPhoneNumbers(List<PhoneNumbers> phoneNumbers) {
-        this.phoneNumbers = phoneNumbers;
+    public void setPhones(List<String> phones) {
+        this.phones = phones;
     }
 
     @Override
     public String toString()
     {
-        return "{\"middleName\" : "+"\""+middleName+"\""+", \"name\" : "+"\""+name+"\""+", \"familyName\" : "+"\""+familyName+"\""+", \"type\" : "+"\""+type+"\""+", \"phoneNumbers\" : "+phoneNumbers+"}";
+        final char dm = (char) 34;
+        List<String> newPhones = new ArrayList<>();
+        for (int i =0; i<phones.size(); i++) {
+            newPhones.add(dm+phones.get(i)+dm);
+        }
+        setPhones(newPhones);
+
+        return "{\"middleName\" : "+"\""+middleName+"\""+", \"name\" : "+"\""+name+"\""+", \"familyName\" : "+"\""+familyName+"\""+", \"type\" : "+"\""+type+"\""+", \"phones\" : "+phones+"}";
     }
+
 
 }
