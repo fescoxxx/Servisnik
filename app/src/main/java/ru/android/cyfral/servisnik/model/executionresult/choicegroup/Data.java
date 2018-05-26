@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.model.choiseelement;
+package ru.android.cyfral.servisnik.model.executionresult.choicegroup;
 
 import java.io.Serializable;
 
@@ -25,5 +25,11 @@ public class Data implements Serializable {
     public void setName (String name)
     {
         this.name = name;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ClassPojo [id = "+id+", name = "+name+"]";
     }
 }

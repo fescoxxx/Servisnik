@@ -14,6 +14,7 @@ import java.util.List;
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.InfoEntrance.Contacts;
 import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
+import ru.android.cyfral.servisnik.model.InfoEntrance.PhoneNumbers;
 import ru.android.cyfral.servisnik.model.InfoEntrance.adapters.AccessEquipmentAdapter;
 
 public class AccessEquipmentActivity extends AppCompatActivity {
@@ -25,7 +26,6 @@ public class AccessEquipmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_access_equipment);
-        setContentView(R.layout.activity_video_service);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ActionBar actionBar =getSupportActionBar();
         assert actionBar != null;
@@ -38,7 +38,19 @@ public class AccessEquipmentActivity extends AppCompatActivity {
 
         listContacts = infoEntrance.getData().getContacts();
         Log.d("listContacts", String.valueOf(listContacts.size()));
-        accessEquipmentAdapter = new AccessEquipmentAdapter(this,listContacts);
+        for(int i = 0; i<listContacts.size(); i++) {
+            Log.d("listContacts", listContacts.get(i).getFamilyName());
+            Log.d("listContacts", listContacts.get(i).getMiddleName());
+            Log.d("listContacts", listContacts.get(i).getName());
+            Log.d("listContacts", listContacts.get(i).getType());
+            List<PhoneNumbers> phoneNumbersList =  listContacts.get(i).getPhoneNumbers();
+            for (int x = 0; x<phoneNumbersList.size(); x++) {
+                Log.d("listContacts", phoneNumbersList.get(x).getNumber());
+
+            }
+
+        }
+        accessEquipmentAdapter = new AccessEquipmentAdapter(this, listContacts);
 
         ListView lv_access_equipment = (ListView) findViewById(R.id.lv_access_equipment);
         lv_access_equipment.setAdapter(accessEquipmentAdapter);

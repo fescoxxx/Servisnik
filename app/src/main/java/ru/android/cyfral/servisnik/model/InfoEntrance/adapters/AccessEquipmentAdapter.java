@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,9 +61,9 @@ public class AccessEquipmentAdapter extends BaseAdapter {
 
         ImageButton btn = (ImageButton) view.findViewById(R.id.contacts_button);
 
-        final List<PhoneNumbers> phonesClean = new ArrayList<>();
+        final List<String> phonesClean = new ArrayList<>();
         for(int i=0; i<contacts.getPhoneNumbers().size(); i++) {
-            phonesClean.add(contacts.getPhoneNumbers().get(i));
+            phonesClean.add(contacts.getPhoneNumbers().get(i).getNumber());
         }
 
         if(phonesClean.isEmpty()) {
@@ -91,7 +92,7 @@ public class AccessEquipmentAdapter extends BaseAdapter {
     }
 
     // создает диалоговое
-    private void createTwoButtonsAlertDialog(String title, List<PhoneNumbers>phones) {
+    private void createTwoButtonsAlertDialog(String title, List<String>phones) {
         AlertDialog.Builder builder;
         final String[] selectedPhone = new String[1];
         final String[] mChooseNumberPgone = phones.toArray(new String[phones.size()]);

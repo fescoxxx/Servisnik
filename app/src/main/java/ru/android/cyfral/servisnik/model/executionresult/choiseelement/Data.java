@@ -1,10 +1,12 @@
-package ru.android.cyfral.servisnik.model.choisetmc;
+package ru.android.cyfral.servisnik.model.executionresult.choiseelement;
 
 import java.io.Serializable;
 
 public class Data implements Serializable {
     private String id;
+
     private String name;
+
     public String getId ()
     {
         return id;

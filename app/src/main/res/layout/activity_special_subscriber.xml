@@ -7,6 +7,7 @@
     tools:context=".ui.infoentrance.SpecialSubscriberActivity">
 
     <ListView
+        android:id="@+id/lv_special_subscriber"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp"/>

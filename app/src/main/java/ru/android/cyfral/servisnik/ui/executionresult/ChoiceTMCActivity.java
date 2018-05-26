@@ -29,15 +29,15 @@ import retrofit2.Response;
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.RefreshToken;
-import ru.android.cyfral.servisnik.model.choisetmc.ChoiseTmc;
-import ru.android.cyfral.servisnik.model.choisetmc.ChoiseTmcAdapter;
+import ru.android.cyfral.servisnik.model.executionresult.choisetmc.ChoiseTmc;
+import ru.android.cyfral.servisnik.model.executionresult.choisetmc.ChoiseTmcAdapter;
 import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
 import ru.android.cyfral.servisnik.model.result.getResult.Tmas;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
-import ru.android.cyfral.servisnik.model.choisetmc.Data;
+import ru.android.cyfral.servisnik.model.executionresult.choisetmc.Data;
 
 public class ChoiceTMCActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;

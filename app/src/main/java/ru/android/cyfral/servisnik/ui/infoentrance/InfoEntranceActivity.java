@@ -30,8 +30,10 @@ import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchInfoEntranceListener;
+import ru.android.cyfral.servisnik.model.InfoEntrance.CallingDevice;
 import ru.android.cyfral.servisnik.model.InfoEntrance.Contacts;
 import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
+import ru.android.cyfral.servisnik.model.InfoEntrance.SpecialApartments;
 import ru.android.cyfral.servisnik.model.InfoEntrance.VideoService;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
@@ -152,6 +154,14 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
                     startActivity(intent);
                 } catch (NullPointerException ex) {}
                 break;
+            case R.id.list_special_subscriber_button:
+                //  список особых абонентов
+                try {
+                    Intent intent = new Intent("ru.android.cyfral.servisnik.specialsubscriber");
+                    intent.putExtra("infoentrance", currentInfoEntrance);
+                    startActivity(intent);
+                } catch (NullPointerException ex) {}
+                break;
            }
     }
 
@@ -231,10 +241,11 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
         }
     }
 
-    private void chehVisibleButton(InfoEntrance infoEntrance) {
+    private void checkVisibleButton(InfoEntrance infoEntrance) {
         List<Contacts> contactsList = infoEntrance.getData().getContacts();
         List<VideoService> videoServiceList = infoEntrance.getData().getVideoService();
-
+        List<CallingDevice> callingDevicesList = infoEntrance.getData().getCallingDevice();
+        List<SpecialApartments> specialApartmentsList =  infoEntrance.getData().getSpecialApartments();
         if (contactsList.isEmpty()) {
             access_equipment_button.setVisibility(View.GONE);
         }
@@ -243,12 +254,18 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
             video_dervice_button.setVisibility(View.GONE);
         }
 
+        if (callingDevicesList.isEmpty()) {
+            call_block_button.setVisibility(View.GONE);
+        }
 
+        if (specialApartmentsList.isEmpty()) {
+            list_special_subscriber_button.setVisibility(View.GONE);
+        }
     }
 
     private void showInfoEntrance(InfoEntrance infoEntrance){
         currentInfoEntrance = infoEntrance;
-        chehVisibleButton(currentInfoEntrance);
+        checkVisibleButton(currentInfoEntrance);
         mProgressBar.setVisibility(View.INVISIBLE);
         mLinearLayout.setVisibility(View.VISIBLE);
         ppr_ok_button.setVisibility(View.VISIBLE);

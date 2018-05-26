@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.model.choiseelement;
+package ru.android.cyfral.servisnik.model.executionresult.choiseelement;
 
 import java.io.Serializable;
 

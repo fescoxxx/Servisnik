@@ -1,16 +1,10 @@
 package ru.android.cyfral.servisnik.service;
 
-import java.util.HashMap;
-import java.util.List;
 
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.PATCH;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -18,10 +12,10 @@ import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.OrderCard.AgreedDate;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
-import ru.android.cyfral.servisnik.model.choicegroup.ChoiseGroup;
-import ru.android.cyfral.servisnik.model.choiseelement.ChoiseElement;
-import ru.android.cyfral.servisnik.model.choisetmc.ChoiseTmc;
-import ru.android.cyfral.servisnik.model.choisetype.ChoiseType;
+import ru.android.cyfral.servisnik.model.executionresult.choicegroup.ChoiseGroup;
+import ru.android.cyfral.servisnik.model.executionresult.choiseelement.ChoiseElement;
+import ru.android.cyfral.servisnik.model.executionresult.choisetmc.ChoiseTmc;
+import ru.android.cyfral.servisnik.model.executionresult.choisetype.ChoiseType;
 import ru.android.cyfral.servisnik.model.repairRequests.RepairRequest;
 import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
 import ru.android.cyfral.servisnik.model.result.putResult.PutResult;

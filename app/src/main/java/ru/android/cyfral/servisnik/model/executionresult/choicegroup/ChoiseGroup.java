@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.model.choicegroup;
+package ru.android.cyfral.servisnik.model.executionresult.choicegroup;
 
 import java.io.Serializable;
 import java.util.List;

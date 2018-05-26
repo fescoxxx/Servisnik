@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.model.choisetmc;
+package ru.android.cyfral.servisnik.model.executionresult.choisetype;
 
 import java.io.Serializable;
 

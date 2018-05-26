@@ -1,12 +1,10 @@
-package ru.android.cyfral.servisnik.model.choicegroup;
+package ru.android.cyfral.servisnik.model.executionresult.choisetmc;
 
 import java.io.Serializable;
 
 public class Data implements Serializable {
     private String id;
-
     private String name;
-
     public String getId ()
     {
         return id;
@@ -25,11 +23,5 @@ public class Data implements Serializable {
     public void setName (String name)
     {
         this.name = name;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "ClassPojo [id = "+id+", name = "+name+"]";
     }
 }

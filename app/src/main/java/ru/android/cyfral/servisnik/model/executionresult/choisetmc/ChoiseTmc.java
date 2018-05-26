@@ -1,9 +1,10 @@
-package ru.android.cyfral.servisnik.model.choiseelement;
+package ru.android.cyfral.servisnik.model.executionresult.choisetmc;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class ChoiseElement implements Serializable{
+public class ChoiseTmc implements Serializable {
+
     private Errors errors;
 
     private List<Data> data;
@@ -38,5 +39,11 @@ public class ChoiseElement implements Serializable{
     public void setIsSuccess (String isSuccess)
     {
         this.isSuccess = isSuccess;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ClassPojo [errors = "+errors+", data = "+data+", isSuccess = "+isSuccess+"]";
     }
 }
