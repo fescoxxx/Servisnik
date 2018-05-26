@@ -38,12 +38,12 @@ import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 
 
-public class InfoEntranceActivity extends AppCompatActivity implements DataFetchInfoEntranceListener {
+public class InfoEntranceActivity extends AppCompatActivity implements DataFetchInfoEntranceListener, View.OnClickListener {
     private ProgressBar mProgressBar;
     private OrderCard currentOrderCard;
     private SharedPreferences sPref;
     private LinearLayout mLinearLayout;
-    private Button ppr_ok_button;
+
     private TextView date_ppr_text; //дата ппр
     private TextView header_sity_info_entrance; //город улица
     private TextView decr_home_info_entrance; //дом литера крвартира
@@ -60,6 +60,16 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
             .create(ServiceApiClient.class);
 
     private Call<InfoEntrance> getInfoEntranceCall;
+
+    //кнопки
+    private Button video_dervice_button;
+    private Button access_equipment_button;
+    private Button list_special_subscriber_button;
+    private Button call_block_button;
+    private Button ppr_ok_button;
+
+    private InfoEntrance currentInfoEntrance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,10 +84,22 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar_info_entrance);
         mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_info_entrance);
-        ppr_ok_button = (Button) findViewById(R.id.ppr_ok_button);
         date_ppr_text = (TextView) findViewById(R.id.date_ppr_text);
         header_sity_info_entrance = (TextView) findViewById(R.id.header_sity_info_entrance);
         decr_home_info_entrance = (TextView) findViewById(R.id.decr_home_info_entrance);
+
+        ppr_ok_button = (Button) findViewById(R.id.ppr_ok_button);
+        video_dervice_button = (Button) findViewById(R.id.video_dervice_button);
+        access_equipment_button = (Button) findViewById(R.id.access_equipment_button);
+        list_special_subscriber_button = (Button) findViewById(R.id.list_special_subscriber_button);
+        call_block_button = (Button) findViewById(R.id.call_block_button);
+
+        video_dervice_button.setOnClickListener(this);
+        access_equipment_button.setOnClickListener(this);
+        list_special_subscriber_button.setOnClickListener(this);
+        call_block_button.setOnClickListener(this);
+        ppr_ok_button.setOnClickListener(this);
+
         mProgressBar.setVisibility(View.VISIBLE);
         mLinearLayout.setVisibility(View.INVISIBLE);
         ppr_ok_button.setVisibility(View.INVISIBLE);
@@ -93,6 +115,30 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
             getInfoEntranceDataBase();
         }
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        Log.d("onClick", v.toString());
+        switch (v.getId()) {
+            //видеосервис
+            case R.id.video_dervice_button:
+                try {
+                    Intent intent = new Intent("ru.android.cyfral.servisnik.videoservice");
+                    intent.putExtra("infoentrance", currentInfoEntrance);
+                    startActivity(intent);
+                } catch (NullPointerException ex) {}
+                break;
+            case R.id.call_block_button:
+                //  блок вызова
+                try {
+
+
+
+                } catch (NullPointerException ex) {}
+                break;
+
+        }
     }
 
     private void getInfoEntranceDataBase() {
@@ -171,7 +217,8 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
         }
     }
 
-    private void showInfoEntrance(InfoEntrance currentInfoEntrance){
+    private void showInfoEntrance(InfoEntrance infoEntrance){
+        currentInfoEntrance = infoEntrance;
         mProgressBar.setVisibility(View.INVISIBLE);
         mLinearLayout.setVisibility(View.VISIBLE);
         ppr_ok_button.setVisibility(View.VISIBLE);
@@ -318,6 +365,8 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
     public void onDeliverData(InfoEntrance infoEntrance) {
         showInfoEntrance(infoEntrance);
     }
+
+
 
     public static class SaveIntoDatabaseOdrerCard extends AsyncTask<InfoEntrance, Void, Void> {
         private final String TAG = SaveIntoDatabaseOdrerCard.class.getSimpleName();

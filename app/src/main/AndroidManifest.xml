@@ -137,7 +137,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.infoentrance.VideoServiceActivity" />
+        <activity android:name=".ui.infoentrance.VideoServiceActivity">
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.videoservice" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".ui.infoentrance.AccessEquipmentActivity" />
         <activity android:name=".ui.infoentrance.SpecialSubscriberActivity" />
         <activity android:name=".ui.infoentrance.CallBlockActivity" />
