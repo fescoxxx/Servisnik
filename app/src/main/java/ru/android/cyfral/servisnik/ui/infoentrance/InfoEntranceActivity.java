@@ -21,6 +21,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +30,9 @@ import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchInfoEntranceListener;
+import ru.android.cyfral.servisnik.model.InfoEntrance.Contacts;
 import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
+import ru.android.cyfral.servisnik.model.InfoEntrance.VideoService;
 import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.Utils;
@@ -117,6 +121,8 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
 
     }
 
+
+
     @Override
     public void onClick(View v) {
         Log.d("onClick", v.toString());
@@ -129,12 +135,12 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
                     startActivity(intent);
                 } catch (NullPointerException ex) {}
                 break;
-            case R.id.call_block_button:
-                //  блок вызова
+            case R.id.access_equipment_button:
+                //  доступ к оборудованию
                 try {
-
-
-
+                    Intent intent = new Intent("ru.android.cyfral.servisnik.accessequipment");
+                    intent.putExtra("infoentrance", currentInfoEntrance);
+                    startActivity(intent);
                 } catch (NullPointerException ex) {}
                 break;
 
@@ -217,8 +223,24 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
         }
     }
 
+    private void chehVisibleButton(InfoEntrance infoEntrance) {
+        List<Contacts> contactsList = infoEntrance.getData().getContacts();
+        List<VideoService> videoServiceList = infoEntrance.getData().getVideoService();
+
+        if (contactsList.isEmpty()) {
+            access_equipment_button.setVisibility(View.GONE);
+        }
+
+        if (videoServiceList.isEmpty()) {
+            video_dervice_button.setVisibility(View.GONE);
+        }
+
+
+    }
+
     private void showInfoEntrance(InfoEntrance infoEntrance){
         currentInfoEntrance = infoEntrance;
+        chehVisibleButton(currentInfoEntrance);
         mProgressBar.setVisibility(View.INVISIBLE);
         mLinearLayout.setVisibility(View.VISIBLE);
         ppr_ok_button.setVisibility(View.VISIBLE);

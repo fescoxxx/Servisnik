@@ -81,6 +81,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.ordercard.EquipmentActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.equipment" />
@@ -88,6 +89,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.ordercard.SafeHouseActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.safehouse" />
@@ -95,6 +97,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.executionresult.ExecutionResultActivity"
             android:launchMode="singleTask">
@@ -104,12 +107,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.executionresult.ChoiceTMCActivity" >
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.choistmc" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.executionresult.ChoiceGroupActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.choisegroup" />
@@ -117,6 +122,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.executionresult.ChoiceElementsActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.choiseelement" />
@@ -124,6 +130,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.executionresult.ChoiceTypeActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.choisetype" />
@@ -131,20 +138,27 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.infoentrance.InfoEntranceActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.infoentrance" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.infoentrance.VideoServiceActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.videoservice" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.infoentrance.AccessEquipmentActivity">
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.accessequipment" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
 
         </activity>
-        <activity android:name=".ui.infoentrance.AccessEquipmentActivity" />
         <activity android:name=".ui.infoentrance.SpecialSubscriberActivity" />
         <activity android:name=".ui.infoentrance.CallBlockActivity" />
         <activity android:name=".ui.listwork.ListWorkActivity" />
