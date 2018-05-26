@@ -144,7 +144,15 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
                 } catch (NullPointerException ex) {}
                 break;
 
-        }
+            case R.id.call_block_button:
+                //  вызывной блок
+                try {
+                    Intent intent = new Intent("ru.android.cyfral.servisnik.callblock");
+                    intent.putExtra("infoentrance", currentInfoEntrance);
+                    startActivity(intent);
+                } catch (NullPointerException ex) {}
+                break;
+           }
     }
 
     private void getInfoEntranceDataBase() {

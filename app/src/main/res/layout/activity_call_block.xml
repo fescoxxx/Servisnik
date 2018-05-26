@@ -7,6 +7,7 @@
     tools:context=".ui.infoentrance.CallBlockActivity">
 
     <ListView
+        android:id="@+id/lv_call_block"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"

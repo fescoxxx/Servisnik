@@ -159,8 +159,15 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".ui.infoentrance.CallBlockActivity">
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.callblock" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
         <activity android:name=".ui.infoentrance.SpecialSubscriberActivity" />
-        <activity android:name=".ui.infoentrance.CallBlockActivity" />
         <activity android:name=".ui.listwork.ListWorkActivity" />
         <activity android:name=".ui.listwork.WorksAtActivity" />
         <activity android:name=".ui.listwork.NearListActivity" />
