@@ -11,11 +11,9 @@ import android.widget.ListView;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
-import ru.android.cyfral.servisnik.model.OrderCard.Contacts;
-import ru.android.cyfral.servisnik.model.OrderCard.InstalledEquipments;
-import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
-import ru.android.cyfral.servisnik.model.contacts.ContactsAdapter;
-import ru.android.cyfral.servisnik.model.equipments.EquipmentsAdapter;
+import ru.android.cyfral.servisnik.model.orderCard.InstalledEquipments;
+import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
+import ru.android.cyfral.servisnik.model.orderCard.equipments.EquipmentsAdapter;
 
 public class EquipmentActivity extends AppCompatActivity {
     private List<InstalledEquipments> listInstalledEquipments;

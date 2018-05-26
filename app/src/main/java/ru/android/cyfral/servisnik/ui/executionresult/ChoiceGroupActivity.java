@@ -32,12 +32,12 @@ import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.executionresult.choicegroup.ChoisGroupAdapter;
 import ru.android.cyfral.servisnik.model.executionresult.choicegroup.ChoiseGroup;
 import ru.android.cyfral.servisnik.model.executionresult.choicegroup.Data;
-import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
+import ru.android.cyfral.servisnik.model.executionresult.result.getResult.GetResult;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
-import ru.android.cyfral.servisnik.model.result.getResult.Group;
+import ru.android.cyfral.servisnik.model.executionresult.result.getResult.Group;
 
 public class ChoiceGroupActivity extends AppCompatActivity {
 

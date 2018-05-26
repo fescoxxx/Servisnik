@@ -12,8 +12,8 @@ import android.widget.ListView;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
-import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
-import ru.android.cyfral.servisnik.model.tmc.TmcAdapter;
+import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
+import ru.android.cyfral.servisnik.model.orderCard.tmc.TmcAdapter;
 
 public class TMCActivity extends AppCompatActivity {
 

@@ -2,7 +2,7 @@ package ru.android.cyfral.servisnik.model;
 
 import java.util.List;
 
-import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
+import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.repairRequests.Data;
 
 public interface DataFetchListener {

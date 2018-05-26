@@ -5,20 +5,16 @@ import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
-import ru.android.cyfral.servisnik.model.OrderCard.Items;
-import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
-import ru.android.cyfral.servisnik.model.OrderCard.SafeHome;
-import ru.android.cyfral.servisnik.model.equipments.EquipmentsAdapter;
-import ru.android.cyfral.servisnik.model.safeHome.SafeHomeAdapter;
+import ru.android.cyfral.servisnik.model.orderCard.Items;
+import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
+import ru.android.cyfral.servisnik.model.orderCard.SafeHome;
+import ru.android.cyfral.servisnik.model.orderCard.safeHome.SafeHomeAdapter;
 
 public class SafeHouseActivity extends AppCompatActivity {
     private List<SafeHome> listSafeHome;

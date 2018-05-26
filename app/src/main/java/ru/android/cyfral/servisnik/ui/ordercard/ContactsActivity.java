@@ -11,10 +11,9 @@ import android.widget.ListView;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
-import ru.android.cyfral.servisnik.model.OrderCard.Contacts;
-import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
-import ru.android.cyfral.servisnik.model.contacts.ContactsAdapter;
-import ru.android.cyfral.servisnik.model.tmc.TmcAdapter;
+import ru.android.cyfral.servisnik.model.orderCard.Contacts;
+import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
+import ru.android.cyfral.servisnik.model.orderCard.contacts.ContactsAdapter;
 
 public class ContactsActivity extends AppCompatActivity {
 

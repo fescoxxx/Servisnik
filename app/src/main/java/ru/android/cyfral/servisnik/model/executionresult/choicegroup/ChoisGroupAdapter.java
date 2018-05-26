@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
-import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
+import ru.android.cyfral.servisnik.model.executionresult.result.getResult.GetResult;
 
 public class ChoisGroupAdapter extends BaseAdapter {
     Context ctx;

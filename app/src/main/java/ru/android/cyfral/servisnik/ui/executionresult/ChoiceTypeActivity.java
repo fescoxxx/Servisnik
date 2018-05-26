@@ -31,13 +31,13 @@ import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.executionresult.choisetype.ChoiseType;
 import ru.android.cyfral.servisnik.model.executionresult.choisetype.ChoiseTypeAdapter;
-import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
+import ru.android.cyfral.servisnik.model.executionresult.result.getResult.GetResult;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 import ru.android.cyfral.servisnik.model.executionresult.choisetype.Data;
-import ru.android.cyfral.servisnik.model.result.getResult.Type;
+import ru.android.cyfral.servisnik.model.executionresult.result.getResult.Type;
 
 public class ChoiceTypeActivity extends AppCompatActivity {
 

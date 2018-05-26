@@ -23,7 +23,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.android.cyfral.servisnik.R;
-import ru.android.cyfral.servisnik.model.OrderCard.Contacts;
 import ru.android.cyfral.servisnik.model.Token;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;

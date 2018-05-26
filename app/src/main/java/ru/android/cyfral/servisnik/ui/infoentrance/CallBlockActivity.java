@@ -11,9 +11,9 @@ import android.widget.ListView;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
-import ru.android.cyfral.servisnik.model.InfoEntrance.CallingDevice;
-import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
-import ru.android.cyfral.servisnik.model.InfoEntrance.adapters.CallBlockAdapter;
+import ru.android.cyfral.servisnik.model.infoEntrance.CallingDevice;
+import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
+import ru.android.cyfral.servisnik.model.infoEntrance.adapters.CallBlockAdapter;
 
 public class CallBlockActivity extends AppCompatActivity {
     private List<CallingDevice> callingDeviceList;

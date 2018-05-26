@@ -11,9 +11,9 @@ import android.widget.ListView;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
-import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
-import ru.android.cyfral.servisnik.model.InfoEntrance.VideoService;
-import ru.android.cyfral.servisnik.model.InfoEntrance.adapters.VideoServiceAdapter;
+import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
+import ru.android.cyfral.servisnik.model.infoEntrance.VideoService;
+import ru.android.cyfral.servisnik.model.infoEntrance.adapters.VideoServiceAdapter;
 
 public class VideoServiceActivity extends AppCompatActivity {
     private List<VideoService> listVideoService;

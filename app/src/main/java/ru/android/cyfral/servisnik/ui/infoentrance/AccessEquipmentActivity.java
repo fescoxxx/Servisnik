@@ -12,10 +12,10 @@ import android.widget.ListView;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
-import ru.android.cyfral.servisnik.model.InfoEntrance.Contacts;
-import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
-import ru.android.cyfral.servisnik.model.InfoEntrance.PhoneNumbers;
-import ru.android.cyfral.servisnik.model.InfoEntrance.adapters.AccessEquipmentAdapter;
+import ru.android.cyfral.servisnik.model.infoEntrance.Contacts;
+import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
+import ru.android.cyfral.servisnik.model.infoEntrance.PhoneNumbers;
+import ru.android.cyfral.servisnik.model.infoEntrance.adapters.AccessEquipmentAdapter;
 
 public class AccessEquipmentActivity extends AppCompatActivity {
 

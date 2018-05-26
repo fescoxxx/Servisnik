@@ -1,7 +1,6 @@
 package ru.android.cyfral.servisnik.ui.executionresult;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,7 +12,6 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -30,7 +28,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -40,19 +37,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.Constants;
-import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
+import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
-import ru.android.cyfral.servisnik.model.result.TmcResultAtapter;
-import ru.android.cyfral.servisnik.model.result.getResult.GetResult;
-import ru.android.cyfral.servisnik.model.result.putResult.PutResult;
-import ru.android.cyfral.servisnik.model.result.putResult.Works;
+import ru.android.cyfral.servisnik.model.executionresult.result.TmcResultAtapter;
+import ru.android.cyfral.servisnik.model.executionresult.result.getResult.GetResult;
+import ru.android.cyfral.servisnik.model.executionresult.result.putResult.PutResult;
+import ru.android.cyfral.servisnik.model.executionresult.result.putResult.Works;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
@@ -488,7 +484,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
                             type_result.setText(currentResult.getData().getWorks().getType().getName());
                         } catch (java.lang.NullPointerException ex) {}
 
-                        List<ru.android.cyfral.servisnik.model.result.getResult.Tmas> listTmas =currentResult.getData().getTmas();
+                        List<ru.android.cyfral.servisnik.model.executionresult.result.getResult.Tmas> listTmas =currentResult.getData().getTmas();
                         mAdapter = new TmcResultAtapter(ExecutionResultActivity.this, currentResult);
                         ListView lv_tmc_result = (ListView) findViewById(R.id.lv_tmc_result);
 

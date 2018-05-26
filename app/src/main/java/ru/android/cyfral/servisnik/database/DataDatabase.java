@@ -12,7 +12,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,8 +19,8 @@ import java.util.List;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchInfoEntranceListener;
 import ru.android.cyfral.servisnik.model.DataFetchListener;
-import ru.android.cyfral.servisnik.model.InfoEntrance.InfoEntrance;
-import ru.android.cyfral.servisnik.model.OrderCard.OrderCard;
+import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
+import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.repairRequests.Address;
 import ru.android.cyfral.servisnik.model.repairRequests.Contacts;
 import ru.android.cyfral.servisnik.model.repairRequests.Data;
