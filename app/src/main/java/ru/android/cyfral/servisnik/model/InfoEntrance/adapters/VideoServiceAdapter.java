@@ -54,7 +54,7 @@ public class VideoServiceAdapter  extends BaseAdapter {
         return view;
     }
 
-    // тмц по позиции
+    // по позиции
     VideoService getVideoService(int position) {
         return objects.get(position);
     }

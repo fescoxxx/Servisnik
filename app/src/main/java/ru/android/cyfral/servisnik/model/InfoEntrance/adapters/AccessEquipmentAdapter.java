@@ -69,7 +69,7 @@ public class AccessEquipmentAdapter extends BaseAdapter {
             btn.setVisibility(View.INVISIBLE);
         } else {
             btn.setVisibility(View.VISIBLE);
-           /* btn.setOnClickListener(new View.OnClickListener() {
+            btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     createTwoButtonsAlertDialog(contacts.getName() +
@@ -83,7 +83,7 @@ public class AccessEquipmentAdapter extends BaseAdapter {
                     createTwoButtonsAlertDialog(contacts.getName() +
                             " "+ contacts.getMiddleName(),phonesClean);
                 }
-            });*/
+            });
         }
 
 
