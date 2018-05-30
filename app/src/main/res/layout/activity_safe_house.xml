@@ -7,15 +7,11 @@
     tools:context=".ui.ordercard.SafeHouseActivity">
 
 
-
     <ListView
         android:id="@+id/lv_safe_house"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null">
-    </ListView>
-
-
+        android:divider="@null"></ListView>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -133,7 +133,7 @@
                             android:background="#FFFFFF"
                             android:fontFamily="@font/roboto"
                             android:paddingLeft="16dp"
-                            android:text="Крайняя дата выполнения"
+                            android:text="Крайняя дата"
                             android:textAlignment="viewStart"
                             android:textColor="#3c3c3c"
                             android:textSize="16sp" />
@@ -172,10 +172,11 @@
                                 android:layout_marginRight="0dp"
                                 android:background="#FFFFFF"
                                 android:fontFamily="@font/roboto"
-                                android:hint="Согласованная дата выполнения"
-                                android:paddingBottom="5dp"
+                                android:hint="Согласованная дата"
+                                android:paddingBottom="4dp"
                                 android:paddingLeft="16dp"
                                 android:paddingRight="4pt"
+                                android:textColor="#c6c6c6"
                                 android:textSize="16dp" />
 
                             <TextView
@@ -184,10 +185,11 @@
                                 android:layout_height="wrap_content"
                                 android:background="#FFFFFF"
                                 android:fontFamily="@font/roboto"
-                                android:hint="Согласованное время выполнения"
-                                android:paddingBottom="5dp"
+                                android:hint="Согласованное время"
+                                android:paddingBottom="8dp"
                                 android:paddingLeft="16dp"
                                 android:paddingRight="4pt"
+                                android:textColor="#c6c6c6"
                                 android:textSize="14dp" />
                         </LinearLayout>
 
@@ -223,7 +225,7 @@
                         android:background="@drawable/button"
                         android:fontFamily="@font/roboto_medium"
                         android:paddingLeft="16dp"
-                        android:text="ТМЦ"
+                        android:text="Плановые затраты ТМЦ"
                         android:textAlignment="textStart"
                         android:textSize="16sp"
                         android:visibility="visible" />
@@ -270,6 +272,7 @@
                         android:paddingLeft="16dp"
                         android:text="Информация о подьезде"
                         android:textAlignment="textStart"
+                        android:stateListAnimator="@null"
                         android:textSize="16sp" />
 
                     <View
