@@ -86,15 +86,10 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
     private GetResult newResult;
     private LocationManager locationManager;
     Call<StandartAnswer> putResultCall;
-    private static final int PERMISSION_REQUEST = 1;
     public Location location;
     Context mContext;
 
-    //The minimum distance to change updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
 
-    //The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;//1000 * 60 * 1; // 1 minute
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
