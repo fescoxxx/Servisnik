@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -206,7 +207,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
             ed.putString(Constants.SETTINGS.LONGITUDE, String.valueOf(longitude));
             ed.apply();
             String msg="New Latitude: "+latitude + "New Longitude: "+longitude;
-            //Toast.makeText(mContext,msg,Toast.LENGTH_LONG).show();
+           //  Toast.makeText(mContext,msg,Toast.LENGTH_LONG).show();
         }
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {

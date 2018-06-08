@@ -124,6 +124,9 @@ public class RepairRequestActivity extends AppCompatActivity {
             Intent intent = new Intent("ru.android.cyfral.servisnik.search");
             intent.putExtra("searchHint", Constants.SEARCH.NUMBER_PHONE);
             startActivity(intent);
+        } else if(id == R.id.listworkmap) {
+            Intent intent = new Intent("ru.android.cyfral.servisnik.ui.listwork");
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
