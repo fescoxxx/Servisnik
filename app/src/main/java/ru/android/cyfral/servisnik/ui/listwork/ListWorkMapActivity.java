@@ -11,6 +11,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.provider.Settings;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.Constants;
 
-public class ListWorkMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ListWorkMapActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
     public Location location;
@@ -40,6 +42,8 @@ public class ListWorkMapActivity extends AppCompatActivity implements OnMapReady
     Context mContext;
     private Double latitude;
     private Double longitude;
+
+    private FloatingActionButton floatingActionButtonCenterMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,9 @@ public class ListWorkMapActivity extends AppCompatActivity implements OnMapReady
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+        floatingActionButtonCenterMap = (FloatingActionButton) findViewById(R.id.floatingActionButtonCenterMap);
+        floatingActionButtonCenterMap.setOnClickListener(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -136,14 +142,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setBuildingsEnabled(true);
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(Double.parseDouble(loadTextPref(Constants.SETTINGS.LATITUDE)),
-                Double.parseDouble(loadTextPref(Constants.SETTINGS.LONGITUDE)));
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Я тут "+loadTextPref(Constants.SETTINGS.LATITUDE)));
-
-        float zoomLevel = 17.0f; //This goes up to 21
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
+        centerMeMap();
 
     }
     private String loadTextPref(String prefStr) {
@@ -201,4 +200,29 @@ public class ListWorkMapActivity extends AppCompatActivity implements OnMapReady
         }
     }
 
+    private void centerMeMap() {
+
+        LatLng myTown = new LatLng(Double.parseDouble(loadTextPref(Constants.SETTINGS.LATITUDE)),
+                Double.parseDouble(loadTextPref(Constants.SETTINGS.LONGITUDE)));
+        mMap.addMarker(new MarkerOptions().position(myTown).title("Я тут "+loadTextPref(Constants.SETTINGS.LATITUDE)));
+
+        float zoomLevel = 17.0f; //This goes up to 21
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myTown, zoomLevel));
+
+    }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.floatingActionButtonMap:
+
+
+                break;
+
+            case R.id.floatingActionButtonCenterMap:
+
+                centerMeMap();
+                break;
+
+        }
+    }
 }

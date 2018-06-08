@@ -81,6 +81,8 @@ public interface ServiceApiClient {
     Call<InfoEntrance> getInfoEntrance(@Path("GUID") String GUID,
                                        @Header("Authorization") String token);
 
+    //@GET()
+
 
 }
 
