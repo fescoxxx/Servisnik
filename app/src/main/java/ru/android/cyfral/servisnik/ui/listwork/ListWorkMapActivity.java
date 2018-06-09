@@ -23,12 +23,16 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.text.DateFormat;
@@ -52,7 +56,10 @@ import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 import ru.android.cyfral.servisnik.ui.infoentrance.InfoEntranceActivity;
 
-public class ListWorkMapActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
+public class ListWorkMapActivity extends AppCompatActivity implements
+        OnMapReadyCallback,
+        View.OnClickListener,
+        GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     public Location location;
@@ -60,6 +67,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements OnMapReady
     Context mContext;
     private Double latitude;
     private Double longitude;
+    private Marker mMarker;
 
     TokenClient tokenClient = RetrofitClientToken
             .getClient(Constants.HTTP.BASE_URL_TOKEN)
@@ -301,6 +309,57 @@ public class ListWorkMapActivity extends AppCompatActivity implements OnMapReady
 
     private void showListWorks(ListWorks currentListWorks){
 
+        for (int i=0; i<currentListWorks.getData().size(); i++) {
+            Date dateToday = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'");
+            try {
+                Date deadLine = format.parse(currentListWorks.getData().get(i).getRepairRequestDeadline());
+                if (deadLine.before(format.parse(format.format(dateToday)))) {
+                    pinBlackMap(Double.parseDouble(currentListWorks.getData().get(i).getLatitude()),
+                            Double.parseDouble(currentListWorks.getData().get(i).getLongitude()), "BLACK",
+                            currentListWorks.getData().get(i).getHouseId());
+                } else if (deadLine.equals(format.parse(format.format(dateToday)))){
+                    pinBlackMap(Double.parseDouble(currentListWorks.getData().get(i).getLatitude()),
+                            Double.parseDouble(currentListWorks.getData().get(i).getLongitude()), "RED",
+                            currentListWorks.getData().get(i).getHouseId());
+                } else {
+                    pinBlackMap(Double.parseDouble(currentListWorks.getData().get(i).getLatitude()),
+                            Double.parseDouble(currentListWorks.getData().get(i).getLongitude()), "BLUE",
+                            currentListWorks.getData().get(i).getHouseId());
+                }
+            }  catch (NullPointerException ex) {
+                pinBlackMap(Double.parseDouble(currentListWorks.getData().get(i).getLatitude()),
+                        Double.parseDouble(currentListWorks.getData().get(i).getLongitude()), "NULL",
+                        currentListWorks.getData().get(i).getHouseId());
+            }
+            catch (ParseException e) {
+                 e.printStackTrace();
+            }
+        }
+
+    }
+
+    private void pinBlackMap(Double latitude,
+                             Double longitude,
+                             String color,
+                             String houseID) {
+        LatLng myPin = new LatLng(latitude, longitude);
+        if (color.equals("BLACK")) {
+            mMarker = mMap.addMarker(new MarkerOptions().position(myPin).title("Пин")
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_black)));
+            mMarker.setTag(houseID);
+        } else if (color.equals("RED")) {
+            mMarker = mMap.addMarker(new MarkerOptions().position(myPin).title("Пин")
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_red)));
+            mMarker.setTag(houseID);
+        } else if (color.equals("BLUE")) {
+            mMarker = mMap.addMarker(new MarkerOptions().position(myPin).title("Пин")
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_blue)));
+            mMarker.setTag(houseID);
+        } else if (color.equals("NULL")) {
+            mMarker =mMap.addMarker(new MarkerOptions().position(myPin).title("Пин"));
+            mMarker.setTag(houseID);
+        }
 
     }
 
@@ -349,11 +408,12 @@ public class ListWorkMapActivity extends AppCompatActivity implements OnMapReady
         LatLng myTown = new LatLng(Double.parseDouble(loadTextPref(Constants.SETTINGS.LATITUDE)),
                 Double.parseDouble(loadTextPref(Constants.SETTINGS.LONGITUDE)));
         mMap.addMarker(new MarkerOptions().position(myTown).title("Я тут "+loadTextPref(Constants.SETTINGS.LATITUDE)));
-
         float zoomLevel = 17.0f; //This goes up to 21
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myTown, zoomLevel));
-
+        mMap.setOnMarkerClickListener(this);
     }
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -386,5 +446,13 @@ public class ListWorkMapActivity extends AppCompatActivity implements OnMapReady
                     }
                 });
         builder.show();
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Toast toast = Toast.makeText(getApplicationContext(),
+                marker.getTag().toString(), Toast.LENGTH_SHORT);
+        toast.show();
+        return false;
     }
 }
