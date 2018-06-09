@@ -47,7 +47,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="0.3dp"
                         android:layout_weight="1"
                         android:layout_marginTop="8dp"
                         android:background="#E0E0E0"
@@ -81,14 +81,14 @@
                         tools:text="Header2" />
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="0.3dp"
                         android:layout_weight="1"
                         android:background="#E0E0E0"
                         android:visibility="visible" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="0.3dp"
                         android:layout_weight="1"
                         android:layout_marginTop="8dp"
                         android:background="#E0E0E0"
@@ -101,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
                         android:fontFamily="@font/roboto"
-                        android:paddingBottom="5pt"
+                        android:paddingBottom="4dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:paddingTop="5pt"
@@ -116,7 +116,7 @@
                         android:fontFamily="@font/roboto"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:paddingBottom="16dp"
+                        android:paddingBottom="4dp"
                         android:textColor="#979797"
                         android:textSize="14dp" />
 
@@ -136,7 +136,7 @@
                             android:text="Крайняя дата"
                             android:textAlignment="viewStart"
                             android:textColor="#3c3c3c"
-                            android:textSize="16sp" />
+                            android:textSize="16dp" />
 
                         <TextView
                             android:id="@+id/date_deadline"
@@ -148,7 +148,7 @@
                             android:paddingRight="16dp"
                             android:textAlignment="textEnd"
                             android:textColor="#3c3c3c"
-                            android:textSize="16sp"
+                            android:textSize="16dp"
                             tools:text="Просрочена" />
 
                     </LinearLayout>
@@ -205,14 +205,14 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="0.3dp"
                         android:layout_weight="1"
                         android:background="#E0E0E0"
                         android:visibility="visible" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
+                        android:layout_height="0.3dp"
                         android:layout_weight="1"
                         android:layout_marginTop="8dp"
                         android:background="#E0E0E0"
@@ -277,7 +277,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
+                        android:layout_height="0.3dp"
                         android:layout_weight="1"
                         android:background="#E0E0E0"
                         android:visibility="visible"
