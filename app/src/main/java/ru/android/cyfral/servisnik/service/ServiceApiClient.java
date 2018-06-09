@@ -9,7 +9,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
-import ru.android.cyfral.servisnik.model.listwork.ListWorks;
+import ru.android.cyfral.servisnik.model.listwork.listworkmap.ListWorks;
 import ru.android.cyfral.servisnik.model.orderCard.AgreedDate;
 import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.StandartAnswer;

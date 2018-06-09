@@ -13,7 +13,6 @@ import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -22,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,7 +28,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -48,13 +45,11 @@ import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.Utils;
-import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
-import ru.android.cyfral.servisnik.model.listwork.ListWorks;
+import ru.android.cyfral.servisnik.model.listwork.listworkmap.ListWorks;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
-import ru.android.cyfral.servisnik.ui.infoentrance.InfoEntranceActivity;
 
 public class ListWorkMapActivity extends AppCompatActivity implements
         OnMapReadyCallback,
@@ -80,6 +75,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
     private Call<ListWorks> listWorksCall;
 
     private FloatingActionButton floatingActionButtonCenterMap;
+   private ListWorks currentListWorks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +93,16 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        if (loadTextPref(Constants.SETTINGS.LATITUDE).equals("") |
+                loadTextPref(Constants.SETTINGS.LONGITUDE).equals("")) {
+            SharedPreferences myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor ed = myPrefs.edit();
+            ed.putString(Constants.SETTINGS.LATITUDE, "0.0");
+            ed.putString(Constants.SETTINGS.LONGITUDE, "0.0");
+            ed.apply();
+        }
+
     }
 
     @Override
@@ -178,6 +184,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(this);
         centerMeMap();
 
     }
@@ -308,7 +315,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
     }
 
     private void showListWorks(ListWorks currentListWorks){
-
+        this.currentListWorks = currentListWorks;
         for (int i=0; i<currentListWorks.getData().size(); i++) {
             Date dateToday = new Date();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'");
@@ -345,19 +352,19 @@ public class ListWorkMapActivity extends AppCompatActivity implements
                              String houseID) {
         LatLng myPin = new LatLng(latitude, longitude);
         if (color.equals("BLACK")) {
-            mMarker = mMap.addMarker(new MarkerOptions().position(myPin).title("Пин")
+            mMarker = mMap.addMarker(new MarkerOptions().position(myPin)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_black)));
             mMarker.setTag(houseID);
         } else if (color.equals("RED")) {
-            mMarker = mMap.addMarker(new MarkerOptions().position(myPin).title("Пин")
+            mMarker = mMap.addMarker(new MarkerOptions().position(myPin)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_red)));
             mMarker.setTag(houseID);
         } else if (color.equals("BLUE")) {
-            mMarker = mMap.addMarker(new MarkerOptions().position(myPin).title("Пин")
+            mMarker = mMap.addMarker(new MarkerOptions().position(myPin)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_blue)));
             mMarker.setTag(houseID);
         } else if (color.equals("NULL")) {
-            mMarker =mMap.addMarker(new MarkerOptions().position(myPin).title("Пин"));
+            mMarker =mMap.addMarker(new MarkerOptions().position(myPin));
             mMarker.setTag(houseID);
         }
 
@@ -407,10 +414,12 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         mMap.clear();
         LatLng myTown = new LatLng(Double.parseDouble(loadTextPref(Constants.SETTINGS.LATITUDE)),
                 Double.parseDouble(loadTextPref(Constants.SETTINGS.LONGITUDE)));
-        mMap.addMarker(new MarkerOptions().position(myTown).title("Я тут "+loadTextPref(Constants.SETTINGS.LATITUDE)));
+        mMap.addMarker(new MarkerOptions().position(myTown));
         float zoomLevel = 17.0f; //This goes up to 21
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myTown, zoomLevel));
-        mMap.setOnMarkerClickListener(this);
+        if(currentListWorks != null) {
+            showListWorks(currentListWorks);
+        }
     }
 
 
@@ -450,9 +459,16 @@ public class ListWorkMapActivity extends AppCompatActivity implements
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Toast toast = Toast.makeText(getApplicationContext(),
-                marker.getTag().toString(), Toast.LENGTH_SHORT);
-        toast.show();
+        if (marker.getTag() != null) {
+
+            Intent intent = new Intent("ru.android.cyfral.servisnik.worksatactivity");
+            intent.putExtra("GUID", marker.getTag().toString());
+            startActivity(intent);
+
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    marker.getTag().toString(), Toast.LENGTH_SHORT);
+            toast.show();
+        }
         return false;
     }
 }

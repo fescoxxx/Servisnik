@@ -1,4 +1,4 @@
-package ru.android.cyfral.servisnik.model.listwork;
+package ru.android.cyfral.servisnik.model.listwork.listworkmap;
 
 import java.io.Serializable;
 

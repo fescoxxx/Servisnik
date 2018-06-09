@@ -171,11 +171,15 @@
         <activity android:name=".ui.infoentrance.SpecialSubscriberActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.specialsubscriber" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.listwork.WorksAtActivity" />
+        <activity android:name=".ui.listwork.WorksAtActivity" >
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.worksatactivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.listwork.NearListActivity" />
         <activity android:name=".ui.entranceto.EntranceTOActivity" />
         <activity android:name=".ui.entranceto.EntranceSearchActivity" />
