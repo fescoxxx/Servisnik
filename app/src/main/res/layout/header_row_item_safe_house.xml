@@ -10,7 +10,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.3dp"
             android:background="#1F000000"
             android:visibility="visible" />
 
@@ -29,7 +29,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.3dp"
             android:background="#1F000000"
             android:visibility="visible" />
 

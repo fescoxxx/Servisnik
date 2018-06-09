@@ -9,6 +9,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
+import ru.android.cyfral.servisnik.model.listwork.ListWorks;
 import ru.android.cyfral.servisnik.model.orderCard.AgreedDate;
 import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
@@ -77,9 +78,12 @@ public interface ServiceApiClient {
                                  @Header("Authorization") String token);
 
     //Получить инфориацию о подъезде
-    @GET("/api/entrances/{GUID}")
+    @GET("api/entrances/{GUID}")
     Call<InfoEntrance> getInfoEntrance(@Path("GUID") String GUID,
                                        @Header("Authorization") String token);
+
+    @GET("api/map")
+    Call<ListWorks> getListWorks(@Header("Authorization") String token);
 
 
 }
