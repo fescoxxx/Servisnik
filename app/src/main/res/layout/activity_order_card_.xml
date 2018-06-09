@@ -227,6 +227,7 @@
                         android:paddingLeft="16dp"
                         android:text="Плановые затраты ТМЦ"
                         android:textAlignment="textStart"
+                        android:stateListAnimator="@null"
                         android:textSize="16sp"
                         android:visibility="visible" />
 
@@ -239,6 +240,7 @@
                         android:paddingLeft="16dp"
                         android:text="Контакты"
                         android:textAlignment="textStart"
+                        android:stateListAnimator="@null"
                         android:textSize="16sp" />
 
                     <Button
@@ -250,6 +252,7 @@
                         android:paddingLeft="16dp"
                         android:text="Оборудование"
                         android:textAlignment="textStart"
+                        android:stateListAnimator="@null"
                         android:textSize="16sp" />
 
                     <Button
@@ -261,6 +264,7 @@
                         android:paddingLeft="16dp"
                         android:text="Безопасный дом"
                         android:textAlignment="textStart"
+                        android:stateListAnimator="@null"
                         android:textSize="16sp" />
 
                     <Button

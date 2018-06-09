@@ -34,7 +34,6 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingBottom="8dp"
-            android:paddingTop="4dp"
             android:text="descr"
             android:textColor="#8A000000" />
 
