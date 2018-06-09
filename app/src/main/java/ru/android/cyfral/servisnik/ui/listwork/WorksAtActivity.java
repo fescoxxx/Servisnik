@@ -1,22 +1,28 @@
 package ru.android.cyfral.servisnik.ui.listwork;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -36,13 +42,14 @@ import ru.android.cyfral.servisnik.model.executionresult.choisetmc.ChoiseTmc;
 import ru.android.cyfral.servisnik.model.executionresult.choisetmc.ChoiseTmcAdapter;
 import ru.android.cyfral.servisnik.model.executionresult.choisetmc.Data;
 import ru.android.cyfral.servisnik.model.executionresult.result.getResult.Tmas;
+import ru.android.cyfral.servisnik.model.listwork.worksat.entrancelist.EntranceList;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 import ru.android.cyfral.servisnik.ui.executionresult.ChoiceTMCActivity;
 
-public class WorksAtActivity extends AppCompatActivity {
+public class WorksAtActivity extends AppCompatActivity implements View.OnClickListener{
 
     private LinearLayout mLinearLayout;
     private SharedPreferences sPref;
@@ -58,11 +65,16 @@ public class WorksAtActivity extends AppCompatActivity {
             .getClient(Constants.HTTP.BASE_URL_REQUEST)
             .create(ServiceApiClient.class);
 
+    private Call<EntranceList> entranceListCall;
+    private LinearLayout linearLayout_entranceto;
+    private Button btnEntrance;
+    private Context mContect;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_works_at);
-
+        mContect = this;
         setTitle("Работы по адресу");
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ActionBar actionBar = getSupportActionBar();
@@ -73,6 +85,7 @@ public class WorksAtActivity extends AppCompatActivity {
         mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_works_at);
         refreshLayout = (SwipeRefreshLayout)  findViewById(R.id.srl_workat);
         progressBar_works_at = (ProgressBar) findViewById(R.id.progressBar_works_at);
+        linearLayout_entranceto = (LinearLayout) findViewById(R.id.linearLayout_entranceto);
 
         progressBar_works_at.setVisibility(View.VISIBLE);
         refreshLayout.setVisibility(View.INVISIBLE);
@@ -162,58 +175,42 @@ public class WorksAtActivity extends AppCompatActivity {
 
     private void loadListEntrance() {
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
-     /*   getChoiseTmc = serviceApiClient
-                .getChoiseTmc(currentResult
-                                .getData()
-                                .getWorks()
-                                .getType()
-                                .getId(),
+        entranceListCall = serviceApiClient
+                .getListEntrance(guid,
                         "Bearer " + token);
-        getChoiseTmc.enqueue(new Callback<ChoiseTmc>() {
+        entranceListCall.enqueue(new Callback<EntranceList>() {
             @Override
-            public void onResponse(Call<ChoiseTmc> call, Response<ChoiseTmc> response) {
+            public void onResponse(Call<EntranceList> call, Response<EntranceList> response) {
                 if (response.isSuccessful()) {
                     if (response.body().getIsSuccess().equals("true")){
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        lv_choice_tmc.setVisibility(View.VISIBLE);
-                        List<Data> listData = new ArrayList<>();
-                        listData = response.body().getData();
-                        final ChoiseTmcAdapter mAdapter = new ChoiseTmcAdapter(ChoiceTMCActivity.this, currentResult);
-                        ListView lv_choice_tmc = (ListView) findViewById(R.id.lv_choice_tmc);
-                        if (!listData.isEmpty()) {
-                            for (int i =0; i<listData.size(); i++) {
-                                mAdapter.addData(listData.get(i));
-                            }
+                        EntranceList entranceList = response.body();
+
+                        progressBar_works_at.setVisibility(View.INVISIBLE);
+                        refreshLayout.setVisibility(View.VISIBLE);
+                        for(int i =0; i<entranceList.getData().get(0).getEntrances().size(); i++)
+                        {
+                            View content = LayoutInflater.from(mContect).inflate(R.layout.row_item_works_at, null);
+                            btnEntrance = (Button) content.findViewById (R.id.button_entrance);
+
+                            btnEntrance.setText(entranceList.getData().get(0).getEntrances().get(i).getNumber());
+                            btnEntrance.setTag(entranceList.getData().get(0).getEntrances().get(i).getId());
+                            btnEntrance.setOnClickListener(WorksAtActivity.this);
+                            linearLayout_entranceto.addView(content);
+
+
                         }
-                        lv_choice_tmc.setAdapter(mAdapter);
-                        //обработчик listView
-                        lv_choice_tmc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            public void onItemClick(AdapterView<?> parent, View view,
-                                                    int position, long id) {
 
-                                View convertView =view;
-                                Tmas tmas = new Tmas();
-                                tmas.setId(mAdapter.getItem(position).getId());
-                                tmas.setName(mAdapter.getItem(position).getName());
-                                currentResult.getData().getTmas().add(tmas);
-
-                                Intent intent = new Intent();
-                                intent.putExtra("currentResult", currentResult);
-                                setResult(RESULT_OK, intent);
-
-                                finish();
-
-                            }
-                        });
 
                     } else {
                         //сервер вернул ошибку от АПИ
-                        mProgressBar.setVisibility(View.INVISIBLE);
+                        progressBar_works_at.setVisibility(View.INVISIBLE);
+                        refreshLayout.setVisibility(View.VISIBLE);
                         showErrorDialog(response.body().getErrors().getCode());
                     }
                 } else {
                     //сервер вернул ошибку
-                    mProgressBar.setVisibility(View.INVISIBLE);
+                    progressBar_works_at.setVisibility(View.INVISIBLE);
+                    refreshLayout.setVisibility(View.VISIBLE);
                     int rc = response.code();
                     if (rc == 401) {
                         startActivity(new Intent("ru.android.cyfral.servisnik.login"));
@@ -223,12 +220,13 @@ public class WorksAtActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ChoiseTmc> call, Throwable t) {
+            public void onFailure(Call<EntranceList> call, Throwable t) {
                 //Произошла непредвиденная ошибка
-                mProgressBar.setVisibility(View.INVISIBLE);
+                progressBar_works_at.setVisibility(View.INVISIBLE);
+                refreshLayout.setVisibility(View.VISIBLE);
                 showErrorDialog("");
             }
-        });*/
+        });
     }
 
     @Override
@@ -261,5 +259,17 @@ public class WorksAtActivity extends AppCompatActivity {
                     }
                 });
         builder.show();
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (view.getTag() != null) {
+
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    view.getTag().toString(), Toast.LENGTH_SHORT);
+            toast.show();
+        };
+
     }
 }

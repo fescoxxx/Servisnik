@@ -10,6 +10,8 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.listwork.listworkmap.ListWorks;
+import ru.android.cyfral.servisnik.model.listwork.worksat.entrancelist.EntranceList;
+import ru.android.cyfral.servisnik.model.listwork.worksat.ordercardlist.OrderCardList;
 import ru.android.cyfral.servisnik.model.orderCard.AgreedDate;
 import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.StandartAnswer;
@@ -82,9 +84,19 @@ public interface ServiceApiClient {
     Call<InfoEntrance> getInfoEntrance(@Path("GUID") String GUID,
                                        @Header("Authorization") String token);
 
+    //список работ на картен
     @GET("api/map")
     Call<ListWorks> getListWorks(@Header("Authorization") String token);
 
+    //дом со списком подъездов
+    @GET("api/entrances")
+    Call<EntranceList> getListEntrance(@Query("houseID") String guid,
+                                       @Header("Authorization") String token);
+
+    //Список всех заказ-нарядов в рамках одного дома
+    @GET("api/repairRequests")
+    Call<OrderCardList> getOrderCardList(@Query("houseID") String guid,
+                                         @Header("Authorization") String token);
 
 }
 
