@@ -460,14 +460,9 @@ public class ListWorkMapActivity extends AppCompatActivity implements
     @Override
     public boolean onMarkerClick(Marker marker) {
         if (marker.getTag() != null) {
-
             Intent intent = new Intent("ru.android.cyfral.servisnik.worksatactivity");
             intent.putExtra("GUID", marker.getTag().toString());
             startActivity(intent);
-
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    marker.getTag().toString(), Toast.LENGTH_SHORT);
-            toast.show();
         }
         return false;
     }

@@ -87,19 +87,25 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         progressBar_works_at = (ProgressBar) findViewById(R.id.progressBar_works_at);
         linearLayout_entranceto = (LinearLayout) findViewById(R.id.linearLayout_entranceto);
 
-        progressBar_works_at.setVisibility(View.VISIBLE);
-        refreshLayout.setVisibility(View.INVISIBLE);
-
         Intent intent = getIntent();
         guid = intent.getStringExtra("GUID");
 
+        progressBar_works_at.setVisibility(View.VISIBLE);
+        refreshLayout.setVisibility(View.INVISIBLE);
         getListEntrance();
-
+        // указываем слушатель свайпов пользователя
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getListEntrance();
+            }
+        });
 
 
     }
 
     private void getListEntrance() {
+
 
 
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
@@ -148,6 +154,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
                          //   mProgressBar.setVisibility(View.INVISIBLE);
                             int rc = response.code();
                             if (rc == 401) {
+                                refreshLayout.setRefreshing(false);
                                 startActivity(new Intent("ru.android.cyfral.servisnik.login"));
                                 finish();
                             }
@@ -156,6 +163,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
 
                     @Override
                     public void onFailure(Call<RefreshToken> call, Throwable t) {
+                        refreshLayout.setRefreshing(false);
                         showErrorDialog("");
                     }
                 });
@@ -174,6 +182,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void loadListEntrance() {
+        linearLayout_entranceto.removeAllViews(); //отчищаем списко подъездов
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         entranceListCall = serviceApiClient
                 .getListEntrance(guid,
@@ -191,26 +200,25 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
                         {
                             View content = LayoutInflater.from(mContect).inflate(R.layout.row_item_works_at, null);
                             btnEntrance = (Button) content.findViewById (R.id.button_entrance);
-
                             btnEntrance.setText(entranceList.getData().get(0).getEntrances().get(i).getNumber());
                             btnEntrance.setTag(entranceList.getData().get(0).getEntrances().get(i).getId());
                             btnEntrance.setOnClickListener(WorksAtActivity.this);
                             linearLayout_entranceto.addView(content);
-
-
                         }
-
+                        refreshLayout.setRefreshing(false);
 
                     } else {
                         //сервер вернул ошибку от АПИ
+                        refreshLayout.setRefreshing(false);
                         progressBar_works_at.setVisibility(View.INVISIBLE);
-                        refreshLayout.setVisibility(View.VISIBLE);
+                        //refreshLayout.setVisibility(View.VISIBLE);
                         showErrorDialog(response.body().getErrors().getCode());
                     }
                 } else {
                     //сервер вернул ошибку
+                    refreshLayout.setRefreshing(false);
                     progressBar_works_at.setVisibility(View.INVISIBLE);
-                    refreshLayout.setVisibility(View.VISIBLE);
+                   // refreshLayout.setVisibility(View.VISIBLE);
                     int rc = response.code();
                     if (rc == 401) {
                         startActivity(new Intent("ru.android.cyfral.servisnik.login"));
@@ -222,8 +230,9 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onFailure(Call<EntranceList> call, Throwable t) {
                 //Произошла непредвиденная ошибка
+                refreshLayout.setRefreshing(false);
                 progressBar_works_at.setVisibility(View.INVISIBLE);
-                refreshLayout.setVisibility(View.VISIBLE);
+                //refreshLayout.setVisibility(View.VISIBLE);
                 showErrorDialog("");
             }
         });
