@@ -75,7 +75,8 @@ public class ListWorkMapActivity extends AppCompatActivity implements
     private Call<ListWorks> listWorksCall;
 
     private FloatingActionButton floatingActionButtonCenterMap;
-   private ListWorks currentListWorks;
+    private FloatingActionButton floatingActionButtonNearList;
+    private ListWorks currentListWorks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +90,9 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         floatingActionButtonCenterMap = (FloatingActionButton) findViewById(R.id.floatingActionButtonCenterMap);
+        floatingActionButtonNearList = (FloatingActionButton) findViewById(R.id.floatingActionButtonNearList);
         floatingActionButtonCenterMap.setOnClickListener(this);
+        floatingActionButtonNearList.setOnClickListener(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -426,13 +429,16 @@ public class ListWorkMapActivity extends AppCompatActivity implements
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.floatingActionButtonMap:
-
-
+            case R.id.floatingActionButtonNearList:
+                Intent intent = new Intent("ru.android.cyfral.servisnik.nearlistactivity");
+                intent.putExtra(Constants.SETTINGS.LATITUDE,
+                        Double.parseDouble(loadTextPref(Constants.SETTINGS.LATITUDE)));
+                intent.putExtra(Constants.SETTINGS.LONGITUDE,
+                        Double.parseDouble(loadTextPref(Constants.SETTINGS.LONGITUDE)));
+                startActivity(intent);
                 break;
 
             case R.id.floatingActionButtonCenterMap:
-
                 centerMeMap();
                 break;
 

@@ -180,7 +180,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.listwork.NearListActivity" />
+        <activity android:name=".ui.listwork.NearListActivity" >
+            <intent-filter>
+                <action android:name="ru.android.cyfral.servisnik.nearlistactivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.entranceto.EntranceTOActivity" />
         <activity android:name=".ui.entranceto.EntranceSearchActivity" />
         <!--

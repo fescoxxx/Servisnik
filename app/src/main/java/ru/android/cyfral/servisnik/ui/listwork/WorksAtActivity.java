@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -39,6 +40,7 @@ import ru.android.cyfral.servisnik.model.listwork.adapter.OrderCardListAdapter;
 import ru.android.cyfral.servisnik.model.listwork.worksat.ordercardlist.Data;
 import ru.android.cyfral.servisnik.model.listwork.worksat.entrancelist.EntranceList;
 import ru.android.cyfral.servisnik.model.listwork.worksat.ordercardlist.OrderCardList;
+import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
@@ -102,7 +104,17 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {return;}
+        if(requestCode == 10) {
+            Log.d("onActivityResult_10", "All ok");
+            progressBar_works_at.setVisibility(View.VISIBLE);
+            refreshLayout.setVisibility(View.INVISIBLE);
+            getListEntrance();
+        }
     }
 
     private void getListEntrance() {
@@ -186,14 +198,11 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
                 result.add(notSortListData.get(i));
             }
         }
-
         for(int i=0; i<notSortListData.size(); i++) {
             if(notSortListData.get(i).getIsViewed().equals("true")) {
                 result.add(notSortListData.get(i));
             }
         }
-
-
         return result;
     }
 
@@ -209,7 +218,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
                     if (response.body().getIsSuccess().equals("true")){
                         OrderCardList orderCardList = response.body();
                         List<Data> dataList;
-                        OrderCardListAdapter orderCardListAdapter;
+                        final OrderCardListAdapter orderCardListAdapter;
 
                         dataList = orderCardList.getData();
                         orderCardListAdapter = new OrderCardListAdapter(mContect, sortListData(dataList));
@@ -225,6 +234,15 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
                                 if (list_view_works_at.getChildAt(0) != null) {
                                     refreshLayout.setEnabled(list_view_works_at.getFirstVisiblePosition() == 0 && list_view_works_at.getChildAt(0).getTop() == 0);
                                 }
+                            }
+                        });
+
+                        list_view_works_at.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent intent = new Intent("ru.android.cyfral.servisnik.card");
+                                intent.putExtra(Constants.SETTINGS.GUID, orderCardListAdapter.getData(position).getId());
+                                startActivityForResult(intent, 10);
                             }
                         });
 
@@ -340,8 +358,6 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void loadListEntrance() {
-
-        linearLayout_entranceto.removeAllViews(); //отчищаем списко подъездов
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         entranceListCall = serviceApiClient
                 .getListEntrance(guid,
@@ -351,6 +367,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
             public void onResponse(Call<EntranceList> call, Response<EntranceList> response) {
                 if (response.isSuccessful()) {
                     if (response.body().getIsSuccess().equals("true")){
+                        linearLayout_entranceto.removeAllViews(); //отчищаем списко подъездов
                         EntranceList entranceList = response.body();
                         showCityAndAdress(entranceList);
                         progressBar_works_at.setVisibility(View.INVISIBLE);
@@ -433,10 +450,14 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
 
         if (view.getTag() != null) {
+            OrderCard currentOrderCard = new OrderCard();
+            ru.android.cyfral.servisnik.model.orderCard.Data data = new ru.android.cyfral.servisnik.model.orderCard.Data();
+            data.setEntranceId(view.getTag().toString());
+            currentOrderCard.setData(data);
+            Intent intent = new Intent("ru.android.cyfral.servisnik.infoentrance");
+            intent.putExtra("ordercard", currentOrderCard);
+            startActivityForResult(intent, 10);
 
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    view.getTag().toString(), Toast.LENGTH_SHORT);
-            toast.show();
         };
 
     }

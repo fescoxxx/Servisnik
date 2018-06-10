@@ -228,20 +228,12 @@ public class OrderCardListAdapter extends BaseAdapter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent("ru.android.cyfral.servisnik.card");
-                intent.putExtra(Constants.SETTINGS.GUID, data.getId());
-                ctx.startActivity(intent);
-            }
-        });
 
         return view;
     }
 
     // по позиции
-    Data getData(int position) {
+    public Data getData(int position) {
         return ((Data) getItem(position));
     }
 }

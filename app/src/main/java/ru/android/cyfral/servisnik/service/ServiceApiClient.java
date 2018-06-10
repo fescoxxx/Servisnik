@@ -98,5 +98,10 @@ public interface ServiceApiClient {
     Call<OrderCardList> getOrderCardList(@Query("houseID") String guid,
                                          @Header("Authorization") String token);
 
+    @GET("api/repairRequests")
+    Call<OrderCardList> getOrderCardNearList(@Query("latitude") String latitude,
+                                             @Query("longitude") String longitude,
+                                             @Header("Authorization") String token);
+
 }
 
