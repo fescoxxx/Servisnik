@@ -19,6 +19,7 @@ import java.util.List;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchInfoEntranceListener;
 import ru.android.cyfral.servisnik.model.DataFetchListener;
+import ru.android.cyfral.servisnik.model.DataFetchSearchActivity;
 import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.repairRequests.Address;
@@ -208,13 +209,13 @@ public class DataDatabase extends SQLiteOpenHelper {
 
 
     //получение списка repair request с фильтром
-    public void fetchDatasForFiltr(DataFetchListener listener, String filtr, String filtrType) {
+    public void fetchDatasForFiltr(DataFetchSearchActivity listener, String filtr, String filtrType) {
         DataFetcherForFiltr fetcher = new DataFetcherForFiltr(listener, this.getWritableDatabase(), filtr, filtrType);
         fetcher.start();
     }
 
     //получение кешированного списка Repair Request для главного экрана список ЗН
-    public void fetchDatas(DataFetchListener listener) {
+    public void fetchDatas(DataFetchSearchActivity listener) {
         DataFetcher fetcher = new DataFetcher(listener, this.getWritableDatabase());
         fetcher.start();
     }
@@ -329,12 +330,12 @@ public class DataDatabase extends SQLiteOpenHelper {
 
     public class DataFetcherForFiltr extends Thread {
 
-        private final DataFetchListener mListener;
+        private final DataFetchSearchActivity mListener;
         private final SQLiteDatabase mDb;
         private String filtr = "";
         private String filtrType = "";
 
-        public DataFetcherForFiltr(DataFetchListener listener, SQLiteDatabase db, String filtr, String filtrType) {
+        public DataFetcherForFiltr(DataFetchSearchActivity listener, SQLiteDatabase db, String filtr, String filtrType) {
             mListener = listener;
             mDb = db;
             this.filtr = filtr;
@@ -413,7 +414,7 @@ public class DataDatabase extends SQLiteOpenHelper {
                         }
                         data.setContacts(constantsList);
                         dataList.add(data);
-                        publishData(data);
+                        //publishData(data);
 
                     } while (cursorData.moveToNext());
                 }
@@ -424,12 +425,12 @@ public class DataDatabase extends SQLiteOpenHelper {
                 @Override
                 public void run() {
                     mListener.onDeliverAllDatas(dataList);
-                    mListener.onHideDialog();
+                 //   mListener.onHideDialog();
                 }
             });
 
         }
-        public void publishData(final Data data) {
+/*        public void publishData(final Data data) {
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(new Runnable() {
                 @Override
@@ -437,17 +438,17 @@ public class DataDatabase extends SQLiteOpenHelper {
                     mListener.onDeliverData(data);
                 }
             });
-        }
+        }*/
 
     }
 
 
     public class DataFetcher extends Thread {
 
-        private final DataFetchListener mListener;
+        private final DataFetchSearchActivity mListener;
         private final SQLiteDatabase mDb;
 
-        public DataFetcher(DataFetchListener listener, SQLiteDatabase db) {
+        public DataFetcher(DataFetchSearchActivity listener, SQLiteDatabase db) {
             mListener = listener;
             mDb = db;
         }
@@ -521,7 +522,7 @@ public class DataDatabase extends SQLiteOpenHelper {
                 @Override
                 public void run() {
                     mListener.onDeliverAllDatas(dataList);
-                    mListener.onHideDialog();
+
                 }
             });
 
@@ -531,7 +532,7 @@ public class DataDatabase extends SQLiteOpenHelper {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mListener.onDeliverData(data);
+                   // mListener.onDeliverData(data);
                 }
             });
         }

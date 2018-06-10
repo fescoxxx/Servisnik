@@ -99,8 +99,13 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
         if (!group.equals("") & !element.equals("") & !type.equals("")) {
             mWorksStr = element + " | "+ type;
         } else {
-
             mWorksStr = group + " | "+element + " | "+ type;
+            if (type.equals("")) {
+                mWorksStr = group + " | "+element;
+            }
+            if (type.equals("") & element.equals("")) {
+                mWorksStr = group;
+            }
         }
 
 

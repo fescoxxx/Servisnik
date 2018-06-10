@@ -84,7 +84,7 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
         try{
             if (!mData.get(position).getAddress().getBuilding().equals("")
                     &!mData.get(position).getAddress().getBuilding().equals("null")) {
-                building = "к" + mData.get(position).getAddress().getBuilding()+" ";
+                building = "к." + mData.get(position).getAddress().getBuilding()+" ";
             }
         } catch (java.lang.NullPointerException ex) {}
 
@@ -121,8 +121,13 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
         if (!group.equals("") & !element.equals("") & !type.equals("")) {
             mWorksStr = element + " | "+ type;
         } else {
-
             mWorksStr = group + " | "+element + " | "+ type;
+            if (type.equals("")) {
+                mWorksStr = group + " | "+element;
+            }
+            if (type.equals("") & element.equals("")) {
+                mWorksStr = group;
+            }
         }
 
         holder.mWorks.setText(mWorksStr.replace(" |  | ", ""));
@@ -176,6 +181,12 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
 
     public void addData(Data data) {
         mData.add(data);
+        notifyDataSetChanged();
+    }
+
+    public void  allAddData(List<Data> dataList) {
+        mData.clear();
+        mData = dataList;
         notifyDataSetChanged();
     }
 

@@ -20,12 +20,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl_workat"
         android:layout_width="match_parent"
         android:background="#ECEFF1"
         android:layout_height="match_parent">
-
     <LinearLayout
         android:id="@+id/linearLayout_works_at"
         android:layout_width="match_parent"
@@ -95,7 +95,6 @@
             android:orientation="horizontal">
 
 
-
             <HorizontalScrollView
                 android:id="@+id/hsw_entranceto"
                 android:layout_width="match_parent"
@@ -111,7 +110,9 @@
 
                 </LinearLayout>
             </HorizontalScrollView>
+
         </LinearLayout>
+
         <View
             android:id="@+id/divider4"
             android:layout_width="match_parent"
@@ -138,10 +139,10 @@
             android:background="#E0E0E0" />
 
         <ListView
+            android:id="@+id/list_view_works_at"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-    </LinearLayout>
-
+        </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
+
 </android.support.constraint.ConstraintLayout>

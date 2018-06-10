@@ -25,12 +25,12 @@ import java.util.List;
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
-import ru.android.cyfral.servisnik.model.DataFetchListener;
+import ru.android.cyfral.servisnik.model.DataFetchSearchActivity;
 import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.orderCard.adapter.RepairRequestAdapter;
 import ru.android.cyfral.servisnik.model.repairRequests.Data;
 
-public class SearchActivity extends AppCompatActivity  implements  RepairRequestAdapter.RepairRequestClickListener, DataFetchListener {
+public class SearchActivity extends AppCompatActivity  implements  RepairRequestAdapter.RepairRequestClickListener, DataFetchSearchActivity {
     private SearchView searchView;
     private String searchHint;
     private RepairRequestAdapter mRepairRequestAdapter;
@@ -163,25 +163,26 @@ public class SearchActivity extends AppCompatActivity  implements  RepairRequest
 
     }
 
+    private List<Data> sortListData(List<Data> notSortListData){
+        List<Data> result = new ArrayList<>();
+
+        for(int i=0; i<notSortListData.size(); i++) {
+            if(notSortListData.get(i).getIsViewed().equals("false")) {
+                result.add(notSortListData.get(i));
+            }
+        }
+        for(int i=0; i<notSortListData.size(); i++) {
+            if(notSortListData.get(i).getIsViewed().equals("true")) {
+                result.add(notSortListData.get(i));
+            }
+        }
+
+        return result;
+    }
 
     @Override
     public void onDeliverAllDatas(List<Data> datas) {
-
-    }
-
-    @Override
-    public void onDeliverData(Data data) {
-        mRepairRequestAdapter.addData(data);
-    }
-
-    @Override
-    public void onDeliverOrderCard(OrderCard orderCard) {
-
-    }
-
-    @Override
-    public void onHideDialog() {
-
+        mRepairRequestAdapter.allAddData(sortListData(datas));
     }
 
 

@@ -42,6 +42,7 @@ import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchListener;
+import ru.android.cyfral.servisnik.model.DataFetchSearchActivity;
 import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.Utils;
@@ -132,7 +133,7 @@ public class RepairRequestActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static class RepairRequestFragment extends Fragment implements DataCategoryAdapter.ItemClickListener, DataFetchListener {
+    public static class RepairRequestFragment extends Fragment implements DataCategoryAdapter.ItemClickListener, DataFetchSearchActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         public RepairRequestFragment() {
         }
@@ -158,7 +159,8 @@ public class RepairRequestActivity extends AppCompatActivity {
                 public void onResponse(Call<RepairRequest> call, Response<RepairRequest> response) {
                     if (response.isSuccessful()) {
                         if (response.body().getIsSuccess().equals("true")){
-                            showRepairRequest(response.body().getData(), true);
+                            showRepairRequest(sortListData(response.body().getData()),
+                                    true);
                         } else {
                             showErrorDialog(response.body().getErrors().getCode());
                             getFeedFromDatabase();
@@ -405,26 +407,26 @@ public class RepairRequestActivity extends AppCompatActivity {
         }
         @Override
         public void onDeliverAllDatas(List<Data> datas) {
-            showRepairRequest(datas, false);
-        }
-
-        @Override
-        public void onDeliverData(Data data) {
-
-        }
-
-        @Override
-        public void onDeliverOrderCard(OrderCard orderCard) {
-
-        }
-
-        @Override
-        public void onHideDialog() {
-
+            showRepairRequest(sortListData(datas), false);
         }
 
 
+        private List<Data> sortListData(List<Data> notSortListData){
+            List<Data> result = new ArrayList<>();
 
+            for(int i=0; i<notSortListData.size(); i++) {
+                if(notSortListData.get(i).getIsViewed().equals("false")) {
+                    result.add(notSortListData.get(i));
+                }
+            }
+            for(int i=0; i<notSortListData.size(); i++) {
+                if(notSortListData.get(i).getIsViewed().equals("true")) {
+                    result.add(notSortListData.get(i));
+                }
+            }
+
+            return result;
+        }
        /* @Override
         public void onClick(int position) {
             Data selectedData = mRepairRequestAdapter.getSelectedData(position);

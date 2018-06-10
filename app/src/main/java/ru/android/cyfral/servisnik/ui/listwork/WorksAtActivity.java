@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -15,15 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.AbsListView;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,16 +34,14 @@ import retrofit2.Response;
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.RefreshToken;
-import ru.android.cyfral.servisnik.model.executionresult.choisetmc.ChoiseTmc;
-import ru.android.cyfral.servisnik.model.executionresult.choisetmc.ChoiseTmcAdapter;
-import ru.android.cyfral.servisnik.model.executionresult.choisetmc.Data;
-import ru.android.cyfral.servisnik.model.executionresult.result.getResult.Tmas;
+import ru.android.cyfral.servisnik.model.listwork.adapter.OrderCardListAdapter;
+import ru.android.cyfral.servisnik.model.listwork.worksat.ordercardlist.Data;
 import ru.android.cyfral.servisnik.model.listwork.worksat.entrancelist.EntranceList;
+import ru.android.cyfral.servisnik.model.listwork.worksat.ordercardlist.OrderCardList;
 import ru.android.cyfral.servisnik.remote.RetrofitClientServiseApi;
 import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
-import ru.android.cyfral.servisnik.ui.executionresult.ChoiceTMCActivity;
 
 public class WorksAtActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -56,6 +50,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     private String guid; //houseID текущий
     private SwipeRefreshLayout refreshLayout;
     private ProgressBar progressBar_works_at;
+    private ListView list_view_works_at; //список заказов по дому
 
     TokenClient tokenClient = RetrofitClientToken
             .getClient(Constants.HTTP.BASE_URL_TOKEN)
@@ -66,6 +61,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
             .create(ServiceApiClient.class);
 
     private Call<EntranceList> entranceListCall;
+    private Call<OrderCardList> orderCardListCall;
     private LinearLayout linearLayout_entranceto;
     private Button btnEntrance;
     private Context mContect;
@@ -86,6 +82,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         refreshLayout = (SwipeRefreshLayout)  findViewById(R.id.srl_workat);
         progressBar_works_at = (ProgressBar) findViewById(R.id.progressBar_works_at);
         linearLayout_entranceto = (LinearLayout) findViewById(R.id.linearLayout_entranceto);
+        list_view_works_at = (ListView)  findViewById(R.id.list_view_works_at);
 
         Intent intent = getIntent();
         guid = intent.getStringExtra("GUID");
@@ -177,7 +174,90 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
+    private List<Data> sortListData(List<Data> notSortListData){
+        List<Data> result = new ArrayList<>();
+
+        for(int i=0; i<notSortListData.size(); i++) {
+            if(notSortListData.get(i).getIsViewed().equals("false")) {
+                result.add(notSortListData.get(i));
+            }
+        }
+
+        for(int i=0; i<notSortListData.size(); i++) {
+            if(notSortListData.get(i).getIsViewed().equals("true")) {
+                result.add(notSortListData.get(i));
+            }
+        }
+
+
+        return result;
+    }
+
     private void LoadListOrderCard() {
+        String token = loadTextPref(Constants.SETTINGS.TOKEN);
+        orderCardListCall = serviceApiClient
+                .getOrderCardList(guid,
+                        "Bearer " + token);
+        orderCardListCall.enqueue(new Callback<OrderCardList>() {
+            @Override
+            public void onResponse(Call<OrderCardList> call, Response<OrderCardList> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getIsSuccess().equals("true")){
+                        OrderCardList orderCardList = response.body();
+                        List<Data> dataList;
+                        OrderCardListAdapter orderCardListAdapter;
+
+                        dataList = orderCardList.getData();
+                        orderCardListAdapter = new OrderCardListAdapter(mContect, sortListData(dataList));
+                        list_view_works_at.setAdapter(orderCardListAdapter);
+
+                        //Для коректной работы list_view и refreshLayout вместе
+                        list_view_works_at.setOnScrollListener(new AbsListView.OnScrollListener() {
+                            @Override
+                            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                            }
+                            @Override
+                            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                                if (list_view_works_at.getChildAt(0) != null) {
+                                    refreshLayout.setEnabled(list_view_works_at.getFirstVisiblePosition() == 0 && list_view_works_at.getChildAt(0).getTop() == 0);
+                                }
+                            }
+                        });
+
+                        progressBar_works_at.setVisibility(View.INVISIBLE);
+                        refreshLayout.setVisibility(View.VISIBLE);
+                        refreshLayout.setRefreshing(false);
+
+                    } else {
+                        //сервер вернул ошибку от АПИ
+                        refreshLayout.setRefreshing(false);
+                        progressBar_works_at.setVisibility(View.INVISIBLE);
+                        //refreshLayout.setVisibility(View.VISIBLE);
+                        showErrorDialog(response.body().getErrors().getCode());
+                    }
+                } else {
+                    //сервер вернул ошибку
+                    refreshLayout.setRefreshing(false);
+                    progressBar_works_at.setVisibility(View.INVISIBLE);
+                    // refreshLayout.setVisibility(View.VISIBLE);
+                    int rc = response.code();
+                    if (rc == 401) {
+                        startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderCardList> call, Throwable t) {
+                //Произошла непредвиденная ошибка
+                refreshLayout.setRefreshing(false);
+                progressBar_works_at.setVisibility(View.INVISIBLE);
+                //refreshLayout.setVisibility(View.VISIBLE);
+                showErrorDialog("");
+            }
+        });
+
 
     }
 
