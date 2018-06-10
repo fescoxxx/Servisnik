@@ -1,6 +1,7 @@
 package ru.android.cyfral.servisnik.model.listwork.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
+import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.listwork.worksat.ordercardlist.Data;
 
 public class OrderCardListAdapter extends BaseAdapter {
@@ -226,6 +228,15 @@ public class OrderCardListAdapter extends BaseAdapter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("ru.android.cyfral.servisnik.card");
+                intent.putExtra(Constants.SETTINGS.GUID, data.getId());
+                ctx.startActivity(intent);
+            }
+        });
+
         return view;
     }
 

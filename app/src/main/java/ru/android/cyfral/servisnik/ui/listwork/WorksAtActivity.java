@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -65,6 +66,8 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     private LinearLayout linearLayout_entranceto;
     private Button btnEntrance;
     private Context mContect;
+    private TextView textView_adress;
+    private TextView textView_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +86,8 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         progressBar_works_at = (ProgressBar) findViewById(R.id.progressBar_works_at);
         linearLayout_entranceto = (LinearLayout) findViewById(R.id.linearLayout_entranceto);
         list_view_works_at = (ListView)  findViewById(R.id.list_view_works_at);
-
+        textView_adress = (TextView)  findViewById(R.id.textView_adress);
+        textView_number = (TextView)  findViewById(R.id.textView_number);
         Intent intent = getIntent();
         guid = intent.getStringExtra("GUID");
 
@@ -261,7 +265,82 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    private void showCityAndAdress(EntranceList entranceList) {
+
+
+        String city = "";
+        String cityType = "";
+        String street = "";
+        String streetType = "";
+        String number = "";
+        String letter = "";
+        String building = "";
+
+        try{
+            if (!entranceList.getData().get(0).getAddress().getCity().equals("")
+                    &!entranceList.getData().get(0).getAddress().getCity().equals("null")) {
+                city = entranceList.getData().get(0).getAddress().getCity();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            if (!entranceList.getData().get(0).getAddress().getCityType().equals("")
+                    &!entranceList.getData().get(0).getAddress().getCityType().equals("null")) {
+                cityType = entranceList.getData().get(0).getAddress().getCityType();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+
+        try{
+            if (!entranceList.getData().get(0).getAddress().getStreet().equals("")
+                    &!entranceList.getData().get(0).getAddress().getStreet().equals("null")) {
+                street = entranceList.getData().get(0).getAddress().getStreet();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            if (!entranceList.getData().get(0).getAddress().getStreetType().equals("")
+                    &!entranceList.getData().get(0).getAddress().getStreetType().equals("null")) {
+                streetType = entranceList.getData().get(0).getAddress().getStreetType();
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            if (!entranceList.getData().get(0).getAddress().getNumber().equals("")
+                    &!entranceList.getData().get(0).getAddress().getNumber().equals("null")) {
+                number = "д."+entranceList.getData().get(0).getAddress().getNumber()+" ";
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            if (!entranceList.getData().get(0).getAddress().getLetter().equals("")
+                    &!entranceList.getData().get(0).getAddress().getLetter().equals("null")) {
+                letter = "л."+entranceList.getData().get(0).getAddress().getLetter()+" ";
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            if (!entranceList.getData().get(0).getAddress().getBuilding().equals("")
+                    &!entranceList.getData().get(0).getAddress().getBuilding().equals("null")) {
+                building = "к" +entranceList.getData().get(0).getAddress().getBuilding()+" ";
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        textView_adress.setText(cityType + " "+
+                city + " "+
+                streetType + " " +
+                street + " ");
+
+        textView_number.setText(
+                        number+
+                        letter+
+                        building
+        );
+
+    }
+
     private void loadListEntrance() {
+
         linearLayout_entranceto.removeAllViews(); //отчищаем списко подъездов
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         entranceListCall = serviceApiClient
@@ -273,7 +352,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
                 if (response.isSuccessful()) {
                     if (response.body().getIsSuccess().equals("true")){
                         EntranceList entranceList = response.body();
-
+                        showCityAndAdress(entranceList);
                         progressBar_works_at.setVisibility(View.INVISIBLE);
                         refreshLayout.setVisibility(View.VISIBLE);
                         for(int i =0; i<entranceList.getData().get(0).getEntrances().size(); i++)
