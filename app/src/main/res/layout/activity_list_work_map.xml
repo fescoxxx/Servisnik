@@ -22,7 +22,7 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/tab_repair_request_manwork" />
+        app:srcCompat="@drawable/ic_action_person" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButtonCenterMap"
@@ -33,6 +33,6 @@
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/floatingActionButtonNearList"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/keyworker_white" />
+        app:srcCompat="@drawable/ic_action_gps" />
 
 </android.support.constraint.ConstraintLayout>
