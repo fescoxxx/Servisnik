@@ -367,7 +367,8 @@ public class ListWorkMapActivity extends AppCompatActivity implements
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_blue)));
             mMarker.setTag(houseID);
         } else if (color.equals("NULL")) {
-            mMarker =mMap.addMarker(new MarkerOptions().position(myPin));
+            mMarker =mMap.addMarker(new MarkerOptions().position(myPin)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_big_dildo)));;
             mMarker.setTag(houseID);
         }
 
@@ -417,7 +418,8 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         mMap.clear();
         LatLng myTown = new LatLng(Double.parseDouble(loadTextPref(Constants.SETTINGS.LATITUDE)),
                 Double.parseDouble(loadTextPref(Constants.SETTINGS.LONGITUDE)));
-        mMap.addMarker(new MarkerOptions().position(myTown));
+        mMap.addMarker(new MarkerOptions().position(myTown)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_iam_person2)));;
         float zoomLevel = 17.0f; //This goes up to 21
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myTown, zoomLevel));
         if(currentListWorks != null) {
