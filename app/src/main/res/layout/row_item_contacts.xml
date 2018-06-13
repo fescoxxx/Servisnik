@@ -36,6 +36,7 @@
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:text="contacts"
                     android:textColor="#3c3c3c"
                     android:textSize="16dp" />
@@ -49,7 +50,7 @@
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:paddingTop="4dp"
+                    android:paddingTop="8dp"
                     android:text="Абонент"
                     android:textColor="#8A000000" />
             </LinearLayout>

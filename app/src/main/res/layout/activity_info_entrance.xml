@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f5f5f6"
     tools:context=".ui.infoentrance.InfoEntranceActivity">
     <ProgressBar
         android:id="@+id/progressBar_info_entrance"
@@ -41,8 +42,7 @@
             android:fontFamily="@font/roboto"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+            android:paddingTop="16dp"
             android:text="TextView"
             android:textColor="#DE000000"
             android:textSize="16dp" />
@@ -55,8 +55,7 @@
             android:fontFamily="@font/roboto"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+            android:paddingBottom="16dp"
             android:text="TextView"
             android:textColor="#8A000000" />
 
@@ -80,27 +79,27 @@
                 android:id="@+id/textView3"
                 android:background="#FFFFFF"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text="Дата последних ППР"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
+                android:gravity="center_vertical"
                 android:textColor="#DE000000"
                 android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/date_ppr_text"
-                android:background="#FFFFFF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ДАТА"
+                android:background="#FFFFFF"
+                android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingTop="8dp"
-                android:paddingBottom="8dp"
+                android:text="ДАТА"
+                android:textAlignment="textEnd"
                 android:textColor="#8A000000"
                 android:textSize="16dp" />
         </LinearLayout>
@@ -128,33 +127,42 @@
             android:textAlignment="textStart"
             android:textSize="16sp"
             android:visibility="visible" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#E0E0E0" />
         <Button
             android:id="@+id/video_dervice_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@drawable/button"
             android:fontFamily="@font/roboto_medium"
             android:paddingLeft="16dp"
             android:text="Видеообслуживание"
             android:textAlignment="textStart"
             android:textSize="16sp" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#E0E0E0" />
         <Button
             android:id="@+id/access_equipment_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@drawable/button"
             android:fontFamily="@font/roboto_medium"
             android:paddingLeft="16dp"
-            android:text="Получить доступ к оборудованию"
+            android:text="Доступ к оборудованию"
             android:textAlignment="textStart"
             android:textSize="16sp" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#E0E0E0" />
         <Button
             android:id="@+id/list_special_subscriber_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="@drawable/button"
             android:fontFamily="@font/roboto_medium"
             android:paddingLeft="16dp"

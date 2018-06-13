@@ -72,10 +72,10 @@
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
                         android:fontFamily="@font/roboto"
-                        android:paddingBottom="5pt"
+                        android:paddingBottom="4dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:paddingTop="5dp"
+                        android:paddingTop="4dp"
                         android:textColor="#979797"
                         android:textSize="14dp"
                         tools:text="Header2" />
@@ -101,10 +101,9 @@
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
                         android:fontFamily="@font/roboto"
-                        android:paddingBottom="4dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:paddingTop="5pt"
+                        android:paddingTop="4dp"
                         android:textColor="#3c3c3c"
                         android:textSize="16dp" />
 
@@ -147,7 +146,7 @@
                             android:fontFamily="@font/roboto"
                             android:paddingRight="16dp"
                             android:textAlignment="textEnd"
-                            android:textColor="#3c3c3c"
+                            android:textColor="#979797"
                             android:textSize="16dp"
                             tools:text="Просрочена" />
 
@@ -175,8 +174,8 @@
                                 android:hint="Согласованная дата"
                                 android:paddingBottom="4dp"
                                 android:paddingLeft="16dp"
-                                android:paddingRight="4pt"
-                                android:textColor="#c6c6c6"
+                                android:paddingRight="4dp"
+                                android:textColor="#d4d4d4"
                                 android:textSize="16dp" />
 
                             <TextView
@@ -188,8 +187,8 @@
                                 android:hint="Согласованное время"
                                 android:paddingBottom="8dp"
                                 android:paddingLeft="16dp"
-                                android:paddingRight="4pt"
-                                android:textColor="#c6c6c6"
+                                android:paddingRight="4dp"
+                                android:textColor="#d4d4d4"
                                 android:textSize="14dp" />
                         </LinearLayout>
 
@@ -230,11 +229,17 @@
                         android:stateListAnimator="@null"
                         android:textSize="16sp"
                         android:visibility="visible" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:layout_weight="1"
+                        android:background="#E0E0E0"
+                        android:visibility="visible" />
 
                     <Button
                         android:id="@+id/contacts_button"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:background="@drawable/button"
                         android:fontFamily="@font/roboto_medium"
                         android:paddingLeft="16dp"
@@ -243,10 +248,17 @@
                         android:stateListAnimator="@null"
                         android:textSize="16sp" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:layout_weight="1"
+                        android:background="#E0E0E0"
+                        android:visibility="visible" />
+
                     <Button
                         android:id="@+id/equipment_button"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:background="@drawable/button"
                         android:fontFamily="@font/roboto_medium"
                         android:paddingLeft="16dp"
@@ -255,10 +267,17 @@
                         android:stateListAnimator="@null"
                         android:textSize="16sp" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:layout_weight="1"
+                        android:background="#E0E0E0"
+                        android:visibility="visible" />
+
                     <Button
                         android:id="@+id/save_house_button"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:background="@drawable/button"
                         android:fontFamily="@font/roboto_medium"
                         android:paddingLeft="16dp"
@@ -267,10 +286,17 @@
                         android:stateListAnimator="@null"
                         android:textSize="16sp" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:layout_weight="1"
+                        android:background="#E0E0E0"
+                        android:visibility="visible" />
+
                     <Button
                         android:id="@+id/PDInfo_button"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
                         android:background="@drawable/button"
                         android:fontFamily="@font/roboto_medium"
                         android:paddingLeft="16dp"
@@ -282,7 +308,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.3dp"
-                        android:layout_weight="1"
+                        android:layout_weight="0.3"
                         android:background="#E0E0E0"
                         android:visibility="visible"
                         android:layout_marginBottom="16dp"/>

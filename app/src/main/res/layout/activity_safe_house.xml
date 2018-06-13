@@ -5,13 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ordercard.SafeHouseActivity">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <ListView
         android:id="@+id/lv_safe_house"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"></ListView>
+        android:divider="@null">
 
+
+    </ListView>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
