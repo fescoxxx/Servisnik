@@ -8,12 +8,12 @@
     tools:context=".ui.RepairRequestActivity$ListPprFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_container"
+        android:id="@+id/srl_entrance_to"
         android:layout_width="match_parent"
         android:background="#ECEFF1"
         android:layout_height="match_parent">
         <ListView
-            android:id="@+id/rv_list"
+            android:id="@+id/entrance_to_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"/>
