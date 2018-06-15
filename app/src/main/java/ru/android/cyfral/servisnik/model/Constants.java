@@ -175,4 +175,10 @@ public class Constants {
 
     }
 
+    public static final class FIRST_LOAD_APP {
+
+        public static boolean ENTRANCE_TO_FIRST = true;
+
+    }
+
 }

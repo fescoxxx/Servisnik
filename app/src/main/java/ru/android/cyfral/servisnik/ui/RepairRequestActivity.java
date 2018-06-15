@@ -28,11 +28,12 @@ import android.view.ViewGroup;
 
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -42,8 +43,8 @@ import retrofit2.Response;
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
-import ru.android.cyfral.servisnik.model.DataFetchListener;
 import ru.android.cyfral.servisnik.model.DataFetchSearchActivity;
+import ru.android.cyfral.servisnik.model.entranceto.EntranceTo;
 import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.Utils;
@@ -74,16 +75,20 @@ public class RepairRequestActivity extends AppCompatActivity {
             .create(TokenClient.class);
 
     private ViewPager mViewPager;
-    private TabLayout tabLayout;
+    private static TabLayout tabLayout;
     private static TextView mTexrView;
     private static LinearLayout linearNoConnectionInternet;
-    private static SwipeRefreshLayout mSwipeRefreshLayout;
+    private static SwipeRefreshLayout srlRepairReques;
+    private static SwipeRefreshLayout srlEntranceTo;
     private static DataDatabase mDatabase;
     private static Call<RefreshToken> callRedresh;
     private static Call<RepairRequest> repairRequestCall;
     private static Call<OrderCard> orderCardCall;
     private static ProgressDialog mDialog;
     private static RepairRequestFragment.SaveIntoDatabaseRequest task;
+    final String LOG_TAG = "myLogs2";
+
+    private static Call<EntranceTo> entranceToCall; //запрос на список подъездов на ТО
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +106,9 @@ public class RepairRequestActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
         mDatabase = new DataDatabase(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
+
     }
 
     @Override
@@ -150,7 +158,7 @@ public class RepairRequestActivity extends AppCompatActivity {
 
         public void getFeed() {
 
-            mSwipeRefreshLayout.setRefreshing(true);
+            srlRepairReques.setRefreshing(true);
             SharedPreferences sPref = getActivity().getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
             String token = sPref.getString(Constants.SETTINGS.TOKEN, "");
             repairRequestCall = serviceApiClient.repairRequests("Bearer "+token);
@@ -167,7 +175,7 @@ public class RepairRequestActivity extends AppCompatActivity {
                             getFeedFromDatabase();
                         }
                     } else {
-                        mSwipeRefreshLayout.setRefreshing(false);
+                        srlRepairReques.setRefreshing(false);
                         int sc = response.code();
                         switch (sc) {
                             case 401:
@@ -209,7 +217,7 @@ public class RepairRequestActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<RepairRequest> call, Throwable t) {
                     //не отправить запрос
-                    mSwipeRefreshLayout.setRefreshing(false);
+                    srlRepairReques.setRefreshing(false);
                     showErrorDialog("");
                     Log.d("repairRequests", t.getMessage());
                 }
@@ -327,7 +335,7 @@ public class RepairRequestActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                mSwipeRefreshLayout.setRefreshing(true);
+                srlRepairReques.setRefreshing(true);
             }
             @Override
             protected Integer doInBackground(List<Data>... params) {
@@ -345,7 +353,7 @@ public class RepairRequestActivity extends AppCompatActivity {
             protected void onPostExecute(Integer result) {
                 super.onPostExecute(result);
                 if (result == 1) {
-                    mSwipeRefreshLayout.setRefreshing(false);
+                    srlRepairReques.setRefreshing(false);
                 }
             }
         }
@@ -355,7 +363,7 @@ public class RepairRequestActivity extends AppCompatActivity {
                 linearNoConnectionInternet.removeView(mTexrView);
                 getFeed();
             } else {
-                mSwipeRefreshLayout.setRefreshing(false);
+                srlRepairReques.setRefreshing(false);
                 linearNoConnectionInternet.removeView(mTexrView);
                 mTexrView.setText("Нет доступа к сети.\n" +
                         "Проверьте, есть ли доступ к Интернет через Ваше мобильное устройство");
@@ -371,10 +379,10 @@ public class RepairRequestActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_repair_request, container, false);
-            mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.srl_container);
+            srlRepairReques = (SwipeRefreshLayout) rootView.findViewById(R.id.srl_container);
 
                 // указываем слушатель свайпов пользователя
-                mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                srlRepairReques.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
                         refreshList();
@@ -444,6 +452,8 @@ public class RepairRequestActivity extends AppCompatActivity {
          * The fragment argument representing the section number for this
          * fragment.
          */
+        final String LOG_TAG = "myLogs2";
+
         private static final String ARG_SECTION_NUMBER = "section_number2";
         public ListPprFragment() {
         }
@@ -460,26 +470,186 @@ public class RepairRequestActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_list_ppr, container, false);
+            srlEntranceTo = (SwipeRefreshLayout) rootView.findViewById(R.id.srl_entrance_to);
+            // указываем слушатель свайпов пользователя
+            srlEntranceTo.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    getListEntranceTo();
+                }
+            });
 
-
+            TabLayout.OnTabSelectedListener selectedListener = new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    if (tab.getPosition() == 1) {
+                        if (Constants.FIRST_LOAD_APP.ENTRANCE_TO_FIRST) {
+                            Log.d(LOG_TAG, "tab.onTabSelected() первое нажатие ");
+                            Constants.FIRST_LOAD_APP.ENTRANCE_TO_FIRST = false;
+                        } else {
+                            Log.d(LOG_TAG, "tab.onTabSelected() второе и более нажатие ");
+                        }
+                    }
+                }
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                }
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                }
+            };
+            tabLayout.addOnTabSelectedListener(selectedListener);
             return rootView;
         }
 
-        @Override
+        private void getListEntranceTo() {
+
+
+            String token = loadTextPref(Constants.SETTINGS.TOKEN);
+            String token_ref = loadTextPref(Constants.SETTINGS.REFRESH_TOKEN);
+            String life_time_token = loadTextPref(Constants.SETTINGS.DATE_TOKEN);
+            //токенов нет
+            if (token.equals("")) {
+                startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                getActivity().finish();
+            } else {
+                String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+                DateFormat df = new SimpleDateFormat(DATE_FORMAT_NOW);
+                Date date_ltt = null;
+                try {
+                    date_ltt = df.parse(life_time_token);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Date date_now = new Date();
+                if (date_now.after(date_ltt)) {
+                    Log.d("life_time_date_token4", " Новая дата позже" + date_now.toString() + "      " + date_ltt.toString());
+                    //Токен просрочен, пробуем получить новый
+                    Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                            "mpservisnik",
+                            "secret",
+                            loadTextPref("token_refresh"));
+                    callRedresh.enqueue(new Callback<RefreshToken>() {
+                        @Override
+                        public void onResponse(Call<RefreshToken> call, Response<RefreshToken> response) {
+                            if (response.isSuccessful()) {
+                                SharedPreferences sPref = getActivity().getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
+                                SharedPreferences.Editor ed = sPref.edit();
+                                ed.putString(Constants.SETTINGS.TOKEN, response.body().getAccess_token());
+                                ed.putString(Constants.SETTINGS.REFRESH_TOKEN, response.body().getRefresh_token());
+                                Calendar date = Calendar.getInstance();
+                                long t = date.getTimeInMillis();
+                                Date life_time_date_token =
+                                        new Date(t + (Constants.SETTINGS.ONE_SECUNDE_IN_MILLIS
+                                                * Integer.valueOf(response.body().getExpires_in())));
+                                ed.putString(Constants.SETTINGS.DATE_TOKEN, getFormatDate(life_time_date_token));
+                                ed.apply();
+                                loadListEntranceTo();
+                            } else {
+                                //сервер вернул ошибку
+                                //   mProgressBar.setVisibility(View.INVISIBLE);
+                                int rc = response.code();
+                                if (rc == 401) {
+                                    srlEntranceTo.setRefreshing(false);
+                                    startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                                    getActivity().finish();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<RefreshToken> call, Throwable t) {
+                            srlEntranceTo.setRefreshing(false);
+                            showErrorDialog("");
+                        }
+                    });
+
+                } else {
+                    //токен живой
+                    loadListEntranceTo();
+
+                }
+            }
+        }
+
+        private void loadListEntranceTo() {
+            String token = loadTextPref(Constants.SETTINGS.TOKEN);
+            entranceToCall = serviceApiClient
+                    .getEntranceToList("Bearer " + token);
+            entranceToCall.enqueue(new Callback<EntranceTo>() {
+                @Override
+                public void onResponse(Call<EntranceTo> call, Response<EntranceTo> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body().getIsSuccess().equals("true")){
+
+                            EntranceTo entranceList = response.body();
+                            for(int i =0; i<entranceList.getData().get(0).getEntrances().size(); i++)
+                            {
+                                Log.d(LOG_TAG,entranceList.getId());
+                            }
+                            srlEntranceTo.setRefreshing(false);
+
+                        } else {
+                            //сервер вернул ошибку от АПИ
+                            srlEntranceTo.setRefreshing(false);
+                            //refreshLayout.setVisibility(View.VISIBLE);
+                            showErrorDialog(response.body().getErrors().getCode());
+                        }
+                    } else {
+                        //сервер вернул ошибку
+                        srlEntranceTo.setRefreshing(false);
+                        // refreshLayout.setVisibility(View.VISIBLE);
+                        int rc = response.code();
+                        if (rc == 401) {
+                            startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                            getActivity().finish();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<EntranceTo> call, Throwable t) {
+                    //Произошла непредвиденная ошибка
+                    srlEntranceTo.setRefreshing(false);
+                    //refreshLayout.setVisibility(View.VISIBLE);
+                    showErrorDialog("");
+                }
+            });
+        }
+
+        private String loadTextPref(String prefStr) {
+            SharedPreferences sPref = getActivity().getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
+            return sPref.getString(prefStr, "");
+        }
+
+        public static String getFormatDate(Date date) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return sdf.format(date);
+        }
+
+        private void showErrorDialog(String code) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Ошибка "+code);
+            builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");
+            builder.setNeutralButton("Отмена",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                            int which) {
+                        }
+                    });
+            builder.show();
+        }
+
         public void onStart() {
             super.onStart();
+            Log.d(LOG_TAG, "Fragment2 onStart");
         }
 
-        @Override
         public void onResume() {
             super.onResume();
-            if (!this.isHidden()) {
-                Toast toast = Toast.makeText(getActivity(),
-                        "Пора покормить кота!", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-
+            Log.d(LOG_TAG, "Fragment2 onResume");
         }
+
 
 
     }
@@ -493,9 +663,10 @@ public class RepairRequestActivity extends AppCompatActivity {
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+
         @Override
         public Fragment getItem(int position) {
-            Log.d("getItem_log", String.valueOf(position));
+            Log.d("", String.valueOf(position));
             switch (position) {
                 case 0:
                     return RepairRequestFragment.newInstance(position + 1);

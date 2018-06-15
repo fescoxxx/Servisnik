@@ -11,8 +11,7 @@
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true">
-    </uses-feature>
+        android:required="true"></uses-feature>
 
     <application
         android:allowBackup="true"
@@ -171,18 +170,21 @@
         <activity android:name=".ui.infoentrance.SpecialSubscriberActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.specialsubscriber" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.listwork.WorksAtActivity" >
+        <activity android:name=".ui.listwork.WorksAtActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.worksatactivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.listwork.NearListActivity" >
+        <activity android:name=".ui.listwork.NearListActivity">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.nearlistactivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -209,9 +211,18 @@
             android:label="@string/title_activity_list_work_map">
             <intent-filter>
                 <action android:name="ru.android.cyfral.servisnik.ui.listwork" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
     </application>
 
 </manifest>

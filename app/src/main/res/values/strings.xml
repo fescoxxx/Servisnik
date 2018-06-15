@@ -15,4 +15,5 @@
     <string name="search_">Search</string>
     <string name="title_activity_execution_result_card">execution_result_card</string>
     <string name="title_activity_list_work_map">Map</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
