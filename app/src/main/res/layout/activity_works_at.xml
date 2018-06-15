@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f5f5f6"
     tools:context=".ui.listwork.WorksAtActivity">
 
     <ProgressBar
@@ -24,123 +25,123 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl_workat"
         android:layout_width="match_parent"
-        android:background="#ECEFF1"
-        android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/linearLayout_works_at"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:layout_marginTop="8dp"
-            android:background="#E0E0E0" />
-
-        <TextView
-            android:id="@+id/textView_adress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:text="Адрес"
-            android:textColor="#DE000000"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/textView_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:text="улица"
-            android:textColor="#8A000000" />
-
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:background="#E0E0E0" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F5F5F6"
-            android:fontFamily="@font/roboto"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:text="Подьезды на ТО"
-            android:textSize="16dp" />
-
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:background="#E0E0E0" />
+        android:background="#ECEFF1">
 
         <LinearLayout
+            android:id="@+id/linearLayout_works_at"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-
-            <HorizontalScrollView
-                android:id="@+id/hsw_entranceto"
+            <View
+                android:id="@+id/divider"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:scrollbars="none">
+                android:layout_height="0.3dp"
+                android:layout_marginTop="8dp"
+                android:background="#E0E0E0" />
 
-                <LinearLayout
-                    android:id="@+id/linearLayout_entranceto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textView_adress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:fontFamily="@font/roboto"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:text="Адрес"
+                android:textColor="#DE000000"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/textView_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:fontFamily="@font/roboto"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="улица"
+                android:textColor="#8A000000" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:background="#E0E0E0" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#F5F5F6"
+                android:fontFamily="@font/roboto"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Подьезды на ТО"
+                android:textSize="14dp" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:background="#E0E0E0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal">
 
 
-                </LinearLayout>
-            </HorizontalScrollView>
+                <HorizontalScrollView
+                    android:id="@+id/hsw_entranceto"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:scrollbars="none">
 
-        </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/linearLayout_entranceto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-        <View
-            android:id="@+id/divider4"
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:background="#E0E0E0" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F5F5F6"
-            android:fontFamily="@font/roboto"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
-            android:text="Список заказ нарядов"
-            android:textSize="16dp" />
+                    </LinearLayout>
+                </HorizontalScrollView>
 
-        <View
-            android:id="@+id/divider5"
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:background="#E0E0E0" />
+            </LinearLayout>
 
-        <ListView
-            android:id="@+id/list_view_works_at"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:background="#E0E0E0" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#F5F5F6"
+                android:fontFamily="@font/roboto"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Список заказ-нарядов"
+                android:textSize="14dp" />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:background="#E0E0E0" />
+
+            <ListView
+                android:id="@+id/list_view_works_at"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 

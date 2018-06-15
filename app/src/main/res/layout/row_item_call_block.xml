@@ -17,7 +17,6 @@
             android:fontFamily="@font/roboto"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:text="call_block"
             android:textColor="#3c3c3c"
@@ -29,8 +28,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:paddingBottom="8dp"
-            android:paddingTop="8dp"
             android:text="call_block_comment"
             android:textColor="#8A000000" />
 
