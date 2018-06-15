@@ -8,6 +8,7 @@ import retrofit2.http.Header;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import ru.android.cyfral.servisnik.model.entranceto.EntranceTo;
 import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.listwork.listworkmap.ListWorks;
 import ru.android.cyfral.servisnik.model.listwork.worksat.entrancelist.EntranceList;
@@ -102,6 +103,10 @@ public interface ServiceApiClient {
     Call<OrderCardList> getOrderCardNearList(@Query("latitude") String latitude,
                                              @Query("longitude") String longitude,
                                              @Header("Authorization") String token);
+
+    @GET("api/entrances")
+    Call<EntranceTo> getEntranceToList(@Header("Authorization") String token);
+
 
 }
 
