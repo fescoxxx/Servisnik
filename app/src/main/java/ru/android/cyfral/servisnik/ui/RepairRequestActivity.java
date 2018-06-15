@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -133,7 +134,7 @@ public class RepairRequestActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static class RepairRequestFragment extends Fragment implements DataCategoryAdapter.ItemClickListener, DataFetchSearchActivity {
+     public static class RepairRequestFragment extends Fragment implements DataCategoryAdapter.ItemClickListener, DataFetchSearchActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         public RepairRequestFragment() {
         }
@@ -460,8 +461,27 @@ public class RepairRequestActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_list_ppr, container, false);
 
+
             return rootView;
         }
+
+        @Override
+        public void onStart() {
+            super.onStart();
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            if (!this.isHidden()) {
+                Toast toast = Toast.makeText(getActivity(),
+                        "Пора покормить кота!", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
+        }
+
+
     }
 
 
