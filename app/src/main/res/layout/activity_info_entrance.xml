@@ -91,14 +91,13 @@
             <TextView
                 android:id="@+id/date_ppr_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
-                android:paddingBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:paddingTop="8dp"
                 android:text="ДАТА"
+                android:gravity="center_vertical"
                 android:textAlignment="textEnd"
                 android:textColor="#8A000000"
                 android:textSize="16dp" />
@@ -126,6 +125,8 @@
             android:text="Вызывной блок"
             android:textAlignment="textStart"
             android:textSize="16sp"
+            android:textAllCaps="false"
+            android:stateListAnimator="@null"
             android:visibility="visible" />
         <View
             android:layout_width="match_parent"
@@ -140,6 +141,8 @@
             android:paddingLeft="16dp"
             android:text="Видеообслуживание"
             android:textAlignment="textStart"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"
             android:textSize="16sp" />
         <View
             android:layout_width="match_parent"
@@ -154,6 +157,8 @@
             android:paddingLeft="16dp"
             android:text="Доступ к оборудованию"
             android:textAlignment="textStart"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"
             android:textSize="16sp" />
         <View
             android:layout_width="match_parent"
@@ -168,6 +173,8 @@
             android:paddingLeft="16dp"
             android:text="Списки особых абонентов"
             android:textAlignment="textStart"
+            android:stateListAnimator="@null"
+            android:textAllCaps="false"
             android:textSize="16sp" />
 
 
