@@ -17,9 +17,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.model.Constants;
+import ru.android.cyfral.servisnik.model.DataFetchEntranceTo;
 import ru.android.cyfral.servisnik.model.DataFetchInfoEntranceListener;
 import ru.android.cyfral.servisnik.model.DataFetchListener;
 import ru.android.cyfral.servisnik.model.DataFetchSearchActivity;
+import ru.android.cyfral.servisnik.model.entranceto.EntranceTo;
 import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.repairRequests.Address;
@@ -55,6 +57,7 @@ public class DataDatabase extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(Constants.DATABASE.DROP_QUERY_CONTACTS);
         sqLiteDatabase.execSQL(Constants.DATABASE.DROP_QUERY_ORDER_CARD);
         sqLiteDatabase.execSQL(Constants.DATABASE.DROP_QUERY_INFO_ENTRANCE);
+        sqLiteDatabase.execSQL(Constants.DATABASE.DROP_QUERY_ENTRANCE_TO);
         this.onCreate(sqLiteDatabase);
     }
 
@@ -65,8 +68,33 @@ public class DataDatabase extends SQLiteOpenHelper {
         db.execSQL(Constants.DATABASE.DROP_QUERY_CONTACTS);
         db.execSQL(Constants.DATABASE.DROP_QUERY_ORDER_CARD);
         db.execSQL(Constants.DATABASE.DROP_QUERY_INFO_ENTRANCE);
+        db.execSQL(Constants.DATABASE.DROP_QUERY_ENTRANCE_TO);
         this.onCreate(db);
     }
+
+    //сохранение в БД ENTRANCE_TO
+    public void addDataEntranceTo(EntranceTo entranceTo) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursorData = null;
+        cursorData = db.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_INFO_ENTRANCE
+                +entranceTo.getId()+"' ", null);
+        //Если запись есть - удаляем
+        if (cursorData.getCount() > 0)  {
+            db.execSQL(Constants.DATABASE.DELETE_DATAS_INFO_ENTRANCE+entranceTo.getId()+ "'");
+        }
+        //записи нет - создаем
+        ContentValues valuesDatas = new ContentValues();
+        valuesDatas.put(Constants.DATABASE.ID_GUID_ENTRANCE_TO, entranceTo.getId());
+        valuesDatas.put(Constants.DATABASE.JSON_ENTRANCE_TO, entranceTo.toString());
+        try {
+
+            db.insert(Constants.DATABASE.TABLE_NAME_ENTRANCE_TO, null, valuesDatas);
+        } catch (Exception e) {
+            Log.d("TABLE_ENTRANCE_TO", e.fillInStackTrace().toString());
+        }
+
+    }
+
 
     //сохранение в БД одного объекта InfoEntrance
     public void addDataInfoEntrance(InfoEntrance infoEntrance) {
@@ -195,6 +223,14 @@ public class DataDatabase extends SQLiteOpenHelper {
        // db.close();
     }
 
+
+    //получение объекта EntranceTo DataFetchEntranceTo
+
+    public void fetchDatasForEntranceTo(DataFetchEntranceTo listener, String guid) {
+        DataFetcherEntranceTo fetcher = new DataFetcherEntranceTo(listener,this.getWritableDatabase(),guid);
+        fetcher.start();
+    }
+
     //получение объекта Order CArd по ID
     public void fetchDatasForOrderCard(DataFetchListener listener, String guid) {
         DataFetcherForOrderCard fetcher = new DataFetcherForOrderCard(listener, this.getWritableDatabase(), guid);
@@ -220,6 +256,56 @@ public class DataDatabase extends SQLiteOpenHelper {
         fetcher.start();
     }
 
+
+    public class DataFetcherEntranceTo extends Thread {
+        DataFetchEntranceTo mListener;
+        private final SQLiteDatabase mDb;
+        private String guid = "";
+
+        public DataFetcherEntranceTo(DataFetchEntranceTo listener, SQLiteDatabase db, String guid) {
+            mListener = listener;
+            mDb = db;
+            this.guid = guid;
+        }
+        @Override
+        public void run(){
+            Cursor cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_ENTRANCE_TO+guid+"'", null);
+            EntranceTo entranceTo = new EntranceTo();
+
+                if (cursorData.getCount() > 0) {
+                    if (cursorData.moveToFirst()) {
+                        do {
+                            Gson gson = new Gson();
+                            // Convert JSON to Java Object
+
+                            entranceTo = gson.fromJson(cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.JSON_ENTRANCE_TO)), EntranceTo.class);
+                            // Convert JSON to JsonElement, and later to String
+                            publishData(entranceTo);
+
+                        } while (cursorData.moveToNext());
+                    }
+                }
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //      mListener.onDeliverAllDatas(dataList);
+                        //       mListener.onHideDialog();
+                    }
+                });
+
+        }
+        public void publishData(final EntranceTo data) {
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mListener.onDeliverData(data);
+                }
+            });
+        }
+    }
+
     public class DataFetcherInfoEntrance extends Thread {
         DataFetchInfoEntranceListener mListener;
         private final SQLiteDatabase mDb;
@@ -234,7 +320,6 @@ public class DataDatabase extends SQLiteOpenHelper {
         public void run(){
             Cursor cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_INFO_ENTRANCE+guid+"'", null);
             InfoEntrance infoEntrance = new InfoEntrance();
-            if (cursorData.getCount() > 0) {
                 if (cursorData.getCount() > 0) {
                     if (cursorData.moveToFirst()) {
                         do {
@@ -256,7 +341,6 @@ public class DataDatabase extends SQLiteOpenHelper {
                         //       mListener.onHideDialog();
                     }
                 });
-            }
         }
         public void publishData(final InfoEntrance data) {
             Handler handler = new Handler(Looper.getMainLooper());

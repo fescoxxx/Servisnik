@@ -107,7 +107,7 @@ public class Constants {
         public static final String GET_DATAS_QUERY_INFO_ENTRANCE = "SELECT * FROM "+TABLE_NAME_INFO_ENTRANCE+" where "+ID_GUID_INFO_ENTRANCE+ " like '";
 
         //получить объекты Entrance to по ID
-        public static final String GET_DATAS_QUERY_ENTRANCE_TO = "SELECT * FROM "+TABLE_NAME_ENTRANCE_TO + " where "+TABLE_NAME_ENTRANCE_TO+ " like '";
+        public static final String GET_DATAS_QUERY_ENTRANCE_TO = "SELECT * FROM "+TABLE_NAME_ENTRANCE_TO + " where "+ID_GUID_INFO_ENTRANCE+ " like '";
 
         public static final String GET_CONTACTS_QUERY = "SELECT * FROM " + TABLE_NAME_CONTACTS + " WHERE "+CONTACTS_ID+" like '";
         public static final String GET_DATAS_QUERY_FOR_STREET = "SELECT * FROM " + TABLE_NAME_DATAS + " where "+STREET+ " like '%";
