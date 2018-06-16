@@ -95,6 +95,7 @@ public class RepairRequestActivity extends AppCompatActivity {
     private static MenuItem findStreet;
     private static MenuItem numberDesk;
     private static MenuItem numberMobile;
+    private static Toolbar toolbar;
 
     final String LOG_TAG = "myLogs2";
 
@@ -104,8 +105,9 @@ public class RepairRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair_request);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -507,6 +509,8 @@ public class RepairRequestActivity extends AppCompatActivity {
                         findStreet.setVisible(false);
                         numberDesk.setVisible(false);
                         numberMobile.setVisible(false);
+                        toolbar.setTitle("Подъезды на ТО");
+
 
                         if (Constants.FIRST_LOAD_APP.ENTRANCE_TO_FIRST) {
                             Log.d(LOG_TAG, "tab.onTabSelected() первое нажатие ");
@@ -520,6 +524,7 @@ public class RepairRequestActivity extends AppCompatActivity {
                         findStreet.setVisible(true);
                         numberDesk.setVisible(true);
                         numberMobile.setVisible(true);
+                        toolbar.setTitle("Список ЗН");
                     }
                 }
                 @Override

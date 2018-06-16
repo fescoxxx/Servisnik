@@ -67,7 +67,7 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
         searchView.setMenuItem(item);
         searchView.showVoice(true);
         searchView.showSearch();
-        searchView.showSuggestions();
+        searchView.setVoiceSearch(true);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
