@@ -68,7 +68,7 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
         searchView.showVoice(true);
         searchView.showSearch();
         searchView.showSuggestions();
-      //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
 
@@ -103,7 +103,7 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
             }
         });
 
-        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+       /* searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
                 //Do some magic
@@ -113,7 +113,7 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
             public void onSearchViewClosed() {
                 filtrListEntranceTo(filtrText);
             }
-        });
+        });*/
 
         return true;
     }
@@ -148,12 +148,18 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
 
     private void filtrListEntranceTo(String filtr) {
         List<Data> listData= new ArrayList<>();
-        for (int i=0; i<entranceTo.getData().size(); i++) {
-            if (entranceTo.getData().get(i).getAddress().getStreet().toLowerCase().contains(filtr.toLowerCase())) {
-                listData.add(entranceTo.getData().get(i));
+        try {
+            for (int i=0; i<entranceTo.getData().size(); i++) {
+                if (entranceTo.getData().get(i).getAddress().getStreet().toLowerCase().contains(filtr.toLowerCase())) {
+                    listData.add(entranceTo.getData().get(i));
+                }
             }
+            showListEntranceTo(listData);
+        } catch (Exception ex) {
+            showListEntranceTo(this.entranceTo.getData());
         }
-        showListEntranceTo(listData);
+
+
     }
 
     private void showListEntranceTo(List<Data> listData) {
