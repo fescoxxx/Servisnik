@@ -26,6 +26,8 @@ public class Constants {
         public static final String DROP_QUERY_INFO_ENTRANCE = "DROP TABLE IF EXISTS " + TABLE_NAME_INFO_ENTRANCE;
         public static final String DROP_QUERY_ENTRANCE_TO = "DROP TABLE IF EXISTS " + TABLE_NAME_ENTRANCE_TO;
 
+        public static final String DELETE_DATA_ENTRANCE_TO = "DELETE FROM "+TABLE_NAME_ENTRANCE_TO;
+
         public static final String GET_DATAS_QUERY = "SELECT * FROM " + TABLE_NAME_DATAS;
 
 
@@ -84,7 +86,7 @@ public class Constants {
         //создание таблицы для Entrance To
         public static final String CREATE_TABLE_ENTRANCE_TO = "CREATE TABLE "
                 + TABLE_NAME_ENTRANCE_TO
-                + "(" + TABLE_NAME_ENTRANCE_TO+ " TEXT, "
+                + "(" + ID_GUID_ENTRANCE_TO+ " TEXT, "
                 + " " + JSON_ENTRANCE_TO+ " TEXT, "
                 + " " + NAME_STREET_ENTRANCE_TO + " TEXT)";
 
@@ -107,7 +109,7 @@ public class Constants {
         public static final String GET_DATAS_QUERY_INFO_ENTRANCE = "SELECT * FROM "+TABLE_NAME_INFO_ENTRANCE+" where "+ID_GUID_INFO_ENTRANCE+ " like '";
 
         //получить объекты Entrance to по ID
-        public static final String GET_DATAS_QUERY_ENTRANCE_TO = "SELECT * FROM "+TABLE_NAME_ENTRANCE_TO + " where "+ID_GUID_INFO_ENTRANCE+ " like '";
+        public static final String GET_DATAS_QUERY_ENTRANCE_TO = "SELECT * FROM "+TABLE_NAME_ENTRANCE_TO;
 
         public static final String GET_CONTACTS_QUERY = "SELECT * FROM " + TABLE_NAME_CONTACTS + " WHERE "+CONTACTS_ID+" like '";
         public static final String GET_DATAS_QUERY_FOR_STREET = "SELECT * FROM " + TABLE_NAME_DATAS + " where "+STREET+ " like '%";
@@ -178,6 +180,7 @@ public class Constants {
     public static final class FIRST_LOAD_APP {
 
         public static boolean ENTRANCE_TO_FIRST = true;
+        public static int TAB_GENERAL_APP = 0;
 
     }
 

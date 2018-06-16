@@ -45,6 +45,7 @@ public class DataDatabase extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL(Constants.DATABASE.CREATE_TABLE_QUERY_CONTACST);
             sqLiteDatabase.execSQL(Constants.DATABASE.CREATE_TABLE_QUERY_ORDER_CARD);
             sqLiteDatabase.execSQL(Constants.DATABASE.CREATE_TABLE_QUERY_INFO_ENTRANCE);
+            sqLiteDatabase.execSQL(Constants.DATABASE.CREATE_TABLE_ENTRANCE_TO);
         } catch (SQLException ex) {
             Log.d(TAG, ex.getMessage());
         }
@@ -75,13 +76,8 @@ public class DataDatabase extends SQLiteOpenHelper {
     //сохранение в БД ENTRANCE_TO
     public void addDataEntranceTo(EntranceTo entranceTo) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursorData = null;
-        cursorData = db.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_INFO_ENTRANCE
-                +entranceTo.getId()+"' ", null);
-        //Если запись есть - удаляем
-        if (cursorData.getCount() > 0)  {
-            db.execSQL(Constants.DATABASE.DELETE_DATAS_INFO_ENTRANCE+entranceTo.getId()+ "'");
-        }
+        //чистим таблицу перед сохранением
+        db.execSQL(Constants.DATABASE.DELETE_DATA_ENTRANCE_TO);
         //записи нет - создаем
         ContentValues valuesDatas = new ContentValues();
         valuesDatas.put(Constants.DATABASE.ID_GUID_ENTRANCE_TO, entranceTo.getId());
@@ -226,8 +222,8 @@ public class DataDatabase extends SQLiteOpenHelper {
 
     //получение объекта EntranceTo DataFetchEntranceTo
 
-    public void fetchDatasForEntranceTo(DataFetchEntranceTo listener, String guid) {
-        DataFetcherEntranceTo fetcher = new DataFetcherEntranceTo(listener,this.getWritableDatabase(),guid);
+    public void fetchDatasForEntranceTo(DataFetchEntranceTo listener) {
+        DataFetcherEntranceTo fetcher = new DataFetcherEntranceTo(listener,this.getWritableDatabase());
         fetcher.start();
     }
 
@@ -260,16 +256,16 @@ public class DataDatabase extends SQLiteOpenHelper {
     public class DataFetcherEntranceTo extends Thread {
         DataFetchEntranceTo mListener;
         private final SQLiteDatabase mDb;
-        private String guid = "";
 
-        public DataFetcherEntranceTo(DataFetchEntranceTo listener, SQLiteDatabase db, String guid) {
+
+        public DataFetcherEntranceTo(DataFetchEntranceTo listener, SQLiteDatabase db) {
             mListener = listener;
             mDb = db;
-            this.guid = guid;
+
         }
         @Override
         public void run(){
-            Cursor cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_ENTRANCE_TO+guid+"'", null);
+            Cursor cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_ENTRANCE_TO, null);
             EntranceTo entranceTo = new EntranceTo();
 
                 if (cursorData.getCount() > 0) {

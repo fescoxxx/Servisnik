@@ -274,7 +274,7 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
         try {
             Date datePpr = format.parse(currentInfoEntrance.getData().getLastPprDate());
             date_ppr_text.setText(format_data.format(datePpr));
-        } catch (ParseException e) {
+        } catch (Exception e) {
             date_ppr_text.setText("Не было");
         }
         String str = "";

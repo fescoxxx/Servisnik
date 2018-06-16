@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -45,6 +46,7 @@ import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchSearchActivity;
 import ru.android.cyfral.servisnik.model.entranceto.EntranceTo;
+import ru.android.cyfral.servisnik.model.entranceto.adapter.EntranceToAdapter;
 import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.Utils;
@@ -61,6 +63,7 @@ import ru.android.cyfral.servisnik.service.TokenClient;
 public class RepairRequestActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private static  ListView entrance_to_list;
     private static DataCategoryAdapter mAdapter;
     private static RecyclerView mRecyclerView;
     private static List<RepairRequestCategory> datasCategories;
@@ -85,7 +88,14 @@ public class RepairRequestActivity extends AppCompatActivity {
     private static Call<RepairRequest> repairRequestCall;
     private static Call<OrderCard> orderCardCall;
     private static ProgressDialog mDialog;
-    private static RepairRequestFragment.SaveIntoDatabaseRequest task;
+    private static RepairRequestFragment.SaveIntoDatabaseRequest taskRepairRequest;
+    private static ListPprFragment.SaveIntoDatabaseRequest taskEntanceTo;
+
+    //пункты меню для поиска
+    private static MenuItem findStreet;
+    private static MenuItem numberDesk;
+    private static MenuItem numberMobile;
+
     final String LOG_TAG = "myLogs2";
 
     private static Call<EntranceTo> entranceToCall; //запрос на список подъездов на ТО
@@ -106,39 +116,43 @@ public class RepairRequestActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
         mDatabase = new DataDatabase(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_repair_request, menu);
+        findStreet = menu.findItem(R.id.findStreet);
+        numberDesk = menu.findItem(R.id.numberDesk);
+        numberMobile = menu.findItem(R.id.numberMobile);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.findStreet) {
-            Intent intent = new Intent("ru.android.cyfral.servisnik.search");
-            intent.putExtra("searchHint", Constants.SEARCH.NAME_STREET);
-            startActivity(intent);
-        } else if (id == R.id.numberDesk) {
-            Intent intent = new Intent("ru.android.cyfral.servisnik.search");
-            intent.putExtra("searchHint", Constants.SEARCH.NUMBER_ZN);
-            startActivity(intent);
-        } else if(id == R.id.numberMobile) {
-            Intent intent = new Intent("ru.android.cyfral.servisnik.search");
-            intent.putExtra("searchHint", Constants.SEARCH.NUMBER_PHONE);
-            startActivity(intent);
-        } else if(id == R.id.listworkmap) {
-            Intent intent = new Intent("ru.android.cyfral.servisnik.ui.listwork");
+        if(Constants.FIRST_LOAD_APP.TAB_GENERAL_APP == 0) {
+            int id = item.getItemId();
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.findStreet) {
+                Intent intent = new Intent("ru.android.cyfral.servisnik.search");
+                intent.putExtra("searchHint", Constants.SEARCH.NAME_STREET);
+                startActivity(intent);
+            } else if (id == R.id.numberDesk) {
+                Intent intent = new Intent("ru.android.cyfral.servisnik.search");
+                intent.putExtra("searchHint", Constants.SEARCH.NUMBER_ZN);
+                startActivity(intent);
+            } else if (id == R.id.numberMobile) {
+                Intent intent = new Intent("ru.android.cyfral.servisnik.search");
+                intent.putExtra("searchHint", Constants.SEARCH.NUMBER_PHONE);
+                startActivity(intent);
+            } else if (id == R.id.listworkmap) {
+                Intent intent = new Intent("ru.android.cyfral.servisnik.ui.listwork");
+                startActivity(intent);
+            }
+        } else if (Constants.FIRST_LOAD_APP.TAB_GENERAL_APP == 1) {
+            Intent intent = new Intent("ru.android.cyfral.servisnik.entrancesearchactivity");
             startActivity(intent);
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -263,8 +277,8 @@ public class RepairRequestActivity extends AppCompatActivity {
             if (saveDataBase) {
                 try {
 
-                    task = new SaveIntoDatabaseRequest();
-                    task.execute(mData);
+                    taskRepairRequest = new SaveIntoDatabaseRequest();
+                    taskRepairRequest.execute(mData);
                 } catch (Exception ex) {
 
                 }
@@ -447,7 +461,7 @@ public class RepairRequestActivity extends AppCompatActivity {
 
     }
 
-    public static class ListPprFragment extends Fragment {
+    public static class ListPprFragment extends Fragment implements  View.OnClickListener{
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -466,11 +480,17 @@ public class RepairRequestActivity extends AppCompatActivity {
             return fragment;
         }
 
+        public void onDestroy() {
+            super.onDestroy();
+            Constants.FIRST_LOAD_APP.ENTRANCE_TO_FIRST = true;
+        }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_list_ppr, container, false);
             srlEntranceTo = (SwipeRefreshLayout) rootView.findViewById(R.id.srl_entrance_to);
+            entrance_to_list = (ListView) rootView.findViewById(R.id.entrance_to_list);
             // указываем слушатель свайпов пользователя
             srlEntranceTo.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -482,13 +502,24 @@ public class RepairRequestActivity extends AppCompatActivity {
             TabLayout.OnTabSelectedListener selectedListener = new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
+                    Constants.FIRST_LOAD_APP.TAB_GENERAL_APP = tab.getPosition();
                     if (tab.getPosition() == 1) {
+                        findStreet.setVisible(false);
+                        numberDesk.setVisible(false);
+                        numberMobile.setVisible(false);
+
                         if (Constants.FIRST_LOAD_APP.ENTRANCE_TO_FIRST) {
                             Log.d(LOG_TAG, "tab.onTabSelected() первое нажатие ");
+                            srlEntranceTo.setRefreshing(true);
+                            getListEntranceTo();
                             Constants.FIRST_LOAD_APP.ENTRANCE_TO_FIRST = false;
                         } else {
                             Log.d(LOG_TAG, "tab.onTabSelected() второе и более нажатие ");
                         }
+                    } else if (tab.getPosition() == 0){
+                        findStreet.setVisible(true);
+                        numberDesk.setVisible(true);
+                        numberMobile.setVisible(true);
                     }
                 }
                 @Override
@@ -572,6 +603,36 @@ public class RepairRequestActivity extends AppCompatActivity {
             }
         }
 
+        //запись списка в БД
+        public static class SaveIntoDatabaseRequest extends AsyncTask<EntranceTo, Void, Integer> {
+
+            private final String TAG = SaveIntoDatabaseRequest.class.getSimpleName();
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                srlEntranceTo.setRefreshing(true);
+            }
+            @Override
+            protected Integer doInBackground(EntranceTo... params) {
+                EntranceTo data = params[0];
+                try {
+                    if (mDatabase != null) {
+                        mDatabase.addDataEntranceTo(data);
+                    }
+                } catch (Exception e) {
+                    return 1;
+                }
+                return 1;
+            }
+            @Override
+            protected void onPostExecute(Integer result) {
+                super.onPostExecute(result);
+                if (result == 1) {
+                    srlEntranceTo.setRefreshing(false);
+                }
+            }
+        }
+
         private void loadListEntranceTo() {
             String token = loadTextPref(Constants.SETTINGS.TOKEN);
             entranceToCall = serviceApiClient
@@ -583,11 +644,14 @@ public class RepairRequestActivity extends AppCompatActivity {
                         if (response.body().getIsSuccess().equals("true")){
 
                             EntranceTo entranceList = response.body();
-                            for(int i =0; i<entranceList.getData().get(0).getEntrances().size(); i++)
-                            {
-                                Log.d(LOG_TAG,entranceList.getId());
-                            }
+                            List<ru.android.cyfral.servisnik.model.entranceto.Data> dataList = entranceList.getData();
+
+                            final EntranceToAdapter entranceToAdapter;
+                            entranceToAdapter = new EntranceToAdapter(getActivity(),dataList);
+                            entrance_to_list.setAdapter(entranceToAdapter);
                             srlEntranceTo.setRefreshing(false);
+                            taskEntanceTo = new SaveIntoDatabaseRequest();
+                            taskEntanceTo.execute(entranceList);
 
                         } else {
                             //сервер вернул ошибку от АПИ
@@ -651,7 +715,10 @@ public class RepairRequestActivity extends AppCompatActivity {
         }
 
 
+        @Override
+        public void onClick(View view) {
 
+        }
     }
 
 
