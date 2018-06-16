@@ -1,4 +1,5 @@
 package ru.android.cyfral.servisnik.model.orderCard.adapter;
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,10 +22,10 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
     private List<Data> mData;
 
     public RepairRequestAdapter(RepairRequestClickListener listener) {
-
         mData = new ArrayList<Data>();
         mListener = listener;
     }
+
 
     public void clearData(){
         mData.clear();

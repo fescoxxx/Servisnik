@@ -9,6 +9,8 @@ import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -30,14 +32,15 @@ import ru.android.cyfral.servisnik.model.DataFetchEntranceTo;
 import ru.android.cyfral.servisnik.model.entranceto.Data;
 import ru.android.cyfral.servisnik.model.entranceto.EntranceTo;
 import ru.android.cyfral.servisnik.model.entranceto.adapter.EntranceToAdapter;
+import ru.android.cyfral.servisnik.model.entranceto.adapter.EntranceToRecycleAdapter;
 
-public class EntranceSearchActivity extends AppCompatActivity implements DataFetchEntranceTo {
+public class EntranceSearchActivity extends AppCompatActivity implements DataFetchEntranceTo, EntranceToRecycleAdapter.EntranceToClickListener {
     MaterialSearchView searchView;
     Toolbar toolbar;
     private static DataDatabase mDatabase;
     private String filtrText;
     private EntranceTo entranceTo;
-    private ListView rv_list_search;
+    private RecyclerView rv_list_search;
 
 
     @Override
@@ -47,7 +50,9 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
-        rv_list_search = (ListView) findViewById(R.id.rv_list_search);
+        rv_list_search = (RecyclerView) findViewById(R.id.rv_list_search);
+        rv_list_search.setLayoutManager(new LinearLayoutManager(getApplicationContext(),
+                LinearLayoutManager.VERTICAL, false));
         searchView.setVoiceSearch(true); //or false
         searchView.setHint("Название улицы");
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
@@ -163,8 +168,9 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
     }
 
     private void showListEntranceTo(List<Data> listData) {
-        final EntranceToAdapter entranceToAdapter;
-        entranceToAdapter = new EntranceToAdapter(this ,listData);
+        final EntranceToRecycleAdapter entranceToAdapter;
+        entranceToAdapter = new EntranceToRecycleAdapter(this ,this);
+        entranceToAdapter.allAddData(listData);
         rv_list_search.setAdapter(entranceToAdapter);
     }
 
@@ -173,5 +179,10 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
         this.entranceTo = entranceTo;
         showListEntranceTo(entranceTo.getData());
         Log.d(" this.entranceTo ",  this.entranceTo.getId());
+    }
+
+    @Override
+    public void onClick(int position) {
+
     }
 }

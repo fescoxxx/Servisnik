@@ -47,6 +47,7 @@ import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchSearchActivity;
 import ru.android.cyfral.servisnik.model.entranceto.EntranceTo;
 import ru.android.cyfral.servisnik.model.entranceto.adapter.EntranceToAdapter;
+import ru.android.cyfral.servisnik.model.entranceto.adapter.EntranceToRecycleAdapter;
 import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.RefreshToken;
 import ru.android.cyfral.servisnik.model.Utils;
@@ -63,7 +64,7 @@ import ru.android.cyfral.servisnik.service.TokenClient;
 public class RepairRequestActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private static  ListView entrance_to_list;
+    private static RecyclerView entrance_to_recyclerView;
     private static DataCategoryAdapter mAdapter;
     private static RecyclerView mRecyclerView;
     private static List<RepairRequestCategory> datasCategories;
@@ -152,8 +153,14 @@ public class RepairRequestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         } else if (Constants.FIRST_LOAD_APP.TAB_GENERAL_APP == 1) {
-            Intent intent = new Intent("ru.android.cyfral.servisnik.entrancesearchactivity");
-            startActivity(intent);
+             int id = item.getItemId();
+             if (id == R.id.listworkmap) {
+                Intent intent = new Intent("ru.android.cyfral.servisnik.ui.listwork");
+                startActivity(intent);
+             } else if (id == R.id.menusearch) {
+                 Intent intent = new Intent("ru.android.cyfral.servisnik.entrancesearchactivity");
+                 startActivity(intent);
+             }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -463,7 +470,7 @@ public class RepairRequestActivity extends AppCompatActivity {
 
     }
 
-    public static class ListPprFragment extends Fragment implements  View.OnClickListener{
+    public static class ListPprFragment extends Fragment implements  EntranceToRecycleAdapter.EntranceToClickListener{
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -492,7 +499,8 @@ public class RepairRequestActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_list_ppr, container, false);
             srlEntranceTo = (SwipeRefreshLayout) rootView.findViewById(R.id.srl_entrance_to);
-            entrance_to_list = (ListView) rootView.findViewById(R.id.entrance_to_list);
+            entrance_to_recyclerView = (RecyclerView) rootView.findViewById(R.id.entrance_to_recyclerView);
+            entrance_to_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             // указываем слушатель свайпов пользователя
             srlEntranceTo.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -608,6 +616,11 @@ public class RepairRequestActivity extends AppCompatActivity {
             }
         }
 
+        @Override
+        public void onClick(int position) {
+
+        }
+
         //запись списка в БД
         public static class SaveIntoDatabaseRequest extends AsyncTask<EntranceTo, Void, Integer> {
 
@@ -640,6 +653,8 @@ public class RepairRequestActivity extends AppCompatActivity {
 
         private void loadListEntranceTo() {
             String token = loadTextPref(Constants.SETTINGS.TOKEN);
+            final EntranceToRecycleAdapter entranceToRecycleAdapter;
+            entranceToRecycleAdapter = new EntranceToRecycleAdapter(this,getActivity());
             entranceToCall = serviceApiClient
                     .getEntranceToList("Bearer " + token);
             entranceToCall.enqueue(new Callback<EntranceTo>() {
@@ -650,10 +665,8 @@ public class RepairRequestActivity extends AppCompatActivity {
 
                             EntranceTo entranceList = response.body();
                             List<ru.android.cyfral.servisnik.model.entranceto.Data> dataList = entranceList.getData();
-
-                            final EntranceToAdapter entranceToAdapter;
-                            entranceToAdapter = new EntranceToAdapter(getActivity(),dataList);
-                            entrance_to_list.setAdapter(entranceToAdapter);
+                            entrance_to_recyclerView.setAdapter(entranceToRecycleAdapter);
+                            entranceToRecycleAdapter.allAddData(dataList);
                             srlEntranceTo.setRefreshing(false);
                             taskEntanceTo = new SaveIntoDatabaseRequest();
                             taskEntanceTo.execute(entranceList);
@@ -719,11 +732,6 @@ public class RepairRequestActivity extends AppCompatActivity {
             Log.d(LOG_TAG, "Fragment2 onResume");
         }
 
-
-        @Override
-        public void onClick(View view) {
-
-        }
     }
 
 
