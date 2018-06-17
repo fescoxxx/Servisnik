@@ -305,16 +305,49 @@ public class RepairRequestActivity extends AppCompatActivity {
             mAdapter.setExpandCollapseListener(new ExpandableRecyclerAdapter.ExpandCollapseListener() {
                 @Override
                 public void onListItemExpanded(int position) {
-                    RepairRequestCategory expandedMovieCategory = datasCategories.get(position);
-                    String toastMsg = getResources().getString(R.string.expanded, expandedMovieCategory.getName());
+                    RepairRequestCategory expandedCategory = datasCategories.get(position);
+                    //сохранение сосстояния категории
+                    if (expandedCategory.getName().contains("Просроченные")) {
+                        Constants.FIRST_LOAD_APP.REPAIR_REQUEST_EXPAND_CAT_1 = true;
+                    } else if (expandedCategory.getName().contains("Выполнить сегодня")) {
+                        Constants.FIRST_LOAD_APP.REPAIR_REQUEST_EXPAND_CAT_2 = true;
+                    }else if (expandedCategory.getName().contains("Более одного дня")) {
+                        Constants.FIRST_LOAD_APP.REPAIR_REQUEST_EXPAND_CAT_3 = true;
+                    }
                 }
                 @Override
                 public void onListItemCollapsed(int position) {
-                    RepairRequestCategory collapsedMovieCategory = datasCategories.get(position);
-                    String toastMsg = getResources().getString(R.string.collapsed, collapsedMovieCategory.getName());
+                    RepairRequestCategory collapsedCategory = datasCategories.get(position);
+                    //сохранение сосстояния категории
+                    if (collapsedCategory.getName().contains("Просроченные")) {
+                        Constants.FIRST_LOAD_APP.REPAIR_REQUEST_EXPAND_CAT_1 = false;
+                    } else if (collapsedCategory.getName().contains("Выполнить сегодня")) {
+                        Constants.FIRST_LOAD_APP.REPAIR_REQUEST_EXPAND_CAT_2 = false;
+                    }else if (collapsedCategory.getName().contains("Более одного дня")) {
+                        Constants.FIRST_LOAD_APP.REPAIR_REQUEST_EXPAND_CAT_3 = false;
+                    }
                 }
             });
+
             mRecyclerView.setAdapter(mAdapter);
+            //expand or collapse категории
+            if (Constants.FIRST_LOAD_APP.REPAIR_REQUEST_EXPAND_CAT_1) {
+                mAdapter.expandParent(one_cat);
+            } else {
+                mAdapter.collapseParent(one_cat);
+            }
+
+            if (Constants.FIRST_LOAD_APP.REPAIR_REQUEST_EXPAND_CAT_2) {
+                mAdapter.expandParent(two_cat);
+            } else {
+                mAdapter.collapseParent(two_cat);
+            }
+
+            if (Constants.FIRST_LOAD_APP.REPAIR_REQUEST_EXPAND_CAT_3) {
+                mAdapter.expandParent(tree_cat);
+            } else {
+                mAdapter.collapseParent(tree_cat);
+            }
 
         }
 

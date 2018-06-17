@@ -181,7 +181,9 @@ public class Constants {
 
         public static boolean ENTRANCE_TO_FIRST = true;
         public static int TAB_GENERAL_APP = 0;
-
+        public static boolean REPAIR_REQUEST_EXPAND_CAT_1 = false;
+        public static boolean REPAIR_REQUEST_EXPAND_CAT_2 = false;
+        public static boolean REPAIR_REQUEST_EXPAND_CAT_3 = false;
     }
 
 }

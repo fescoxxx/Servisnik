@@ -132,10 +132,10 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
         }
 
         holder.mWorks.setText(mWorksStr.replace(" |  | ", ""));
-        holder.mCityStreet.setText(mData.get(position).getAddress().getCityType()+ " "+
-                mData.get(position).getAddress().getCity() + " "+
-                mData.get(position).getAddress().getStreetType() + " " +
-                mData.get(position).getAddress().getStreet() + " ");
+        holder.mCityStreet.setText(mData.get(position).getAddress().getCity()
+                + " " + mData.get(position).getAddress().getCityType()
+                + " " + mData.get(position).getAddress().getStreet()
+                + " " + mData.get(position).getAddress().getStreetType());
         holder.mNumberhome.setText(
                         dom+
                         litera+

@@ -110,10 +110,10 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
 
 
         mWorks.setText(mWorksStr.replace(" |  | ", ""));
-        mCityStreet.setText(data.getAddress().getCityType()+ " "+
-                data.getAddress().getCity() + " "+
-                data.getAddress().getStreetType() + " " +
-                data.getAddress().getStreet() + " ");
+        mCityStreet.setText(data.getAddress().getCity()
+                        + " " + data.getAddress().getCityType()
+                        + " " + data.getAddress().getStreet()
+                        + " " + data.getAddress().getStreetType());
         mNumberhome.setText(
                         dom+
                         litera+
