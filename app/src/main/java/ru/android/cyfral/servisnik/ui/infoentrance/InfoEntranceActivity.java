@@ -357,7 +357,6 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
                         task.execute(currentInfoEntrance);
                     } else {
                         //сервер вернул ошибку от АПИ
-                        mProgressBar.setVisibility(View.INVISIBLE);
                         showErrorDialog(response.body().getErrors().getCode());
                     }
                 } else {
@@ -374,7 +373,6 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
             @Override
             public void onFailure(Call<InfoEntrance> call, Throwable t) {
                 //Произошла непредвиденная ошибка
-                mProgressBar.setVisibility(View.INVISIBLE);
                 showErrorDialog("");
             }
         });
@@ -382,6 +380,7 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
     }
 
     private void showErrorDialog(String code) {
+        mProgressBar.setVisibility(View.INVISIBLE);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Ошибка "+code);
         builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");

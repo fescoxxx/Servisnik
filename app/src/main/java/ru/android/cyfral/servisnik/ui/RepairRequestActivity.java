@@ -46,6 +46,7 @@ import retrofit2.Response;
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
+import ru.android.cyfral.servisnik.model.DataFetchEntranceTo;
 import ru.android.cyfral.servisnik.model.DataFetchSearchActivity;
 import ru.android.cyfral.servisnik.model.entranceto.EntranceTo;
 import ru.android.cyfral.servisnik.model.entranceto.adapter.EntranceToAdapter;
@@ -67,6 +68,7 @@ public class RepairRequestActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private static RecyclerView entrance_to_recyclerView;
+    private static EntranceToRecycleAdapter entranceToRecycleAdapter;
     private static DataCategoryAdapter mAdapter;
     private static RecyclerView mRecyclerView;
     private static List<RepairRequestCategory> datasCategories;
@@ -583,7 +585,9 @@ public class RepairRequestActivity extends AppCompatActivity {
                          } else {
                              //сервер вернул ошибку от АПИ
                              srlRepairReques.setRefreshing(false);
-                             //refreshLayout.setVisibility(View.VISIBLE);
+                             datasCategories = new ArrayList<>();
+                             mAdapter = new DataCategoryAdapter(getActivity(), datasCategories);
+                             mRecyclerView.setAdapter(mAdapter);
                              showErrorDialog(response.body().getErrors().getCode());
                          }
                      } else {
@@ -601,6 +605,9 @@ public class RepairRequestActivity extends AppCompatActivity {
                  public void onFailure(Call<RepairRequest> call, Throwable t) {
                      //Произошла непредвиденная ошибка
                      srlRepairReques.setRefreshing(false);
+                     datasCategories = new ArrayList<>();
+                     mAdapter = new DataCategoryAdapter(getActivity(), datasCategories);
+                     mRecyclerView.setAdapter(mAdapter);
                      showErrorDialog("");
                  }
              });
@@ -661,7 +668,7 @@ public class RepairRequestActivity extends AppCompatActivity {
 
     }
 
-    public static class ListPprFragment extends Fragment implements  EntranceToRecycleAdapter.EntranceToClickListener{
+    public static class ListPprFragment extends Fragment implements  EntranceToRecycleAdapter.EntranceToClickListener, DataFetchEntranceTo {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -696,7 +703,21 @@ public class RepairRequestActivity extends AppCompatActivity {
             srlEntranceTo.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    getListEntranceTo();
+                    if (Utils.isNetworkAvailable(getActivity())) {
+                        linearNoConnectionInternet.removeView(mTexrView);
+                        getListEntranceTo();
+                    } else {
+                        srlEntranceTo.setRefreshing(false);
+                        linearNoConnectionInternet.removeView(mTexrView);
+                        mTexrView.setText("Нет доступа к сети.\n" +
+                                "Проверьте, есть ли доступ к Интернет через Ваше мобильное устройство");
+                        mTexrView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        mTexrView.setPadding(7,7,7,7);
+                        mTexrView.setTextSize(15);
+                        linearNoConnectionInternet.addView(mTexrView);
+                        getListEntranceToDataBase();
+                    }
+
                 }
             });
 
@@ -709,8 +730,6 @@ public class RepairRequestActivity extends AppCompatActivity {
                         numberDesk.setVisible(false);
                         numberMobile.setVisible(false);
                         toolbar.setTitle("Подъезды на ТО");
-
-
                         if (Constants.FIRST_LOAD_APP.ENTRANCE_TO_FIRST) {
                             Log.d(LOG_TAG, "tab.onTabSelected() первое нажатие ");
                             srlEntranceTo.setRefreshing(true);
@@ -735,6 +754,10 @@ public class RepairRequestActivity extends AppCompatActivity {
             };
             tabLayout.addOnTabSelectedListener(selectedListener);
             return rootView;
+        }
+
+        private void getListEntranceToDataBase(){
+            mDatabase.fetchDatasForEntranceTo(this);
         }
 
         private void getListEntranceTo() {
@@ -812,6 +835,14 @@ public class RepairRequestActivity extends AppCompatActivity {
 
         }
 
+        @Override
+        public void onDeliverData(EntranceTo entranceTo) {
+            List<ru.android.cyfral.servisnik.model.entranceto.Data> dataList = entranceTo.getData();
+            entrance_to_recyclerView.setAdapter(entranceToRecycleAdapter);
+            entranceToRecycleAdapter.allAddData(dataList);
+            srlEntranceTo.setRefreshing(false);
+        }
+
         //запись списка в БД
         public static class SaveIntoDatabaseRequest extends AsyncTask<EntranceTo, Void, Integer> {
 
@@ -844,7 +875,7 @@ public class RepairRequestActivity extends AppCompatActivity {
 
         private void loadListEntranceTo() {
             String token = loadTextPref(Constants.SETTINGS.TOKEN);
-            final EntranceToRecycleAdapter entranceToRecycleAdapter;
+
             entranceToRecycleAdapter = new EntranceToRecycleAdapter(this,getActivity());
             entranceToCall = serviceApiClient
                     .getEntranceToList("Bearer " + token);
@@ -868,13 +899,13 @@ public class RepairRequestActivity extends AppCompatActivity {
                         } else {
                             //сервер вернул ошибку от АПИ
                             srlEntranceTo.setRefreshing(false);
-                            //refreshLayout.setVisibility(View.VISIBLE);
+                            entrance_to_recyclerView.setAdapter(entranceToRecycleAdapter);
                             showErrorDialog(response.body().getErrors().getCode());
                         }
                     } else {
                         //сервер вернул ошибку
                         srlEntranceTo.setRefreshing(false);
-                        // refreshLayout.setVisibility(View.VISIBLE);
+                        entrance_to_recyclerView.setAdapter(entranceToRecycleAdapter);
                         int rc = response.code();
                         if (rc == 401) {
                             startActivity(new Intent("ru.android.cyfral.servisnik.login"));
@@ -887,7 +918,7 @@ public class RepairRequestActivity extends AppCompatActivity {
                 public void onFailure(Call<EntranceTo> call, Throwable t) {
                     //Произошла непредвиденная ошибка
                     srlEntranceTo.setRefreshing(false);
-                    //refreshLayout.setVisibility(View.VISIBLE);
+                    entrance_to_recyclerView.setAdapter(entranceToRecycleAdapter);
                     showErrorDialog("");
                 }
             });
