@@ -187,10 +187,10 @@ public class OrderCardListAdapter extends BaseAdapter {
             }
         }
         mWorks.setText(mWorksStr.replace(" |  | ", ""));
-        mCityStreet.setText(cityType + " "+
-                city + " "+
-                streetType + " " +
-                street + " ");
+        mCityStreet.setText(city + " "+
+                cityType+ " "+
+                street+ " " +
+                streetType + " ");
 
         mNumberhome.setText(
                         number+

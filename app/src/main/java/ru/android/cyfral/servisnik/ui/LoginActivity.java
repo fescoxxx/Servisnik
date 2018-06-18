@@ -119,6 +119,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 "secret",
                 username.getText().toString(),
                 password.getText().toString(),
+
+                           "s.sidorov",
+                "!Qwerty7",
+
         "");*/
 
 

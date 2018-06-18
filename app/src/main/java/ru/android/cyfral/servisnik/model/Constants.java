@@ -118,6 +118,8 @@ public class Constants {
 
         //удаление объекта ORDER CARD
         public static final String DELETE_DATAS_ORDER_CARD = "DELETE FROM "+TABLE_NAME_ORDER_CARD + " where "+ID_GUID_ORDER_CARD + " like '";
+        //обновление IsViewed у обьекта из списка repair request
+        public static final String UPDATE_ISVIEWED_ORDER_CARD = "UPDATE "+TABLE_NAME_DATAS+ " SET " +ISVIEWED+" = 'true' where "+DATA_ID + " like '";
 
         //удаление объекта INFO ENTRANCE
         public static final String DELETE_DATAS_INFO_ENTRANCE = "DELETE FROM "+TABLE_NAME_INFO_ENTRANCE + " where "+ID_GUID_INFO_ENTRANCE + " like '";

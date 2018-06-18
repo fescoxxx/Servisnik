@@ -69,7 +69,6 @@ public class DataDatabase extends SQLiteOpenHelper {
         db.execSQL(Constants.DATABASE.DROP_QUERY_CONTACTS);
         db.execSQL(Constants.DATABASE.DROP_QUERY_ORDER_CARD);
         db.execSQL(Constants.DATABASE.DROP_QUERY_INFO_ENTRANCE);
-        db.execSQL(Constants.DATABASE.DROP_QUERY_ENTRANCE_TO);
         this.onCreate(db);
     }
 
@@ -116,6 +115,7 @@ public class DataDatabase extends SQLiteOpenHelper {
     }
 
 
+
     //сохранние в БД одного объекта ORDER CARD
     public void addDataOrderCard(OrderCard orderCard) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -134,9 +134,16 @@ public class DataDatabase extends SQLiteOpenHelper {
             valuesDatas.put(Constants.DATABASE.JSON_ORDER_CARD, orderCard.toString());
             try {
                 db.insert(Constants.DATABASE.TABLE_NAME_ORDER_CARD, null, valuesDatas);
+
             } catch (Exception e) {
                 Log.d("TABLE_ORDER_CARD", e.fillInStackTrace().toString());
             }
+    }
+
+    public void updateIsViewedDataRepairRequest(Data data) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(Constants.DATABASE.UPDATE_ISVIEWED_ORDER_CARD +data.getId()+ "'" );
+
     }
 
     //Сохранения всего списка Request Query
@@ -328,6 +335,8 @@ public class DataDatabase extends SQLiteOpenHelper {
 
                         } while (cursorData.moveToNext());
                     }
+                } else {
+                    publishData(infoEntrance);
                 }
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(new Runnable() {

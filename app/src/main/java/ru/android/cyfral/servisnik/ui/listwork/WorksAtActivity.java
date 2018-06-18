@@ -344,10 +344,10 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
             }
         } catch (java.lang.NullPointerException ex) {}
 
-        textView_adress.setText(cityType + " "+
-                city + " "+
-                streetType + " " +
-                street + " ");
+        textView_adress.setText(city + " "+
+                cityType + " "+
+                street + " " +
+                streetType + " ");
 
         textView_number.setText(
                         number+

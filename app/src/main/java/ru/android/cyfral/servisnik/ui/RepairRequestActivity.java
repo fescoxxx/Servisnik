@@ -35,6 +35,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -173,13 +175,15 @@ public class RepairRequestActivity extends AppCompatActivity {
         @Override
         public void onDestroy() {
             super.onDestroy();
+            Constants.FIRST_LOAD_APP.TAB_GENERAL_APP = 0;
+            Constants.FIRST_LOAD_APP.ENTRANCE_TO_FIRST = true;
             try {repairRequestCall.cancel(); } catch (java.lang.NullPointerException ex) {}
             try {callRedresh.cancel();} catch (java.lang.NullPointerException ex) {}
             try {mDatabase.close();} catch (Exception ex) {}
 
         }
 
-        public void getFeed() {
+       /* public void getFeed() {
 
             srlRepairReques.setRefreshing(true);
             SharedPreferences sPref = getActivity().getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
@@ -246,13 +250,13 @@ public class RepairRequestActivity extends AppCompatActivity {
                 }
             });
 
-        }
+        }*/
 
         private void showRepairRequest(List<Data> Listdata, Boolean saveDataBase) {
             datasCategories = new ArrayList<>();
             List<Data> mData = Listdata;
             if (saveDataBase) {
-                Log.d("Delete_db", Listdata.get(0).getAddress().getApartment());
+//                Log.d("Delete_db", Listdata.get(0).getAddress().getApartment());
                 if(mDatabase != null) {
                     mDatabase.clearDataBase();
                 }
@@ -285,7 +289,6 @@ public class RepairRequestActivity extends AppCompatActivity {
 
             if (saveDataBase) {
                 try {
-
                     taskRepairRequest = new SaveIntoDatabaseRequest();
                     taskRepairRequest.execute(mData);
                 } catch (Exception ex) {
@@ -293,6 +296,27 @@ public class RepairRequestActivity extends AppCompatActivity {
                 }
 
             }
+            String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+            final DateFormat df = new SimpleDateFormat(DATE_FORMAT_NOW);
+            Collections.sort(overdueData, new Comparator<Data>() {
+                @Override
+                public int compare(Data date1, Data date2) {
+                    Date a = null;
+                    Date b = null;
+                    try {
+                        a = df.parse(date1.getDeadline());
+                        b = df.parse(date2.getDeadline());
+                        if (a.after(b))
+                            return -1;
+                        else if (a.before(b)) // it equals
+                            return 0;
+                        else
+                            return 1;
+                    } catch (ParseException e) {
+                        return 1;
+                    }
+                }
+            });
 
             RepairRequestCategory one_cat = new RepairRequestCategory("Просроченные ("+overdueData.size()+")", overdueData);
             RepairRequestCategory two_cat = new RepairRequestCategory("Выполнить сегодня ("+todayData.size()+")", todayData);
@@ -350,6 +374,7 @@ public class RepairRequestActivity extends AppCompatActivity {
             }
 
         }
+
 
         private void showErrorDialog(String code) {
             try{
@@ -414,7 +439,7 @@ public class RepairRequestActivity extends AppCompatActivity {
             }
         }
 
-        public void refreshList() {
+       /* public void refreshList() {
             if (Utils.isNetworkAvailable(getActivity())) {
                 linearNoConnectionInternet.removeView(mTexrView);
                 getFeed();
@@ -429,7 +454,7 @@ public class RepairRequestActivity extends AppCompatActivity {
                 linearNoConnectionInternet.addView(mTexrView);
                 getFeedFromDatabase();
             }
-        }
+        }*/
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -441,20 +466,161 @@ public class RepairRequestActivity extends AppCompatActivity {
                 srlRepairReques.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        refreshList();
+
+
+                        if (Utils.isNetworkAvailable(getActivity())) {
+                            linearNoConnectionInternet.removeView(mTexrView);
+                            getListRepairRequest();
+                        } else {
+                            srlRepairReques.setRefreshing(false);
+                            linearNoConnectionInternet.removeView(mTexrView);
+                            mTexrView.setText("Нет доступа к сети.\n" +
+                                    "Проверьте, есть ли доступ к Интернет через Ваше мобильное устройство");
+                            mTexrView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                            mTexrView.setPadding(7,7,7,7);
+                            mTexrView.setTextSize(15);
+                            linearNoConnectionInternet.addView(mTexrView);
+                            getFeedFromDatabase();
+                        }
+
+
                     }
                 });
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_list);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            getFeed();
+         //   getFeed();
+            getListRepairRequest();
             itemClickListener = this;
             return rootView;
         }
 
+        private void getListRepairRequest() {
+            String token = loadTextPref(Constants.SETTINGS.TOKEN);
+            String token_ref = loadTextPref(Constants.SETTINGS.REFRESH_TOKEN);
+            String life_time_token = loadTextPref(Constants.SETTINGS.DATE_TOKEN);
+            //токенов нет
+            if (token.equals("")) {
+                startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                getActivity().finish();
+            } else {
+                String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+                DateFormat df = new SimpleDateFormat(DATE_FORMAT_NOW);
+                Date date_ltt = null;
+                try {
+                    date_ltt = df.parse(life_time_token);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Date date_now = new Date();
+                if (date_now.after(date_ltt)) {
+                    Log.d("life_time_date_token4", " Новая дата позже" + date_now.toString() + "      " + date_ltt.toString());
+                    //Токен просрочен, пробуем получить новый
+                    Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                            "mpservisnik",
+                            "secret",
+                            loadTextPref("token_refresh"));
+                    callRedresh.enqueue(new Callback<RefreshToken>() {
+                        @Override
+                        public void onResponse(Call<RefreshToken> call, Response<RefreshToken> response) {
+                            if (response.isSuccessful()) {
+                                SharedPreferences sPref = getActivity().getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
+                                SharedPreferences.Editor ed = sPref.edit();
+                                ed.putString(Constants.SETTINGS.TOKEN, response.body().getAccess_token());
+                                ed.putString(Constants.SETTINGS.REFRESH_TOKEN, response.body().getRefresh_token());
+                                Calendar date = Calendar.getInstance();
+                                long t = date.getTimeInMillis();
+                                Date life_time_date_token =
+                                        new Date(t + (Constants.SETTINGS.ONE_SECUNDE_IN_MILLIS
+                                                * Integer.valueOf(response.body().getExpires_in())));
+                                ed.putString(Constants.SETTINGS.DATE_TOKEN, getFormatDate(life_time_date_token));
+                                ed.apply();
+                                loadListRepairRequest();
+                            } else {
+                                //сервер вернул ошибку
+                                //   mProgressBar.setVisibility(View.INVISIBLE);
+                                int rc = response.code();
+                                if (rc == 401) {
+                                    srlRepairReques.setRefreshing(false);
+                                    startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                                    getActivity().finish();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<RefreshToken> call, Throwable t) {
+                            srlRepairReques.setRefreshing(false);
+                            showErrorDialog("");
+                        }
+                    });
+
+                } else {
+                    //токен живой
+                    loadListRepairRequest();
+                }
+            }
+
+        }
+
+         private void loadListRepairRequest() {
+             srlRepairReques.setRefreshing(true);
+             String token = loadTextPref(Constants.SETTINGS.TOKEN);
+             final EntranceToRecycleAdapter entranceToRecycleAdapter;
+             repairRequestCall = serviceApiClient.repairRequests("Bearer "+token);
+             repairRequestCall.enqueue(new Callback<RepairRequest>() {
+                 @Override
+                 public void onResponse(Call<RepairRequest> call, Response<RepairRequest> response) {
+                     if (response.isSuccessful()) {
+                         if (response.body().getIsSuccess().equals("true")){
+                             if (response.body().getData() != null) {
+                                 showRepairRequest(response.body().getData(), true);
+                             } else {
+                                 srlRepairReques.setRefreshing(false);
+                                 datasCategories = new ArrayList<>();
+                                 mAdapter = new DataCategoryAdapter(getActivity(), datasCategories);
+                                 mRecyclerView.setAdapter(mAdapter);
+                             }
+                         } else {
+                             //сервер вернул ошибку от АПИ
+                             srlRepairReques.setRefreshing(false);
+                             //refreshLayout.setVisibility(View.VISIBLE);
+                             showErrorDialog(response.body().getErrors().getCode());
+                         }
+                     } else {
+                         //сервер вернул ошибку
+                         srlRepairReques.setRefreshing(false);
+                         int rc = response.code();
+                         if (rc == 401) {
+                             startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                             getActivity().finish();
+                         }
+                     }
+                 }
+
+                 @Override
+                 public void onFailure(Call<RepairRequest> call, Throwable t) {
+                     //Произошла непредвиденная ошибка
+                     srlRepairReques.setRefreshing(false);
+                     showErrorDialog("");
+                 }
+             });
+
+         }
+
+         private String loadTextPref(String prefStr) {
+             SharedPreferences sPref = getActivity().getSharedPreferences(Constants.SETTINGS.MY_PREFS, MODE_PRIVATE);
+             return sPref.getString(prefStr, "");
+         }
+
+         public static String getFormatDate(Date date) {
+             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+             return sdf.format(date);
+         }
 
         @Override
         public void onClick(View view, Data data, int position) {
             if (itemClickListener != null) {
+                mDatabase.updateIsViewedDataRepairRequest(data); //обновляем в БД метку ISVIEWED
                 Intent intent = new Intent("ru.android.cyfral.servisnik.card");
                 intent.putExtra(Constants.SETTINGS.GUID, data.getId());
                 startActivityForResult(intent, 10);
@@ -465,7 +631,7 @@ public class RepairRequestActivity extends AppCompatActivity {
             if (data == null) {return;}
             if(requestCode == 10) {
                 Log.d("onActivityResult_10", "All ok");
-                refreshList();
+                getListRepairRequest();
             }
 
 
@@ -492,14 +658,6 @@ public class RepairRequestActivity extends AppCompatActivity {
 
             return result;
         }
-       /* @Override
-        public void onClick(int position) {
-            Data selectedData = mRepairRequestAdapter.getSelectedData(position);
-           // Intent intent = new Intent(MainActivity.this, DetailActivity.class );
-          //  intent.putExtra(Constants.REFERENCE.FLOWER, selectedFlower);
-          //  startActivity(intent);
-        }*/
-
 
     }
 
@@ -695,15 +853,18 @@ public class RepairRequestActivity extends AppCompatActivity {
                 public void onResponse(Call<EntranceTo> call, Response<EntranceTo> response) {
                     if (response.isSuccessful()) {
                         if (response.body().getIsSuccess().equals("true")){
-
-                            EntranceTo entranceList = response.body();
-                            List<ru.android.cyfral.servisnik.model.entranceto.Data> dataList = entranceList.getData();
-                            entrance_to_recyclerView.setAdapter(entranceToRecycleAdapter);
-                            entranceToRecycleAdapter.allAddData(dataList);
-                            srlEntranceTo.setRefreshing(false);
-                            taskEntanceTo = new SaveIntoDatabaseRequest();
-                            taskEntanceTo.execute(entranceList);
-
+                            if (response.body().getData() != null) {
+                                EntranceTo entranceList = response.body();
+                                List<ru.android.cyfral.servisnik.model.entranceto.Data> dataList = entranceList.getData();
+                                entrance_to_recyclerView.setAdapter(entranceToRecycleAdapter);
+                                entranceToRecycleAdapter.allAddData(dataList);
+                                srlEntranceTo.setRefreshing(false);
+                                taskEntanceTo = new SaveIntoDatabaseRequest();
+                                taskEntanceTo.execute(entranceList);
+                            } else {
+                                srlEntranceTo.setRefreshing(false);
+                                entrance_to_recyclerView.setAdapter(entranceToRecycleAdapter);
+                            }
                         } else {
                             //сервер вернул ошибку от АПИ
                             srlEntranceTo.setRefreshing(false);

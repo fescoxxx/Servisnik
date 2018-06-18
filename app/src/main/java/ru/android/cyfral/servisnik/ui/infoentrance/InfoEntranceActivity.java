@@ -314,10 +314,16 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
                 entrance = "п."+currentInfoEntrance.getData().getAddress().getEntrance()+ " ";
             }
         } catch (java.lang.NullPointerException ex) {}
-        header_sity_info_entrance.setText(currentInfoEntrance.getData().getAddress().getCityType()+ " "+
-                currentInfoEntrance.getData().getAddress().getCity() + " "+
-                currentInfoEntrance.getData().getAddress().getStreetType() + " " +
-                currentInfoEntrance.getData().getAddress().getStreet() + " ");
+
+        String cityType = currentInfoEntrance.getData().getAddress().getCityType();
+        String city = currentInfoEntrance.getData().getAddress().getCity();
+        String streetType = currentInfoEntrance.getData().getAddress().getStreetType();
+        String street = currentInfoEntrance.getData().getAddress().getStreet();
+
+        header_sity_info_entrance.setText(city+ " "+
+                cityType+ " "+
+                street + " " +
+                streetType + " ");
 
         decr_home_info_entrance.setText(
                         dom+
@@ -345,6 +351,8 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
                         InfoEntrance currentInfoEntrance = response.body();
                         showInfoEntrance(currentInfoEntrance);
                         //сохранение объекта в БД
+                        mLinearLayout.setVisibility(View.VISIBLE);
+                        ppr_ok_button.setVisibility(View.VISIBLE);
                         SaveIntoDatabaseOdrerCard task = new SaveIntoDatabaseOdrerCard();
                         task.execute(currentInfoEntrance);
                     } else {
@@ -410,7 +418,15 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
 
     @Override
     public void onDeliverData(InfoEntrance infoEntrance) {
-        showInfoEntrance(infoEntrance);
+        if (infoEntrance.getData() == null) {
+            mProgressBar.setVisibility(View.INVISIBLE);
+            mLinearLayout.setVisibility(View.INVISIBLE);
+            ppr_ok_button.setVisibility(View.INVISIBLE);
+        } else {
+            mLinearLayout.setVisibility(View.VISIBLE);
+            ppr_ok_button.setVisibility(View.VISIBLE);
+            showInfoEntrance(infoEntrance);
+        }
     }
 
 

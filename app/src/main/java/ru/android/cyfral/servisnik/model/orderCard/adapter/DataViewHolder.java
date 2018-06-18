@@ -135,7 +135,10 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (clickListener != null) clickListener.onClick(view, selectDate, getAdapterPosition());
+        if (clickListener != null) {
+            mLine_is_view.setVisibility(View.INVISIBLE);
+            clickListener.onClick(view, selectDate, getAdapterPosition());
+        }
     }
 
 }
