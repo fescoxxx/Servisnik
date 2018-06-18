@@ -602,10 +602,16 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
         about_title.setText(str);
 
-        header_street.setText(orderCard.getData().getAddress().getCityType()+ " "+
-                orderCard.getData().getAddress().getCity() + " "+
-                orderCard.getData().getAddress().getStreetType() + " " +
-                orderCard.getData().getAddress().getStreet() + " ");
+        String cityType = orderCard.getData().getAddress().getCityType();
+        String city = orderCard.getData().getAddress().getCity();
+        String streetType = orderCard.getData().getAddress().getStreetType();
+        String street = orderCard.getData().getAddress().getStreet();
+
+
+        header_street.setText(city+ " "+
+                cityType + " "+
+                street + " " +
+                streetType + " ");
         adressTitle.setText(
                         dom+
                         litera+
@@ -702,7 +708,13 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
     @Override
     public void onDeliverOrderCard(OrderCard orderCard) {
-        showOrderCard(orderCard);
+        if (orderCard.getData() == null) {
+            mLinearLayout.setVisibility(View.INVISIBLE);
+        }  else {
+            mLinearLayout.setVisibility(View.VISIBLE);
+            showOrderCard(orderCard);
+        }
+
     }
 
     @Override

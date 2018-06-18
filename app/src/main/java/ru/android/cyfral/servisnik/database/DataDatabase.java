@@ -377,22 +377,19 @@ public class DataDatabase extends SQLiteOpenHelper {
             Cursor cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_ORDER_CARD+guid+"'", null);
             OrderCard orderCard = new OrderCard();
 
-
             if (cursorData.getCount() > 0) {
-
                 if (cursorData.moveToFirst()) {
                     do {
                         Gson gson = new Gson();
                         // Convert JSON to Java Object
                         orderCard = gson.fromJson(cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.JSON_ORDER_CARD)), OrderCard.class);
-/*                        Log.d("orderCard_json_sss", cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.JSON_ORDER_CARD)));
-                        Log.d("orderCard_json_xxx",orderCard.toString());
-                        Log.d("orderCard_json_xxx_uid",cursorData.getString(cursorData.getColumnIndex(Constants.DATABASE.ID_GUID_ORDER_CARD)));*/
                        // Convert JSON to JsonElement, and later to String
                         publishData(orderCard);
 
                     } while (cursorData.moveToNext());
                 }
+            } else {
+                publishData(orderCard);
             }
 
             Handler handler = new Handler(Looper.getMainLooper());
