@@ -209,6 +209,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         }
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMapToolbarEnabled(false);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.setOnMarkerClickListener(this);
         centerMeMap();
 
