@@ -379,21 +379,26 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         LatLng myPin = new LatLng(latitude, longitude);
         if (color.equals("BLACK")) {
             mMarker = mMap.addMarker(new MarkerOptions().position(myPin)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_black)));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_black))
+                    .anchor(0.5f, 0.5f));
             mMarker.setTag(houseID);
         } else if (color.equals("RED")) {
             mMarker = mMap.addMarker(new MarkerOptions().position(myPin)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_red)));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_red))
+                    .anchor(0.5f, 0.5f));
             mMarker.setTag(houseID);
         } else if (color.equals("BLUE")) {
             mMarker = mMap.addMarker(new MarkerOptions().position(myPin)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_blue)));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_blue))
+                    .anchor(0.5f, 0.5f));
             mMarker.setTag(houseID);
         } else if (color.equals("NULL")) {
             mMarker =mMap.addMarker(new MarkerOptions().position(myPin)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_big_dildo)));;
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_big_dildo))
+                    .anchor(0.5f, 0.5f));;
             mMarker.setTag(houseID);
         }
+
 
     }
 
