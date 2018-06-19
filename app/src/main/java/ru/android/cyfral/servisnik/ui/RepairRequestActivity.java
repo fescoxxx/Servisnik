@@ -95,6 +95,7 @@ public class RepairRequestActivity extends AppCompatActivity {
     private static ProgressDialog mDialog;
     private static RepairRequestFragment.SaveIntoDatabaseRequest taskRepairRequest;
     private static ListPprFragment.SaveIntoDatabaseRequest taskEntanceTo;
+    private static TabLayout.OnTabSelectedListener selectedListener;
 
     //пункты меню для поиска
     private static MenuItem findStreet;
@@ -722,14 +723,18 @@ public class RepairRequestActivity extends AppCompatActivity {
                 }
             });
 
-            TabLayout.OnTabSelectedListener selectedListener = new TabLayout.OnTabSelectedListener() {
+            selectedListener = new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     Constants.FIRST_LOAD_APP.TAB_GENERAL_APP = tab.getPosition();
                     if (tab.getPosition() == 1) {
-                        findStreet.setVisible(false);
-                        numberDesk.setVisible(false);
-                        numberMobile.setVisible(false);
+                        try {
+                            findStreet.setVisible(false);
+                            numberDesk.setVisible(false);
+                            numberMobile.setVisible(false);
+                        } catch (NullPointerException ex) {
+                        }
+
                         toolbar.setTitle("Подъезды на ТО");
                         if (Constants.FIRST_LOAD_APP.ENTRANCE_TO_FIRST) {
                             Log.d(LOG_TAG, "tab.onTabSelected() первое нажатие ");
@@ -740,9 +745,11 @@ public class RepairRequestActivity extends AppCompatActivity {
                             Log.d(LOG_TAG, "tab.onTabSelected() второе и более нажатие ");
                         }
                     } else if (tab.getPosition() == 0){
-                        findStreet.setVisible(true);
-                        numberDesk.setVisible(true);
-                        numberMobile.setVisible(true);
+                        try {
+                            findStreet.setVisible(true);
+                            numberDesk.setVisible(true);
+                            numberMobile.setVisible(true);
+                        } catch (NullPointerException ex) {}
                         toolbar.setTitle("Список ЗН");
                     }
                 }
