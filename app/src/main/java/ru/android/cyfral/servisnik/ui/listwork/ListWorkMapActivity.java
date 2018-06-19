@@ -130,63 +130,85 @@ public class ListWorkMapActivity extends AppCompatActivity implements
      */
     private void isLocationEnabled() {
 
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            AlertDialog.Builder alertDialog=new AlertDialog.Builder(mContext);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
             alertDialog.setTitle("Геолокация отключена");
             alertDialog.setMessage("Параметры местоположения не включены. Пожалуйста, включите их в меню настроек.");
-            alertDialog.setPositiveButton("Перейти в настройки", new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog, int which){
-                    Intent intent=new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            alertDialog.setPositiveButton("Перейти в настройки", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(intent);
                 }
             });
-            alertDialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog, int which){
+            alertDialog.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
                 }
             });
-            AlertDialog alert=alertDialog.create();
+            AlertDialog alert = alertDialog.create();
             alert.show();
         }
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         try {
             locationManager.removeUpdates(locationListener);
-        } catch (NullPointerException ex) {}
+        } catch (NullPointerException ex) {
+        }
     }
+
     private LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
-            latitude=location.getLatitude();
-            longitude=location.getLongitude();
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
             SharedPreferences myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
             SharedPreferences.Editor ed = myPrefs.edit();
             ed.putString(Constants.SETTINGS.LATITUDE, String.valueOf(latitude));
             ed.putString(Constants.SETTINGS.LONGITUDE, String.valueOf(longitude));
             ed.apply();
-            String msg="New Latitude: "+latitude + "New Longitude: "+longitude;
+            String msg = "New Latitude: " + latitude + "New Longitude: " + longitude;
             //  Toast.makeText(mContext,msg,Toast.LENGTH_LONG).show();
         }
+
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
             Log.d("loc_", provider);
         }
+
         @Override
         public void onProviderEnabled(String provider) {
             Log.d("loc_", provider);
 
         }
+
         @Override
         public void onProviderDisabled(String provider) {
             Log.d("loc_", provider);
         }
     };
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.setBuildingsEnabled(true);
+        mMap.setIndoorEnabled(true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.setOnMarkerClickListener(this);
         centerMeMap();
 
@@ -418,8 +440,8 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         mMap.clear();
         LatLng myTown = new LatLng(Double.parseDouble(loadTextPref(Constants.SETTINGS.LATITUDE)),
                 Double.parseDouble(loadTextPref(Constants.SETTINGS.LONGITUDE)));
-        mMap.addMarker(new MarkerOptions().position(myTown)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_iam_person2)));;
+       /* mMap.addMarker(new MarkerOptions().position(myTown)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_iam_person2)));;*/
         float zoomLevel = 17.0f; //This goes up to 21
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myTown, zoomLevel));
         if(currentListWorks != null) {

@@ -204,6 +204,8 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
+
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAUjmQo0UUzKBaN-61xPA6wGahbfTVq2PM" />
@@ -211,6 +213,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version">
         </meta-data>
+        <meta-data android:name="com.google.android.gms.maps.API_OPTIONS"
+            android:value="B3MWHUG2MR0DQW"/>
 
         <activity
             android:name=".ui.listwork.ListWorkMapActivity"
