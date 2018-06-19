@@ -133,6 +133,7 @@
                             android:fontFamily="@font/roboto"
                             android:paddingLeft="16dp"
                             android:text="Крайняя дата"
+                            android:gravity="center_vertical"
                             android:textAlignment="viewStart"
                             android:textColor="#3c3c3c"
                             android:textSize="16dp" />
@@ -145,6 +146,7 @@
                             android:background="#FFFFFF"
                             android:fontFamily="@font/roboto"
                             android:paddingRight="16dp"
+                            android:gravity="center_vertical"
                             android:textAlignment="textEnd"
                             android:textColor="#979797"
                             android:textSize="16dp"
@@ -231,6 +233,7 @@
                         android:textSize="16sp"
                         android:visibility="visible" />
                     <View
+                        android:id="@+id/tmc_button_divider"
                         android:layout_width="match_parent"
                         android:layout_height="0.3dp"
                         android:layout_weight="1"
@@ -251,6 +254,7 @@
                         android:textSize="16sp" />
 
                     <View
+                        android:id="@+id/contacts_button_divider"
                         android:layout_width="match_parent"
                         android:layout_height="0.3dp"
                         android:layout_weight="1"
@@ -271,6 +275,7 @@
                         android:textSize="16sp" />
 
                     <View
+                        android:id="@+id/equipment_button_divider"
                         android:layout_width="match_parent"
                         android:layout_height="0.3dp"
                         android:layout_weight="1"
@@ -291,6 +296,7 @@
                         android:textSize="16sp" />
 
                     <View
+                        android:id="@+id/save_house_button_divider"
                         android:layout_width="match_parent"
                         android:layout_height="0.3dp"
                         android:layout_weight="1"
@@ -311,6 +317,7 @@
                         android:textSize="16sp" />
 
                     <View
+                        android:id="@+id/PDInfo_button_divider"
                         android:layout_width="match_parent"
                         android:layout_height="0.3dp"
                         android:layout_weight="0.3"

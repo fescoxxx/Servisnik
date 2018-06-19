@@ -17,6 +17,7 @@
             android:layout_weight="1"
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
+            android:backgroundTint="@color/blue"
             android:spinnersShown="true"
             android:timePickerMode="spinner">
 
