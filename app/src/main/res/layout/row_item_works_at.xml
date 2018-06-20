@@ -12,18 +12,22 @@
         android:id="@+id/button_entrance"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:layout_margin="16dp"
         android:background="@drawable/buttonp"
         android:fontFamily="@font/roboto"
         android:minWidth="24dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="1"
         android:gravity="center"
         android:layout_gravity="center"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        />
 </LinearLayout>
 
 
