@@ -61,7 +61,7 @@
                         android:fontFamily="@font/roboto"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:paddingTop="5dp"
+                        android:paddingTop="16dp"
                         android:textColor="#3c3c3c"
                         android:textSize="16dp"
                         tools:text="Header" />
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:background="#FFFFFF"
                         android:fontFamily="@font/roboto"
-                        android:paddingBottom="4dp"
+                        android:paddingBottom="16dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:paddingTop="4dp"
@@ -177,7 +177,8 @@
                                 android:paddingBottom="4dp"
                                 android:paddingLeft="16dp"
                                 android:paddingRight="4dp"
-                                android:textColor="#d4d4d4"
+                                android:textColorHint="#d4d4d4"
+                                android:textColor="#3c3c3c"
                                 android:textSize="16dp" />
 
                             <TextView
@@ -187,10 +188,11 @@
                                 android:background="#FFFFFF"
                                 android:fontFamily="@font/roboto"
                                 android:hint="Согласованное время"
+                                android:textColorHint="#d4d4d4"
                                 android:paddingBottom="8dp"
                                 android:paddingLeft="16dp"
                                 android:paddingRight="4dp"
-                                android:textColor="#d4d4d4"
+                                android:textColor="#3c3c3c"
                                 android:textSize="14dp" />
                         </LinearLayout>
 

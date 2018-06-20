@@ -69,6 +69,7 @@
                         android:paddingRight="16dp"
                         android:paddingTop="8dp"
                         android:hint="Группа работ"
+                        android:textColor="#3c3c3c"
                         android:textColorHint="#d4d4d4"
                         android:textSize="16dp" />
 
@@ -85,6 +86,7 @@
                         android:paddingRight="16dp"
                         android:hint="Элемент работ"
                         android:textColorHint="#d4d4d4"
+                        android:textColor="#3c3c3c"
                         android:textSize="16dp" />
 
                     <TextView
@@ -101,6 +103,7 @@
                         android:paddingRight="16dp"
                         android:hint="Вид работ"
                         android:textColorHint="#d4d4d4"
+                        android:textColor="#3c3c3c"
                         android:textSize="16dp"/>
 
                 </LinearLayout>
