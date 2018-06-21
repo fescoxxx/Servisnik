@@ -10,7 +10,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl_entrance_to"
         android:layout_width="match_parent"
-        android:background="#ECEFF1"
+        android:background="#f5f5f6"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/entrance_to_recyclerView"

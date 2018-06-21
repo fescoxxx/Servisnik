@@ -75,7 +75,6 @@
                         android:paddingBottom="16dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:paddingTop="4dp"
                         android:textColor="#979797"
                         android:textSize="14dp"
                         tools:text="Header2" />
@@ -103,7 +102,7 @@
                         android:fontFamily="@font/roboto"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:paddingTop="4dp"
+                        android:paddingTop="16dp"
                         android:textColor="#3c3c3c"
                         android:textSize="16dp" />
 
@@ -189,7 +188,7 @@
                                 android:fontFamily="@font/roboto"
                                 android:hint="Согласованное время"
                                 android:textColorHint="#d4d4d4"
-                                android:paddingBottom="8dp"
+                                android:paddingBottom="16dp"
                                 android:paddingLeft="16dp"
                                 android:paddingRight="4dp"
                                 android:textColor="#3c3c3c"

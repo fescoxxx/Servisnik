@@ -129,6 +129,7 @@
             android:stateListAnimator="@null"
             android:visibility="visible" />
         <View
+            android:id="@+id/call_block_button_divider"
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
             android:background="#E0E0E0" />
@@ -145,6 +146,7 @@
             android:textAllCaps="false"
             android:textSize="16sp" />
         <View
+            android:id="@+id/video_dervice_button_divider"
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
             android:background="#E0E0E0" />
@@ -161,6 +163,7 @@
             android:textAllCaps="false"
             android:textSize="16sp" />
         <View
+            android:id="@+id/access_equipment_button_divider"
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
             android:background="#E0E0E0" />
@@ -179,6 +182,7 @@
 
 
         <View
+            android:id="@+id/list_special_subscriber_button_divider"
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
             android:background="#E0E0E0" />
