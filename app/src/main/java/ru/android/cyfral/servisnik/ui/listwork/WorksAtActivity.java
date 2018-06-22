@@ -88,7 +88,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         progressBar_works_at = (ProgressBar) findViewById(R.id.progressBar_works_at);
         linearLayout_entranceto = (LinearLayout) findViewById(R.id.linearLayout_entranceto);
         list_view_works_at = (ListView)  findViewById(R.id.list_view_works_at);
-        list_view_works_at.setScrollContainer(false);
+      //  list_view_works_at.setScrollContainer(false);
         textView_adress = (TextView)  findViewById(R.id.textView_adress);
         textView_number = (TextView)  findViewById(R.id.textView_number);
         Intent intent = getIntent();
