@@ -9,4 +9,5 @@
     <color name="blue">#4F7AB4</color>
     <color name="dark">#9F9F9F</color>
     <color name="dark_red">#B70A11</color>
+    <color name="search_cursor">#757575</color>
 </resources>

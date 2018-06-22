@@ -31,4 +31,9 @@
         <item name="android:inputType">textCapWords</item>
     </style>
 
+    <style name="AppSearchTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/search_cursor</item>
+        <item name="colorControlNormal">#FFFFFF</item>
+        <item name="android:textColorPrimary">#757575</item>
+    </style>
 </resources>
