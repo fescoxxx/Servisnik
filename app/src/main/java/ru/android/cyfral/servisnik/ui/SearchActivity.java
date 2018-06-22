@@ -190,6 +190,7 @@ public class SearchActivity extends AppCompatActivity  implements  RepairRequest
     @Override
     public void onClick(int position) {
         Data selectedData = mRepairRequestAdapter.getSelectedData(position);
+        mDatabase.updateIsViewedDataRepairRequest(selectedData); //обновляем в БД метку ISVIEWED
         Intent intent = new Intent("ru.android.cyfral.servisnik.card");
         intent.putExtra(Constants.SETTINGS.GUID, selectedData.getId());
         startActivityForResult(intent, 10);

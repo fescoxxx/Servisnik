@@ -241,6 +241,8 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
                         list_view_works_at.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                View mLine_is_view = (View)  view.findViewById(R.id.line_is_view);
+                                mLine_is_view.setVisibility(View.INVISIBLE);
                                 Intent intent = new Intent("ru.android.cyfral.servisnik.card");
                                 intent.putExtra(Constants.SETTINGS.GUID, orderCardListAdapter.getData(position).getId());
                                 startActivityForResult(intent, 10);
@@ -341,7 +343,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         try{
             if (!entranceList.getData().get(0).getAddress().getBuilding().equals("")
                     &!entranceList.getData().get(0).getAddress().getBuilding().equals("null")) {
-                building = "к" +entranceList.getData().get(0).getAddress().getBuilding()+" ";
+                building = "к." +entranceList.getData().get(0).getAddress().getBuilding()+" ";
             }
         } catch (java.lang.NullPointerException ex) {}
 

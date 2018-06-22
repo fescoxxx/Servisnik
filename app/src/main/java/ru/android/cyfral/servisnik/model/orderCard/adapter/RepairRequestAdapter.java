@@ -210,6 +210,7 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
         }
         @Override
         public void onClick(View view) {
+            mLine_is_view.setVisibility(View.INVISIBLE);
             mListener.onClick(getLayoutPosition());
         }
     }
