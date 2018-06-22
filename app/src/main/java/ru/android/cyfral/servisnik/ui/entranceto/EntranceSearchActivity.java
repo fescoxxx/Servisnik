@@ -1,9 +1,13 @@
 package ru.android.cyfral.servisnik.ui.entranceto;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBar;
@@ -14,15 +18,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +43,8 @@ import ru.android.cyfral.servisnik.model.entranceto.adapter.EntranceToAdapter;
 import ru.android.cyfral.servisnik.model.entranceto.adapter.EntranceToRecycleAdapter;
 
 public class EntranceSearchActivity extends AppCompatActivity implements DataFetchEntranceTo, EntranceToRecycleAdapter.EntranceToClickListener {
-    MaterialSearchView searchView;
-    Toolbar toolbar;
+    SearchView searchView;
+  //  Toolbar toolbar;
     private static DataDatabase mDatabase;
     private String filtrText;
     private EntranceTo entranceTo;
@@ -47,19 +55,18 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entrance_search);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+
+
         rv_list_search = (RecyclerView) findViewById(R.id.rv_list_search);
         rv_list_search.setLayoutManager(new LinearLayoutManager(getApplicationContext(),
                 LinearLayoutManager.VERTICAL, false));
-        searchView.setVoiceSearch(true); //or false
-        searchView.setHint("Название улицы");
-        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+
         mDatabase = new DataDatabase(this);
         mDatabase.fetchDatasForEntranceTo(this);
 
@@ -67,15 +74,35 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu_item_entrance_to, menu);
+      /*  getMenuInflater().inflate(R.menu.search_menu_item_entrance_to, menu);
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
         searchView.showVoice(true);
         searchView.showSearch();
         searchView.setVoiceSearch(true);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);*/
 
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+      MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.listsearch).getActionView();
+        searchView.setQueryHint("Название улицы");
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconified(false);
+        searchView.onActionViewExpanded();
+        searchView.requestFocus();
+
+        AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        try {
+            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            mCursorDrawableRes.setAccessible(true);
+            mCursorDrawableRes.set(searchTextView, R.drawable.cursor_search); //This sets the cursor resource ID to 0 or @null which will make it visible on white background
+        } catch (Exception e) {
+        }
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             private int waitingTime = 500;
             private CountDownTimer cntr;
@@ -130,7 +157,7 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
             case 1: {
                 if (resultCode == Activity.RESULT_OK && null != data) {
                     ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    searchView.setQuery(text.get(0), true);
+                    searchView.setQuery(text.get(0).trim(), true);
                     searchView.requestFocus(SearchView.FOCUS_RIGHT);
                 }
                 break;

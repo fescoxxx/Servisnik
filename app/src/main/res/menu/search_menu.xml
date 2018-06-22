@@ -10,7 +10,7 @@
         app:actionViewClass="android.widget.SearchView"
         android:title="Search"
         android:hint="Поиск"
-        android:iconifiedByDefault="true"
         />
+
 
 </menu>

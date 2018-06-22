@@ -80,7 +80,7 @@ public class SearchActivity extends AppCompatActivity  implements  RepairRequest
                 if (resultCode == Activity.RESULT_OK && null != data) {
                     searchView.setIconified(false);
                     ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    searchView.setQuery(text.get(0), true);
+                    searchView.setQuery(text.get(0).trim(), true);
                     searchView.requestFocus(SearchView.FOCUS_RIGHT);
                 }
                 break;
@@ -104,7 +104,8 @@ public class SearchActivity extends AppCompatActivity  implements  RepairRequest
         searchView = (SearchView) menu.findItem(R.id.listsearch).getActionView();
         searchView.setQueryHint(searchHint);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
+        searchView.setIconified(false);
+        searchView.onActionViewExpanded();
         searchView.requestFocus();
 
         if(searchHint.equals(Constants.SEARCH.NAME_STREET)) {
