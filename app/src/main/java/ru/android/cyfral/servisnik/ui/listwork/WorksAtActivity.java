@@ -55,6 +55,8 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     private ProgressBar progressBar_works_at;
     private ListView list_view_works_at; //список заказов по дому
 
+    private View header_list_work_at;
+
     TokenClient tokenClient = RetrofitClientToken
             .getClient(Constants.HTTP.BASE_URL_TOKEN)
             .create(TokenClient.class);
@@ -86,11 +88,11 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_works_at);
         refreshLayout = (SwipeRefreshLayout)  findViewById(R.id.srl_workat);
         progressBar_works_at = (ProgressBar) findViewById(R.id.progressBar_works_at);
-        linearLayout_entranceto = (LinearLayout) findViewById(R.id.linearLayout_entranceto);
+    //    linearLayout_entranceto = (LinearLayout) findViewById(R.id.linearLayout_entranceto);
         list_view_works_at = (ListView)  findViewById(R.id.list_view_works_at);
-      //  list_view_works_at.setScrollContainer(false);
-        textView_adress = (TextView)  findViewById(R.id.textView_adress);
-        textView_number = (TextView)  findViewById(R.id.textView_number);
+        list_view_works_at.addHeaderView(createHeader());
+    //    textView_adress = (TextView)  findViewById(R.id.textView_adress);
+    //    textView_number = (TextView)  findViewById(R.id.textView_number);
         Intent intent = getIntent();
         guid = intent.getStringExtra("GUID");
 
@@ -105,6 +107,15 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+    }
+
+    // создание шапки
+    View createHeader() {
+        View view = getLayoutInflater().inflate(R.layout.header_list_view_work_at, null);
+        textView_adress = (TextView) view.findViewById(R.id.textView_adress);
+        textView_number = (TextView) view.findViewById(R.id.textView_number);
+        linearLayout_entranceto = (LinearLayout) view.findViewById(R.id.linearLayout_entranceto);
+        return view;
     }
 
     @Override
@@ -223,6 +234,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
 
                         dataList = orderCardList.getData();
                         orderCardListAdapter = new OrderCardListAdapter(mContect, sortListData(dataList));
+
                         list_view_works_at.setAdapter(orderCardListAdapter);
 
                         //Для коректной работы list_view и refreshLayout вместе
@@ -243,8 +255,8 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 View mLine_is_view = (View)  view.findViewById(R.id.line_is_view);
                                 mLine_is_view.setVisibility(View.GONE);
-                                Intent intent = new Intent("ru.android.cyfral.servisnik.card");
-                                intent.putExtra(Constants.SETTINGS.GUID, orderCardListAdapter.getData(position).getId());
+                                     Intent intent = new Intent("ru.android.cyfral.servisnik.card");
+                                intent.putExtra(Constants.SETTINGS.GUID, orderCardListAdapter.getData(position-1).getId());
                                 startActivityForResult(intent, 10);
                             }
                         });

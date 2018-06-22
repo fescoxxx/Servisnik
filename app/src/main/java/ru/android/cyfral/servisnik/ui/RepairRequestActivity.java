@@ -577,7 +577,7 @@ public class RepairRequestActivity extends AppCompatActivity {
                      if (response.isSuccessful()) {
                          if (response.body().getIsSuccess().equals("true")){
                              if (response.body().getData() != null) {
-                                 showRepairRequest(response.body().getData(), true);
+                                 showRepairRequest(sortListData(response.body().getData()), true);
                              } else {
                                  srlRepairReques.setRefreshing(false);
                                  datasCategories = new ArrayList<>();
