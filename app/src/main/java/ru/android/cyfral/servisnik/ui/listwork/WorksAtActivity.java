@@ -54,6 +54,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     private SwipeRefreshLayout refreshLayout;
     private ProgressBar progressBar_works_at;
     private ListView list_view_works_at; //список заказов по дому
+    private TextView text_view_header_list_order_card;
 
     private View header_list_work_at;
 
@@ -114,6 +115,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         View view = getLayoutInflater().inflate(R.layout.header_list_view_work_at, null);
         textView_adress = (TextView) view.findViewById(R.id.textView_adress);
         textView_number = (TextView) view.findViewById(R.id.textView_number);
+        text_view_header_list_order_card = (TextView) view.findViewById(R.id.text_view_header_list_order_card);
         linearLayout_entranceto = (LinearLayout) view.findViewById(R.id.linearLayout_entranceto);
         return view;
     }
@@ -231,52 +233,53 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
                         OrderCardList orderCardList = response.body();
                         List<Data> dataList;
                         final OrderCardListAdapter orderCardListAdapter;
-
-                        dataList = orderCardList.getData();
-                        orderCardListAdapter = new OrderCardListAdapter(mContect, sortListData(dataList));
-
-                        list_view_works_at.setAdapter(orderCardListAdapter);
-
-                        //Для коректной работы list_view и refreshLayout вместе
-                        list_view_works_at.setOnScrollListener(new AbsListView.OnScrollListener() {
-                            @Override
-                            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                            }
-                            @Override
-                            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                                if (list_view_works_at.getChildAt(0) != null) {
-                                    refreshLayout.setEnabled(list_view_works_at.getFirstVisiblePosition() == 0 && list_view_works_at.getChildAt(0).getTop() == 0);
+                        //если пришел пустой массив списка ЗН - прячем надпись "Список заказ-нарядов"
+                        if(orderCardList.getData() != null & !orderCardList.getData().isEmpty()) {
+                            dataList = orderCardList.getData();
+                        } else {
+                            dataList = new ArrayList<>();
+                            text_view_header_list_order_card.setVisibility(View.GONE);
+                        }
+                        if (dataList != null) {
+                            orderCardListAdapter = new OrderCardListAdapter(mContect, sortListData(dataList));
+                            list_view_works_at.setAdapter(orderCardListAdapter);
+                            //Для коректной работы list_view и refreshLayout вместе
+                            list_view_works_at.setOnScrollListener(new AbsListView.OnScrollListener() {
+                                @Override
+                                public void onScrollStateChanged(AbsListView view, int scrollState) {
                                 }
-                            }
-                        });
+                                @Override
+                                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                                    if (list_view_works_at.getChildAt(0) != null) {
+                                        refreshLayout.setEnabled(list_view_works_at.getFirstVisiblePosition() == 0 && list_view_works_at.getChildAt(0).getTop() == 0);
+                                    }
+                                }
+                            });
+                            list_view_works_at.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    View mLine_is_view = (View)  view.findViewById(R.id.line_is_view);
+                                    mLine_is_view.setVisibility(View.GONE);
+                                    Intent intent = new Intent("ru.android.cyfral.servisnik.card");
+                                    intent.putExtra(Constants.SETTINGS.GUID, orderCardListAdapter.getData(position-1).getId());
+                                    startActivityForResult(intent, 10);
+                                }
+                            });
 
-                        list_view_works_at.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                View mLine_is_view = (View)  view.findViewById(R.id.line_is_view);
-                                mLine_is_view.setVisibility(View.GONE);
-                                     Intent intent = new Intent("ru.android.cyfral.servisnik.card");
-                                intent.putExtra(Constants.SETTINGS.GUID, orderCardListAdapter.getData(position-1).getId());
-                                startActivityForResult(intent, 10);
-                            }
-                        });
-
+                        }
                         progressBar_works_at.setVisibility(View.INVISIBLE);
                         refreshLayout.setVisibility(View.VISIBLE);
                         refreshLayout.setRefreshing(false);
-
                     } else {
                         //сервер вернул ошибку от АПИ
                         refreshLayout.setRefreshing(false);
                         progressBar_works_at.setVisibility(View.INVISIBLE);
-                        //refreshLayout.setVisibility(View.VISIBLE);
                         showErrorDialog(response.body().getErrors().getCode());
                     }
                 } else {
                     //сервер вернул ошибку
                     refreshLayout.setRefreshing(false);
                     progressBar_works_at.setVisibility(View.INVISIBLE);
-                    // refreshLayout.setVisibility(View.VISIBLE);
                     int rc = response.code();
                     if (rc == 401) {
                         startActivity(new Intent("ru.android.cyfral.servisnik.login"));

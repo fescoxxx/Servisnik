@@ -97,7 +97,7 @@
             android:layout_height="0.3dp"
             android:background="#E0E0E0" />
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/text_view_header_list_order_card"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="#F5F5F6"

@@ -345,8 +345,10 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         for (int i=0; i<currentListWorks.getData().size(); i++) {
             Date dateToday = new Date();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'");
+
             try {
                 Date deadLine = format.parse(currentListWorks.getData().get(i).getRepairRequestDeadline());
+
                 if (deadLine.before(format.parse(format.format(dateToday)))) {
                     pinBlackMap(Double.parseDouble(currentListWorks.getData().get(i).getLatitude()),
                             Double.parseDouble(currentListWorks.getData().get(i).getLongitude()), "BLACK",
