@@ -205,7 +205,7 @@ public class OrderCardListAdapter extends BaseAdapter {
         if(data.getIsViewed().equals("false")) {
             mLine_is_view.setVisibility(View.VISIBLE);
         } else if(data.getIsViewed().equals("true")) {
-            mLine_is_view.setVisibility(View.INVISIBLE);
+            mLine_is_view.setVisibility(View.GONE);
         }
 
         Date dateToday = new Date();
