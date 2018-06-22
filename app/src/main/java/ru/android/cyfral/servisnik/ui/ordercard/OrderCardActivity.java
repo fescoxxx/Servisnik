@@ -137,6 +137,12 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         result_execution_button = (Button) findViewById(R.id.result_execution_button);
         PDInfo_button = (Button) findViewById(R.id.PDInfo_button);
 
+        tmc_button_divider = (View) findViewById(R.id.tmc_button_divider);
+        contacts_button_divider = (View) findViewById(R.id.contacts_button_divider);
+        equipment_button_divider = (View) findViewById(R.id.equipment_button_divider);
+        save_house_button_divider = (View) findViewById(R.id.save_house_button_divider);
+        PDInfo_button_divider = (View) findViewById(R.id.PDInfo_button_divider);
+
         tmc_button.setOnClickListener(this);
         contacts_button.setOnClickListener(this);
         equipment_button.setOnClickListener(this);

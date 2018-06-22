@@ -106,6 +106,11 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
         list_special_subscriber_button = (Button) findViewById(R.id.list_special_subscriber_button);
         call_block_button = (Button) findViewById(R.id.call_block_button);
 
+        call_block_button_divider = (View)  findViewById(R.id.call_block_button_divider);
+        video_dervice_button_divider = (View)  findViewById(R.id.video_dervice_button_divider);
+        access_equipment_button_divider  = (View)  findViewById(R.id.access_equipment_button_divider);
+        list_special_subscriber_button_divider = (View)  findViewById(R.id.list_special_subscriber_button_divider);
+
         video_dervice_button.setOnClickListener(this);
         access_equipment_button.setOnClickListener(this);
         list_special_subscriber_button.setOnClickListener(this);
