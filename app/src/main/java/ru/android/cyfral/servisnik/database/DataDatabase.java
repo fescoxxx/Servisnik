@@ -541,8 +541,12 @@ public class DataDatabase extends SQLiteOpenHelper {
 
         @Override
         public void run() {
+/*
             Cursor cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY +" order by "
                     +Constants.DATABASE.DEADLINE + ", "+Constants.DATABASE.STREET +" desc", null);
+*/
+
+            Cursor cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY, null);
             final List<Data> dataList = new ArrayList<>();
             final List<Contacts> constantsList = new ArrayList<>();
             if (cursorData.getCount() > 0) {

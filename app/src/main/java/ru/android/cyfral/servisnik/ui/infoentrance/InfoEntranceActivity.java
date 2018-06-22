@@ -55,6 +55,12 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
     private TextView decr_home_info_entrance; //дом литера крвартира
     private String guid;
 
+    private View call_block_button_divider;
+    private View video_dervice_button_divider;
+    private View access_equipment_button_divider;
+    private View list_special_subscriber_button_divider;
+
+
     private static DataDatabase mDatabase; //База данных
 
     TokenClient tokenClient = RetrofitClientToken
@@ -248,18 +254,23 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
         List<SpecialApartments> specialApartmentsList =  infoEntrance.getData().getSpecialApartments();
         if (contactsList.isEmpty()) {
             access_equipment_button.setVisibility(View.GONE);
+            access_equipment_button_divider.setVisibility(View.GONE);
         }
 
         if (videoServiceList.isEmpty()) {
             video_dervice_button.setVisibility(View.GONE);
+            video_dervice_button_divider.setVisibility(View.GONE);
         }
 
         if (callingDevicesList.isEmpty()) {
             call_block_button.setVisibility(View.GONE);
+            call_block_button_divider.setVisibility(View.GONE);
         }
 
         if (specialApartmentsList.isEmpty()) {
             list_special_subscriber_button.setVisibility(View.GONE);
+            list_special_subscriber_button_divider.setVisibility(View.GONE);
+
         }
     }
 

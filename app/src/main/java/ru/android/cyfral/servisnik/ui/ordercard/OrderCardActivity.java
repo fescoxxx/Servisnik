@@ -96,6 +96,14 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private Button result_execution_button;
     private Button PDInfo_button;
     private Context context;
+    private View tmc_button_divider;
+    private View contacts_button_divider;
+    private View equipment_button_divider;
+    private View save_house_button_divider;
+    private View PDInfo_button_divider;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -479,37 +487,34 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
         if (listTmas.isEmpty()) {
             tmc_button.setVisibility(View.GONE);
-        } else {
-          //  tmc_button.setVisibility(View.VISIBLE);
-        }
+            tmc_button_divider.setVisibility(View.GONE);
 
+        }
 
         try{
             if (orderCard.getData().getEntranceId().equals("null") |
                     orderCard.getData().getEntranceId() == null ) {
                 PDInfo_button.setVisibility(View.GONE);
+                PDInfo_button_divider.setVisibility(View.GONE);
             }
         } catch (NullPointerException ex) {
             PDInfo_button.setVisibility(View.GONE);
+            PDInfo_button_divider.setVisibility(View.GONE);
         }
-
 
         if(listContacts.isEmpty()) {
             contacts_button.setVisibility(View.GONE);
-        } else  {
-          //  contacts_button.setVisibility(View.VISIBLE);
+            contacts_button_divider.setVisibility(View.GONE);
         }
 
         if(listInstalledEquipments.isEmpty()) {
             equipment_button.setVisibility(View.GONE);
-        } else {
-           // equipment_button.setVisibility(View.VISIBLE);
+            equipment_button_divider.setVisibility(View.GONE);
         }
 
         if(listSafeHome.isEmpty()) {
             save_house_button.setVisibility(View.GONE);
-        } else {
-            //save_house_button.setVisibility(View.VISIBLE);
+            save_house_button_divider.setVisibility(View.GONE);
         }
     }
 
