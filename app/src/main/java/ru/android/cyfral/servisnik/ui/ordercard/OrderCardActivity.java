@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
@@ -22,13 +23,16 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -161,6 +165,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         }
 
 
+
         btn_date_agreed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,8 +176,14 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
                 timePicker = (TimePicker) dialogView.findViewById(R.id.timePicker_agreed);
                 datePicker = (DatePicker) dialogView.findViewById(R.id.datePicker_argeed);
+              //  timePicker = new MyTimePicker(OrderCardActivity.this);
+                LinearLayout linearLayout_piker_argeed = (LinearLayout)  dialogView.findViewById(R.id.linearLayout_piker_argeed);
+              //  linearLayout_piker_argeed.addView(timePicker);
+                Calendar c = Calendar.getInstance();
+                datePicker.setMinDate(c.getTimeInMillis());
 
                 timePicker.setIs24HourView(true);
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     timePicker.setMinute(timePicker.getMinute()+6);
                 }

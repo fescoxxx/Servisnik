@@ -27,6 +27,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -268,6 +270,43 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
                             text_view_header_list_order_card.setVisibility(View.GONE);
                         }
                         if (dataList != null) {
+
+                            String DATE_FORMAT_NOW = "yyyy-MM-dd'T'HH:mm:ss";
+                            final DateFormat df = new SimpleDateFormat(DATE_FORMAT_NOW);
+
+                            //сортировка по дате, адресу и номеру дома
+                            Collections.sort(dataList, new Comparator<Data>() {
+                                @Override
+                                public int compare(Data date1, Data date2) {
+                                    try {
+
+                                        Date a1 = null;
+                                        Date b1 = null;
+
+                                        String a2 = date1.getAddress().getStreet();
+                                        String b2 = date2.getAddress().getStreet();
+
+                                        String a3 = date1.getAddress().getNumber();
+                                        String b3 = date2.getAddress().getNumber();
+
+                                        a1 = df.parse(date1.getDeadline());
+                                        b1 = df.parse(date2.getDeadline());
+
+                                        int result = a1.compareTo(b1);
+
+                                        if (result == 0) {
+                                            result = a2.compareTo(b2);
+                                        }
+                                        if (result == 0) {
+                                            result = a3.compareTo(b3);
+                                        }
+                                        return result;
+                                    } catch (Exception e) {
+                                        return 1;
+                                    }
+                                }
+                            });
+
                             orderCardListAdapter = new OrderCardListAdapter(mContect, sortListData(dataList));
                             list_view_works_at.setAdapter(orderCardListAdapter);
                             //Для коректной работы list_view и refreshLayout вместе
