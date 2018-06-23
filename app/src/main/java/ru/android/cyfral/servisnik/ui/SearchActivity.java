@@ -19,14 +19,18 @@ import android.view.WindowManager;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.database.DataDatabase;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchSearchActivity;
-import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.orderCard.adapter.RepairRequestAdapter;
 import ru.android.cyfral.servisnik.model.repairRequests.Data;
 
@@ -183,6 +187,42 @@ public class SearchActivity extends AppCompatActivity  implements  RepairRequest
 
     @Override
     public void onDeliverAllDatas(List<Data> datas) {
+
+        String DATE_FORMAT_NOW = "yyyy-MM-dd'T'HH:mm:ss";
+        final DateFormat df = new SimpleDateFormat(DATE_FORMAT_NOW);
+        //сортировка по дате, адресу и номеру дома
+        Collections.sort(datas, new Comparator<Data>() {
+            @Override
+            public int compare(Data date1, Data date2) {
+                try {
+
+                    Date a1 = null;
+                    Date b1 = null;
+
+                    String a2 = date1.getAddress().getStreet();
+                    String b2 = date2.getAddress().getStreet();
+
+                    String a3 = date1.getAddress().getNumber();
+                    String b3 = date2.getAddress().getNumber();
+
+                    a1 = df.parse(date1.getDeadline());
+                    b1 = df.parse(date2.getDeadline());
+
+                    int result = a1.compareTo(b1);
+
+                    if (result == 0) {
+                        result = a2.compareTo(b2);
+                    }
+                    if (result == 0) {
+                        result = a3.compareTo(b3);
+                    }
+                    return result;
+                } catch (Exception e) {
+                    return 1;
+                }
+            }
+        });
+
         mRepairRequestAdapter.allAddData(sortListData(datas));
     }
 

@@ -433,16 +433,13 @@ public class DataDatabase extends SQLiteOpenHelper {
             Cursor cursorData = null;
             if (filtrType.equals(Constants.SEARCH.NAME_STREET)) {
                 cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_FOR_STREET+filtr
-                        +"%' order by "+Constants.DATABASE.DEADLINE+ ", "
-                        +Constants.DATABASE.STREET +" desc", null);
+                        +"%'", null);
             } else if (filtrType.equals(Constants.SEARCH.NUMBER_PHONE)) {
                 cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_FOR_PHONE+filtr
-                        +"%' order by "+Constants.DATABASE.DEADLINE+ ", "
-                        +Constants.DATABASE.STREET +" desc", null);
+                        +"%'", null);
             } else if (filtrType.equals(Constants.SEARCH.NUMBER_ZN)) {
                 cursorData = mDb.rawQuery(Constants.DATABASE.GET_DATAS_QUERY_FOR_NUMBER_ZN+filtr
-                        +"%' order by "+Constants.DATABASE.DEADLINE+ ", "
-                        +Constants.DATABASE.STREET +" desc", null);
+                        +"%'", null);
             }
 
            // Log.d("Constants.DATABASE",Constants.DATABASE.GET_DATAS_QUERY_FOR_STREET+filtr+"'");
