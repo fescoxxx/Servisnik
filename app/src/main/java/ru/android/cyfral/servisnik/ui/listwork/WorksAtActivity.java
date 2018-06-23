@@ -101,13 +101,31 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         guid = intent.getStringExtra("GUID");
 
         progressBar_works_at.setVisibility(View.VISIBLE);
-        refreshLayout.setVisibility(View.INVISIBLE);
+       // refreshLayout.setVisibility(View.INVISIBLE);
 
 
+        actionIsInternet();
+
+        // указываем слушатель свайпов пользователя
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                actionIsInternet();
+            }
+        });
+
+    }
+
+    private void actionIsInternet() {
         if (Utils.isNetworkAvailable(this)) {
+            list_view_works_at.setVisibility(View.VISIBLE);
             linearNoConnectionInternet.removeView(mTexrView);
             getListEntrance();
         } else {
+            linearNoConnectionInternet.removeView(mTexrView);
+            refreshLayout.setVisibility(View.VISIBLE);
+            refreshLayout.setRefreshing(false);
+            list_view_works_at.setVisibility(View.INVISIBLE);
             progressBar_works_at.setVisibility(View.INVISIBLE);
             mTexrView = new TextView(this);
             linearNoConnectionInternet.removeView(mTexrView);
@@ -118,14 +136,6 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
             mTexrView.setTextSize(15);
             linearNoConnectionInternet.addView(mTexrView);
         }
-
-        // указываем слушатель свайпов пользователя
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getListEntrance();
-            }
-        });
 
     }
 
