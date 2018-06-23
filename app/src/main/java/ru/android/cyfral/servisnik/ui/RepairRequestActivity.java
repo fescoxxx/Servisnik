@@ -300,31 +300,118 @@ public class RepairRequestActivity extends AppCompatActivity {
                 }
 
             }
-            String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+            String DATE_FORMAT_NOW = "yyyy-MM-dd'T'HH:mm:ss";
             final DateFormat df = new SimpleDateFormat(DATE_FORMAT_NOW);
+
+
+            //сортировка по дате, адресу и номеру дома
             Collections.sort(overdueData, new Comparator<Data>() {
                 @Override
                 public int compare(Data date1, Data date2) {
-                    Date a = null;
-                    Date b = null;
                     try {
-                        a = df.parse(date1.getDeadline());
-                        b = df.parse(date2.getDeadline());
-                        if (a.after(b))
-                            return -1;
-                        else if (a.before(b)) // it equals
-                            return 0;
-                        else
-                            return 1;
-                    } catch (ParseException e) {
+
+                        Date a1 = null;
+                        Date b1 = null;
+
+                        String a2 = date1.getAddress().getStreet();
+                        String b2 = date2.getAddress().getStreet();
+
+                        String a3 = date1.getAddress().getNumber();
+                        String b3 = date2.getAddress().getNumber();
+
+                        a1 = df.parse(date1.getDeadline());
+                        b1 = df.parse(date2.getDeadline());
+
+                        int result = a1.compareTo(b1);
+
+                        if (result == 0) {
+                            result = a2.compareTo(b2);
+                        }
+                        if (result == 0) {
+                            result = a3.compareTo(b3);
+                        }
+                       return result;
+                    } catch (Exception e) {
+                        return 1;
+                    }
+                }
+            });
+            //сортировка по дате, адресу и номеру дома
+            Collections.sort(todayData, new Comparator<Data>() {
+                @Override
+                public int compare(Data date1, Data date2) {
+                    try {
+
+                        Date a1 = null;
+                        Date b1 = null;
+
+                        String a2 = date1.getAddress().getStreet();
+                        String b2 = date2.getAddress().getStreet();
+
+                        String a3 = date1.getAddress().getNumber();
+                        String b3 = date2.getAddress().getNumber();
+
+                        a1 = df.parse(date1.getDeadline());
+                        b1 = df.parse(date2.getDeadline());
+
+                        int result = a1.compareTo(b1);
+
+                        if (result == 0) {
+                            result = a2.compareTo(b2);
+                        }
+                        if (result == 0) {
+                            result = a3.compareTo(b3);
+                        }
+                        return result;
+                    } catch (Exception e) {
+                        return 1;
+                    }
+                }
+            });
+            // сортировка по дате, адресу и номеру дома
+            Collections.sort(manyday, new Comparator<Data>() {
+                @Override
+                public int compare(Data date1, Data date2) {
+                    try {
+
+                        Date a1 = null;
+                        Date b1 = null;
+
+                        String a2 = date1.getAddress().getStreet();
+                        String b2 = date2.getAddress().getStreet();
+
+                        String a3 = date1.getAddress().getNumber();
+                        String b3 = date2.getAddress().getNumber();
+
+                        a1 = df.parse(date1.getDeadline());
+                        b1 = df.parse(date2.getDeadline());
+
+                        int result = a1.compareTo(b1);
+
+                        if (result == 0) {
+                            result = a2.compareTo(b2);
+                        }
+                        if (result == 0) {
+                            result = a3.compareTo(b3);
+                        }
+                        return result;
+                    } catch (Exception e) {
                         return 1;
                     }
                 }
             });
 
-            RepairRequestCategory one_cat = new RepairRequestCategory("Просроченные ("+overdueData.size()+")", overdueData);
-            RepairRequestCategory two_cat = new RepairRequestCategory("Выполнить сегодня ("+todayData.size()+")", todayData);
-            RepairRequestCategory tree_cat = new RepairRequestCategory("Более одного дня ("+manyday.size()+")", manyday);
+
+
+
+            for(int i=0; i<overdueData.size(); i++) {
+                Log.d("overdueData 2", overdueData.get(i).getDeadline());
+            }
+
+
+            RepairRequestCategory one_cat = new RepairRequestCategory("Просроченные ("+overdueData.size()+")", sortListData(overdueData));
+            RepairRequestCategory two_cat = new RepairRequestCategory("Выполнить сегодня ("+todayData.size()+")", sortListData(todayData));
+            RepairRequestCategory tree_cat = new RepairRequestCategory("Более одного дня ("+manyday.size()+")", sortListData(manyday));
             if(overdueData.size() != 0) {datasCategories.add(one_cat);}
             if (todayData.size() != 0) {datasCategories.add(two_cat);}
             if (manyday.size() != 0) {datasCategories.add(tree_cat);}
@@ -577,7 +664,7 @@ public class RepairRequestActivity extends AppCompatActivity {
                      if (response.isSuccessful()) {
                          if (response.body().getIsSuccess().equals("true")){
                              if (response.body().getData() != null) {
-                                 showRepairRequest(sortListData(response.body().getData()), true);
+                                 showRepairRequest(response.body().getData(), true);
                              } else {
                                  srlRepairReques.setRefreshing(false);
                                  datasCategories = new ArrayList<>();
@@ -647,7 +734,7 @@ public class RepairRequestActivity extends AppCompatActivity {
         }
         @Override
         public void onDeliverAllDatas(List<Data> datas) {
-            showRepairRequest(sortListData(datas), false);
+            showRepairRequest(datas, false);
         }
 
 
