@@ -101,7 +101,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         guid = intent.getStringExtra("GUID");
 
         progressBar_works_at.setVisibility(View.VISIBLE);
-       // refreshLayout.setVisibility(View.INVISIBLE);
+        refreshLayout.setVisibility(View.INVISIBLE);
 
 
         actionIsInternet();
@@ -161,8 +161,6 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void getListEntrance() {
-
-
 
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         String token_ref = loadTextPref(Constants.SETTINGS.REFRESH_TOKEN);
