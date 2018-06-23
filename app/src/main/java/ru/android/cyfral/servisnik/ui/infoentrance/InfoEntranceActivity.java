@@ -60,6 +60,8 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
     private View access_equipment_button_divider;
     private View list_special_subscriber_button_divider;
 
+    private View top_two_divider;
+
 
     private static DataDatabase mDatabase; //База данных
 
@@ -110,6 +112,8 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
         video_dervice_button_divider = (View)  findViewById(R.id.video_dervice_button_divider);
         access_equipment_button_divider  = (View)  findViewById(R.id.access_equipment_button_divider);
         list_special_subscriber_button_divider = (View)  findViewById(R.id.list_special_subscriber_button_divider);
+
+        top_two_divider =  (View)  findViewById(R.id.top_two_divider);
 
         video_dervice_button.setOnClickListener(this);
         access_equipment_button.setOnClickListener(this);
@@ -275,7 +279,13 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
         if (specialApartmentsList.isEmpty()) {
             list_special_subscriber_button.setVisibility(View.GONE);
             list_special_subscriber_button_divider.setVisibility(View.GONE);
+        }
 
+        if (contactsList.isEmpty()
+                & videoServiceList.isEmpty()
+                & callingDevicesList.isEmpty()
+                & specialApartmentsList.isEmpty()) {
+            top_two_divider.setVisibility(View.GONE);
         }
     }
 
