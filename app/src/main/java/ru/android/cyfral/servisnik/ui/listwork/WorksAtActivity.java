@@ -36,6 +36,7 @@ import retrofit2.Response;
 import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.RefreshToken;
+import ru.android.cyfral.servisnik.model.Utils;
 import ru.android.cyfral.servisnik.model.listwork.adapter.OrderCardListAdapter;
 import ru.android.cyfral.servisnik.model.listwork.worksat.ordercardlist.Data;
 import ru.android.cyfral.servisnik.model.listwork.worksat.entrancelist.EntranceList;
@@ -73,6 +74,9 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     private Context mContect;
     private TextView textView_adress;
     private TextView textView_number;
+    private TextView mTexrView;
+
+    private LinearLayout linearNoConnectionInternet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,17 +93,32 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         mLinearLayout = (LinearLayout) findViewById(R.id.linearLayout_works_at);
         refreshLayout = (SwipeRefreshLayout)  findViewById(R.id.srl_workat);
         progressBar_works_at = (ProgressBar) findViewById(R.id.progressBar_works_at);
-    //    linearLayout_entranceto = (LinearLayout) findViewById(R.id.linearLayout_entranceto);
         list_view_works_at = (ListView)  findViewById(R.id.list_view_works_at);
         list_view_works_at.addHeaderView(createHeader());
-    //    textView_adress = (TextView)  findViewById(R.id.textView_adress);
-    //    textView_number = (TextView)  findViewById(R.id.textView_number);
+        linearNoConnectionInternet = (LinearLayout)  findViewById(R.id.linearNoConnectionInternet);
+
         Intent intent = getIntent();
         guid = intent.getStringExtra("GUID");
 
         progressBar_works_at.setVisibility(View.VISIBLE);
         refreshLayout.setVisibility(View.INVISIBLE);
-        getListEntrance();
+
+
+        if (Utils.isNetworkAvailable(this)) {
+            linearNoConnectionInternet.removeView(mTexrView);
+            getListEntrance();
+        } else {
+            progressBar_works_at.setVisibility(View.INVISIBLE);
+            mTexrView = new TextView(this);
+            linearNoConnectionInternet.removeView(mTexrView);
+            mTexrView.setText("Нет доступа к сети.\n" +
+                    "Проверьте, есть ли доступ к Интернет через Ваше мобильное устройство");
+            mTexrView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            mTexrView.setPadding(7,7,7,7);
+            mTexrView.setTextSize(15);
+            linearNoConnectionInternet.addView(mTexrView);
+        }
+
         // указываем слушатель свайпов пользователя
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
