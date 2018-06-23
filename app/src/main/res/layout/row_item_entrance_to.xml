@@ -22,7 +22,9 @@
             android:paddingLeft="16dp"
             android:paddingTop="16dp"
             android:textColor="#3c3c3c"
-            android:text="TextView" />
+            android:text="..."
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/house_atribut"
@@ -33,7 +35,9 @@
             android:paddingTop="16dp"
             android:textColor="#3c3c3c"
             android:gravity="right"
-            android:text="TextView" />
+            android:text="..."
+            android:maxLines="1"
+            android:ellipsize="end"/>
 
     </LinearLayout>
 
