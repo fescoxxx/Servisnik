@@ -73,8 +73,36 @@ public class EntranceToRecycleAdapter extends RecyclerView.Adapter<EntranceToRec
             holder.linearlayout_entrance_to.addView(content);
         }
 
+        String numberHome = "";
+        String litera = "";
+        String building = "";
+
+        String concatStr;
+
+        try {
+            if (!mData.get(position).getAddress().getNumber().equals("") &
+                    !mData.get(position).getAddress().getNumber().equals("null")) {
+                numberHome = "д." +mData.get(position).getAddress().getNumber() + " ";
+            }
+        } catch (NullPointerException ex) {}
+        try{
+            if (!mData.get(position).getAddress().getLetter().equals("")
+                    &!mData.get(position).getAddress().getLetter().equals("null")) {
+                litera = "л."+mData.get(position).getAddress().getLetter() +" ";
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        try{
+            if (!mData.get(position).getAddress().getBuilding().equals("")
+                    &!mData.get(position).getAddress().getBuilding().equals("null")) {
+                building = "к." + mData.get(position).getAddress().getBuilding()+" ";
+            }
+        } catch (java.lang.NullPointerException ex) {}
+
+        concatStr = numberHome + litera +building;
+
         holder.strit_atribut.setText(mData.get(position).getAddress().getStreet() + " "+mData.get(position).getAddress().getStreetType());
-        holder.house_atribut.setText("д." +mData.get(position).getAddress().getNumber());
+        holder.house_atribut.setText(concatStr);
     }
 
     @Override
