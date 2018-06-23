@@ -37,4 +37,8 @@
         <item name="android:background">#FFFFFF</item>
         <item name="android:textColorPrimary">#757575</item>
     </style>
+
+    <style name="PikerTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlNormal">@color/date_time_piker_divider</item>
+    </style>
 </resources>

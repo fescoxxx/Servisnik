@@ -19,7 +19,8 @@
             android:datePickerMode="spinner"
             android:backgroundTint="@color/blue"
             android:spinnersShown="true"
-            android:timePickerMode="spinner">
+            android:timePickerMode="spinner"
+            android:theme="@style/PikerTheme" >
 
         </DatePicker>
 
@@ -29,7 +30,8 @@
             android:layout_height="140dp"
             android:layout_weight="1"
             android:calendarViewShown="false"
-            android:timePickerMode="spinner">
+            android:timePickerMode="spinner"
+            android:theme="@style/PikerTheme">
 
         </TimePicker>
 

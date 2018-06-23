@@ -171,6 +171,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
                 timePicker = (TimePicker) dialogView.findViewById(R.id.timePicker_agreed);
                 datePicker = (DatePicker) dialogView.findViewById(R.id.datePicker_argeed);
+
                 timePicker.setIs24HourView(true);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     timePicker.setMinute(timePicker.getMinute()+6);
