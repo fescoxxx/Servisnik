@@ -1,6 +1,7 @@
 package ru.android.cyfral.servisnik.ui.ordercard;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -102,7 +103,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private View save_house_button_divider;
     private View PDInfo_button_divider;
 
-
+    private ProgressDialog mDialog; //анимация загрузки
 
 
     @Override
@@ -183,6 +184,12 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                 });
                 ad.setPositiveButton("Сохранить", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
+                        mDialog = new ProgressDialog(OrderCardActivity.this);
+                        mDialog.setMessage("Отправляем данные...");
+                        mDialog.setCancelable(true);
+                        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        mDialog.setIndeterminate(true);
+                        mDialog.show();
                         GregorianCalendar calendarBeg= null;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             calendarBeg = new GregorianCalendar(datePicker.getYear(),
@@ -204,11 +211,14 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                                 if(response.isSuccessful()) {
                                     if (response.body().getIsSuccess().equals("true")) {
                                         getFeed();
+                                        mDialog.cancel();
                                     }
                                     else {
+                                        mDialog.cancel();
                                         showErrorDialog(response.body().getErrors().getCode());
                                     }
                                 } else {
+                                    mDialog.cancel();
                                     showErrorDialog(String.valueOf(response.code()));
 
                                 }
@@ -217,6 +227,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                             @Override
                             public void onFailure(Call<StandartAnswer> call, Throwable t) {
                                 Log.d("StandartAnswer", t.toString());
+                                mDialog.cancel();
                                 showErrorDialog("");
                             }
                         });
