@@ -7,6 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -27,6 +31,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -374,29 +379,45 @@ public class ListWorkMapActivity extends AppCompatActivity implements
 
     }
 
+    private BitmapDescriptor getMarkerIconFromDrawable(Drawable drawable) {
+        Canvas canvas = new Canvas();
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        canvas.setBitmap(bitmap);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        drawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
     private void pinBlackMap(Double latitude,
                              Double longitude,
                              String color,
                              String houseID) {
         LatLng myPin = new LatLng(latitude, longitude);
         if (color.equals("BLACK")) {
+            Drawable circleDrawable = ContextCompat.getDrawable(this, R.drawable.worker_000000);
+            BitmapDescriptor markerIcon = getMarkerIconFromDrawable(circleDrawable);
             mMarker = mMap.addMarker(new MarkerOptions().position(myPin)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_black))
+                    .icon(markerIcon)
                     .anchor(0.5f, 0.5f));
             mMarker.setTag(houseID);
         } else if (color.equals("RED")) {
+            Drawable circleDrawable = ContextCompat.getDrawable(this, R.drawable.worker_cf1d1d);
+            BitmapDescriptor markerIcon = getMarkerIconFromDrawable(circleDrawable);
             mMarker = mMap.addMarker(new MarkerOptions().position(myPin)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_red))
+                    .icon(markerIcon)
                     .anchor(0.5f, 0.5f));
             mMarker.setTag(houseID);
         } else if (color.equals("BLUE")) {
+            Drawable circleDrawable = ContextCompat.getDrawable(this, R.drawable.worker_4f7ab4);
+            BitmapDescriptor markerIcon = getMarkerIconFromDrawable(circleDrawable);
             mMarker = mMap.addMarker(new MarkerOptions().position(myPin)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_rr_blue))
+                    .icon(markerIcon)
                     .anchor(0.5f, 0.5f));
             mMarker.setTag(houseID);
         } else if (color.equals("NULL")) {
+            Drawable circleDrawable = ContextCompat.getDrawable(this, R.drawable.wrench);
+            BitmapDescriptor markerIcon = getMarkerIconFromDrawable(circleDrawable);
             mMarker =mMap.addMarker(new MarkerOptions().position(myPin)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_big_dildo))
+                    .icon(markerIcon)
                     .anchor(0.5f, 0.5f));;
             mMarker.setTag(houseID);
         }
