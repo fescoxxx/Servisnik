@@ -61,6 +61,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     private TextView text_view_header_list_order_card;
 
     private View header_list_work_at;
+    private View divider_bootm;
 
     TokenClient tokenClient = RetrofitClientToken
             .getClient(Constants.HTTP.BASE_URL_TOKEN)
@@ -101,6 +102,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         list_view_works_at = (ListView)  findViewById(R.id.list_view_works_at);
         list_view_works_at.addHeaderView(createHeader());
         linearNoConnectionInternet = (LinearLayout)  findViewById(R.id.linearNoConnectionInternet);
+
 
         Intent intent = getIntent();
         guid = intent.getStringExtra("GUID");
@@ -158,6 +160,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         textView_number = (TextView) view.findViewById(R.id.textView_number);
         text_view_header_list_order_card = (TextView) view.findViewById(R.id.text_view_header_list_order_card);
         linearLayout_entranceto = (LinearLayout) view.findViewById(R.id.linearLayout_entranceto);
+        divider_bootm = (View) view.findViewById(R.id.divider_bootm);
         return view;
     }
 
@@ -278,6 +281,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
                         } else {
                             dataList = new ArrayList<>();
                             text_view_header_list_order_card.setVisibility(View.GONE);
+                            divider_bootm.setVisibility(View.GONE);
                         }
                         if (dataList != null) {
 
