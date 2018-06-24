@@ -61,6 +61,7 @@ public class NearListActivity extends AppCompatActivity {
             .create(ServiceApiClient.class);
 
     private Call<OrderCardList>  orderCardListCall;
+    private Call<RefreshToken> callRedresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +95,12 @@ public class NearListActivity extends AppCompatActivity {
         });
 
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {callRedresh.cancel(); } catch (Exception ex) {}
+        try {orderCardListCall.cancel(); } catch (Exception ex) {}
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) {return;}
@@ -220,7 +226,7 @@ public class NearListActivity extends AppCompatActivity {
             if (date_now.after(date_ltt)) {
                 Log.d("life_time_date_token4", " Новая дата позже" + date_now.toString() + "      " + date_ltt.toString());
                 //Токен просрочен, пробуем получить новый
-                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                callRedresh = tokenClient.refreshToken("refresh_token",
                         "mpservisnik",
                         "secret",
                         loadTextPref("token_refresh"));

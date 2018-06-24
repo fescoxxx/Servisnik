@@ -695,8 +695,13 @@ public class RepairRequestActivity extends AppCompatActivity {
                      //Произошла непредвиденная ошибка
                      srlRepairReques.setRefreshing(false);
                      datasCategories = new ArrayList<>();
-                     mAdapter = new DataCategoryAdapter(getActivity(), datasCategories);
-                     mRecyclerView.setAdapter(mAdapter);
+                     try {
+                         mAdapter = new DataCategoryAdapter(getActivity(), datasCategories);
+                         mRecyclerView.setAdapter(mAdapter);
+                     } catch (NullPointerException ex) {
+                     }
+
+
                      showErrorDialog("");
                  }
              });

@@ -53,6 +53,8 @@ public class ChoiceTMCActivity extends AppCompatActivity {
             .getClient(Constants.HTTP.BASE_URL_REQUEST)
             .create(ServiceApiClient.class);
     private Call<ChoiseTmc> getChoiseTmc;
+    private Call<RefreshToken> callRedresh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +72,13 @@ public class ChoiceTMCActivity extends AppCompatActivity {
         GetResult getResult = (GetResult) intent.getExtras().getSerializable("currentResult");
         currentResult = getResult;
         getChoiseTmc();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {callRedresh.cancel(); } catch (Exception ex) {}
+        try {getChoiseTmc.cancel(); } catch (Exception ex) {}
     }
 
     @Override
@@ -116,7 +125,7 @@ public class ChoiceTMCActivity extends AppCompatActivity {
             if (date_now.after(date_ltt)) {
                 Log.d("life_time_date_token4", " Новая дата позже" + date_now.toString() + "      " + date_ltt.toString());
                 //Токен просрочен, пробуем получить новый
-                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                callRedresh = tokenClient.refreshToken("refresh_token",
                         "mpservisnik",
                         "secret",
                         loadTextPref("token_refresh"));

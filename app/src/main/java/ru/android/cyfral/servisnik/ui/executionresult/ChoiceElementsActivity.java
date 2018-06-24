@@ -55,6 +55,8 @@ public class ChoiceElementsActivity extends AppCompatActivity  {
             .create(ServiceApiClient.class);
 
     private Call<ChoiseElement> getChoiseElement;
+    private Call<RefreshToken> callRedresh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +73,13 @@ public class ChoiceElementsActivity extends AppCompatActivity  {
         currentResult = getResult;
         getChoiseElement();
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {callRedresh.cancel(); } catch (Exception ex) {}
+        try {getChoiseElement.cancel(); } catch (Exception ex) {}
     }
 
     @Override
@@ -213,7 +222,7 @@ public class ChoiceElementsActivity extends AppCompatActivity  {
             if (date_now.after(date_ltt)) {
                 Log.d("life_time_date_token4", " Новая дата позже" + date_now.toString() + "      " + date_ltt.toString());
                 //Токен просрочен, пробуем получить новый
-                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                callRedresh = tokenClient.refreshToken("refresh_token",
                         "mpservisnik",
                         "secret",
                         loadTextPref("token_refresh"));

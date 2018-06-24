@@ -85,7 +85,10 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
     private GetResult currentResult;
     private GetResult newResult;
     private LocationManager locationManager;
-    Call<StandartAnswer> putResultCall;
+
+    private Call<StandartAnswer> putResultCall;
+    private Call<RefreshToken> callRedresh;
+
     public Location location;
     Context mContext;
 
@@ -167,6 +170,12 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         try {
             locationManager.removeUpdates(locationListener);
         } catch (NullPointerException ex) {}
+
+        try {callRedresh.cancel(); } catch (Exception ex) {}
+        try {putResultCall.cancel(); } catch (Exception ex) {}
+        try {getResultCall.cancel(); } catch (Exception ex) {}
+
+
     }
     private void isLocationEnabled() {
 
@@ -536,7 +545,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
             if (date_now.after(date_ltt)) {
                 Log.d("life_time_date_token4", " Новая дата позже"+date_now.toString() + "      "+ date_ltt.toString());
                 //Токен просрочен, пробуем получить новый
-                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                callRedresh = tokenClient.refreshToken("refresh_token",
                         "mpservisnik",
                         "secret",
                         loadTextPref("token_refresh"));

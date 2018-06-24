@@ -45,6 +45,8 @@ public class SplashActivity extends AppCompatActivity {
             .getClient(Constants.HTTP.BASE_URL_REQUEST)
             .create(ServiceApiClient.class);
 
+    Call<RefreshToken> callRedresh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +58,11 @@ public class SplashActivity extends AppCompatActivity {
         setTitle("");
         checkToken();
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {callRedresh.cancel(); } catch (Exception ex) {}
+    }
 
     private String loadTextPref(String prefStr) {
         sPref = getSharedPreferences("myPrefs", MODE_PRIVATE);
@@ -89,7 +95,7 @@ public class SplashActivity extends AppCompatActivity {
                 //Токен просрочен
                 Log.d("life_time_date_token4", " Новая дата позже"+date_now.toString() + "      "+ date_ltt.toString());
                 //Токен просрочен, пробуем получить новый
-                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                callRedresh = tokenClient.refreshToken("refresh_token",
                         "mpservisnik",
                         "secret",
                         loadTextPref("token_refresh"));

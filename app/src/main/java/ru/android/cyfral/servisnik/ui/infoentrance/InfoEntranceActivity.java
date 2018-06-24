@@ -74,6 +74,7 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
             .create(ServiceApiClient.class);
 
     private Call<InfoEntrance> getInfoEntranceCall;
+    private Call<RefreshToken> callRedresh;
 
     //кнопки
     private Button video_dervice_button;
@@ -138,7 +139,12 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
 
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {callRedresh.cancel(); } catch (Exception ex) {}
+        try {getInfoEntranceCall.cancel(); } catch (Exception ex) {}
+    }
 
     @Override
     public void onClick(View v) {
@@ -212,7 +218,7 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
             if (date_now.after(date_ltt)) {
                 Log.d("life_time_date_token4", " Новая дата позже" + date_now.toString() + "      " + date_ltt.toString());
                 //Токен просрочен, пробуем получить новый
-                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                callRedresh = tokenClient.refreshToken("refresh_token",
                         "mpservisnik",
                         "secret",
                         loadTextPref("token_refresh"));
@@ -406,17 +412,22 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
     }
 
     private void showErrorDialog(String code) {
-        mProgressBar.setVisibility(View.INVISIBLE);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Ошибка "+code);
-        builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");
-        builder.setNeutralButton("Отмена",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                    }
-                });
-        builder.show();
+        try {
+            mProgressBar.setVisibility(View.INVISIBLE);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Ошибка "+code);
+            builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");
+            builder.setNeutralButton("Отмена",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                            int which) {
+                        }
+                    });
+            builder.show();
+        } catch (Exception ex) {
+
+        }
+
     }
 
     public static String getFormatDate(Date date) {

@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             .create(TokenClient.class);
 
     private SharedPreferences sPref;
+    private Call<Token> call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {call.cancel(); } catch (Exception ex) {}
+    }
+
     public static String getFormatDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(date);
@@ -113,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 "s.sidorov",
                 "!Qwerty7",
                 "");*/
-         Call<Token> call = tokenClient.login("password",
+         call = tokenClient.login("password",
                 "mpservisnik",
                 "secret",
                 username.getText().toString(),

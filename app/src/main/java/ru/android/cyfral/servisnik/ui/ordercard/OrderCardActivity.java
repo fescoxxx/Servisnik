@@ -66,6 +66,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     private static Call<OrderCard> orderCardCall;
     private static Call<StandartAnswer> isViewedCall;
     private static  Call<StandartAnswer> putDateTimeAgreedCall;
+    private Call<RefreshToken> callRedresh;
     private static DataDatabase mDatabase;
     TokenClient tokenClient = RetrofitClientToken
             .getClient(Constants.HTTP.BASE_URL_TOKEN)
@@ -250,6 +251,15 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {orderCardCall.cancel(); } catch (Exception ex) {}
+        try {isViewedCall.cancel(); } catch (Exception ex) {}
+        try {putDateTimeAgreedCall.cancel(); } catch (Exception ex) {}
+        try {callRedresh.cancel(); } catch (Exception ex) {}
+    }
+
     public static String toISO8601UTC(Date date) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ");
         return df.format(date);
@@ -398,7 +408,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
             if (date_now.after(date_ltt)) {
                 Log.d("life_time_date_token4", " Новая дата позже"+date_now.toString() + "      "+ date_ltt.toString());
                 //Токен просрочен, пробуем получить новый
-                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                callRedresh = tokenClient.refreshToken("refresh_token",
                         "mpservisnik",
                         "secret",
                         loadTextPref("token_refresh"));
@@ -454,7 +464,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                             case 401:
                                 Log.d("case 401", response.message());
                                 //Токен просрочен, пробуем получить новый
-                                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                                 callRedresh = tokenClient.refreshToken("refresh_token",
                                         "mpservisnik",
                                         "secret",
                                         loadTextPref("token_refresh"));
@@ -717,17 +727,20 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
     }
 
     private void showErrorDialog(String code) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Ошибка "+code);
-        builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");
-        builder.setNeutralButton("Отмена",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                    }
-                });
-        builder.show();
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Ошибка "+code);
+            builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");
+            builder.setNeutralButton("Отмена",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                            int which) {
+                        }
+                    });
+            builder.show();
+        } catch (Exception ex) {
 
+        }
     }
 
     @Override

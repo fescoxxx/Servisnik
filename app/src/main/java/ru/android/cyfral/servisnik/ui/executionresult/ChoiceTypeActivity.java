@@ -45,7 +45,8 @@ public class ChoiceTypeActivity extends AppCompatActivity {
     private ListView lv_choice_type;
     private GetResult currentResult;
     private SharedPreferences sPref;
-    Call<ChoiseType> getChoiseType;
+    private Call<ChoiseType> getChoiseType;
+    private  Call<RefreshToken> callRedresh;
 
     TokenClient tokenClient = RetrofitClientToken
             .getClient(Constants.HTTP.BASE_URL_TOKEN)
@@ -77,6 +78,12 @@ public class ChoiceTypeActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {callRedresh.cancel(); } catch (Exception ex) {}
+        try {getChoiseType.cancel(); } catch (Exception ex) {}
+    }
     private List<Data> getSortArray(List<Data> listData) {
         try {
             List<Data> newArray = new ArrayList<>();
@@ -189,7 +196,7 @@ public class ChoiceTypeActivity extends AppCompatActivity {
             if (date_now.after(date_ltt)) {
                 Log.d("life_time_date_token4", " Новая дата позже" + date_now.toString() + "      " + date_ltt.toString());
                 //Токен просрочен, пробуем получить новый
-                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                callRedresh = tokenClient.refreshToken("refresh_token",
                         "mpservisnik",
                         "secret",
                         loadTextPref("token_refresh"));

@@ -78,6 +78,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
             .create(ServiceApiClient.class);
 
     private Call<ListWorks> listWorksCall;
+    private Call<RefreshToken> callRedresh;
 
     private FloatingActionButton floatingActionButtonCenterMap;
     private FloatingActionButton floatingActionButtonNearList;
@@ -163,6 +164,8 @@ public class ListWorkMapActivity extends AppCompatActivity implements
             locationManager.removeUpdates(locationListener);
         } catch (NullPointerException ex) {
         }
+        try {callRedresh.cancel(); } catch (Exception ex) {}
+        try {listWorksCall.cancel(); } catch (Exception ex) {}
     }
 
     private LocationListener locationListener = new LocationListener() {
@@ -301,7 +304,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
             if (date_now.after(date_ltt)) {
                 Log.d("life_time_date_token4", " Новая дата позже" + date_now.toString() + "      " + date_ltt.toString());
                 //Токен просрочен, пробуем получить новый
-                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                callRedresh = tokenClient.refreshToken("refresh_token",
                         "mpservisnik",
                         "secret",
                         loadTextPref("token_refresh"));

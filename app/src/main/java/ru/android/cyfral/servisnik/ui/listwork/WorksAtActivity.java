@@ -71,6 +71,8 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
 
     private Call<EntranceList> entranceListCall;
     private Call<OrderCardList> orderCardListCall;
+    private Call<RefreshToken> callRedresh;
+
     private LinearLayout linearLayout_entranceto;
     private Button btnEntrance;
     private Context mContect;
@@ -116,6 +118,14 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {callRedresh.cancel(); } catch (Exception ex) {}
+        try {entranceListCall.cancel(); } catch (Exception ex) {}
+        try {orderCardListCall.cancel(); } catch (Exception ex) {}
     }
 
     private void actionIsInternet() {
@@ -184,7 +194,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
             if (date_now.after(date_ltt)) {
                 Log.d("life_time_date_token4", " Новая дата позже" + date_now.toString() + "      " + date_ltt.toString());
                 //Токен просрочен, пробуем получить новый
-                Call<RefreshToken> callRedresh = tokenClient.refreshToken("refresh_token",
+                callRedresh = tokenClient.refreshToken("refresh_token",
                         "mpservisnik",
                         "secret",
                         loadTextPref("token_refresh"));
