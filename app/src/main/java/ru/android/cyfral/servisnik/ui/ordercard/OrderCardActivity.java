@@ -34,6 +34,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -204,31 +205,41 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                 timePicker.setIs24HourView(true);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    Date d = new Date();
+                    d.getTime();
 
-/*                    Toast toast = Toast.makeText(OrderCardActivity.this, String.valueOf(getMinute()), Toast.LENGTH_SHORT);
-                    toast.show()*/;
-                    if (timePicker.getMinute() >= 0 & timePicker.getMinute()<5) {
+                    if (c.getTime().getMinutes() >= 0 & c.getTime().getMinutes()<5) {
+                        timePicker.setHour(c.getTime().getHours());
                         timePicker.setMinute(2);
-                    } else if (timePicker.getMinute() >= 5 & timePicker.getMinute()<10) {
+                    } else if (c.getTime().getMinutes() >= 5 & c.getTime().getMinutes()<10) {
+                        timePicker.setHour(c.getTime().getHours());
                         timePicker.setMinute(3);
-                    } else if (timePicker.getMinute() >= 10 & timePicker.getMinute()<15) {
+                    } else if (c.getTime().getMinutes() >= 10 & c.getTime().getMinutes()<15) {
+                        timePicker.setHour(c.getTime().getHours());
                         timePicker.setMinute(4);
-                    } else if (timePicker.getMinute() >= 15 & timePicker.getMinute()<20) {
+                    } else if (c.getTime().getMinutes() >= 15 & c.getTime().getMinutes()<20) {
+                        timePicker.setHour(c.getTime().getHours());
                         timePicker.setMinute(5);
-                    } else if (timePicker.getMinute() >= 20 & timePicker.getMinute()<25) {
+                    } else if (c.getTime().getMinutes() >= 20 & c.getTime().getMinutes()<25) {
+                        timePicker.setHour(c.getTime().getHours());
                         timePicker.setMinute(6);
-                    } else if (timePicker.getMinute() >= 25 & timePicker.getMinute()<30) {
+                    } else if (c.getTime().getMinutes() >= 25 & c.getTime().getMinutes()<30) {
+                        timePicker.setHour(c.getTime().getHours());
                         timePicker.setMinute(7);
-                    } else if (timePicker.getMinute() >= 30 & timePicker.getMinute()<35) {
+                    } else if (c.getTime().getMinutes() >= 30 & c.getTime().getMinutes()<35) {
+                        timePicker.setHour(c.getTime().getHours());
                         timePicker.setMinute(8);
-                    } else if (timePicker.getMinute() >= 35 & timePicker.getMinute()<40) {
+                    } else if (c.getTime().getMinutes() >= 35 & c.getTime().getMinutes()<40) {
+                        timePicker.setHour(c.getTime().getHours());
                         timePicker.setMinute(9);
-                    } else if (timePicker.getMinute() >= 40 & timePicker.getMinute()<45) {
+                    } else if (c.getTime().getMinutes() >= 40 & c.getTime().getMinutes()<45) {
+                        timePicker.setHour(c.getTime().getHours());
                         timePicker.setMinute(10);
-                    } else if (timePicker.getMinute() >= 45 & timePicker.getMinute()<50) {
+                    } else if (c.getTime().getMinutes()>= 45 & c.getTime().getMinutes()<50) {
+                        timePicker.setHour(c.getTime().getHours());
                         timePicker.setMinute(11);
-                    } else if (timePicker.getMinute() >= 55 & timePicker.getMinute()<60) {
-                        timePicker.setHour(timePicker.getHour()+1);
+                    } else if (c.getTime().getMinutes() >= 55 & c.getTime().getMinutes()<60) {
+                        timePicker.setHour(c.getTime().getHours()+1);
                         timePicker.setMinute(1);
                     }
 
