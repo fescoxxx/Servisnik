@@ -27,11 +27,14 @@ import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,6 +50,7 @@ import ru.android.cyfral.servisnik.model.Constants;
 import ru.android.cyfral.servisnik.model.DataFetchListener;
 import ru.android.cyfral.servisnik.model.orderCard.AgreedDate;
 import ru.android.cyfral.servisnik.model.orderCard.Contacts;
+import ru.android.cyfral.servisnik.model.orderCard.Data;
 import ru.android.cyfral.servisnik.model.orderCard.InstalledEquipments;
 import ru.android.cyfral.servisnik.model.orderCard.OrderCard;
 import ru.android.cyfral.servisnik.model.orderCard.SafeHome;
@@ -110,6 +114,12 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
     private ProgressDialog mDialog; //анимация загрузки
 
+    private static final int INTERVAL = 5;
+
+    private static final DecimalFormat FORMATTER = new DecimalFormat("00");
+
+   // private TimePicker picker; // set in onCreate
+    private NumberPicker minutePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +177,8 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
 
 
+
+
         btn_date_agreed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,16 +189,60 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
                 timePicker = (TimePicker) dialogView.findViewById(R.id.timePicker_agreed);
                 datePicker = (DatePicker) dialogView.findViewById(R.id.datePicker_argeed);
-              //  timePicker = new MyTimePicker(OrderCardActivity.this);
-                LinearLayout linearLayout_piker_argeed = (LinearLayout)  dialogView.findViewById(R.id.linearLayout_piker_argeed);
-              //  linearLayout_piker_argeed.addView(timePicker);
+              //  timePicker.setDi
+                setMinutePicker();
+
+
+
+                // timePicker = new MyTimePicker(OrderCardActivity.this);
+              //  timePicker.setIs24HourView(true);
+
+           //     LinearLayout linearLayout_piker_argeed = (LinearLayout)  dialogView.findViewById(R.id.linearLayout_piker_argeed);
+               // linearLayout_piker_argeed.addView(timePicker);
                 Calendar c = Calendar.getInstance();
                 datePicker.setMinDate(c.getTimeInMillis());
 
                 timePicker.setIs24HourView(true);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    timePicker.setMinute(timePicker.getMinute()+6);
+                    Date d = new Date();
+                    d.getTime();
+
+                    if (c.getTime().getMinutes() >= 0 & c.getTime().getMinutes()<5) {
+                        timePicker.setHour(c.getTime().getHours());
+                        timePicker.setMinute(2);
+                    } else if (c.getTime().getMinutes() >= 5 & c.getTime().getMinutes()<10) {
+                        timePicker.setHour(c.getTime().getHours());
+                        timePicker.setMinute(3);
+                    } else if (c.getTime().getMinutes() >= 10 & c.getTime().getMinutes()<15) {
+                        timePicker.setHour(c.getTime().getHours());
+                        timePicker.setMinute(4);
+                    } else if (c.getTime().getMinutes() >= 15 & c.getTime().getMinutes()<20) {
+                        timePicker.setHour(c.getTime().getHours());
+                        timePicker.setMinute(5);
+                    } else if (c.getTime().getMinutes() >= 20 & c.getTime().getMinutes()<25) {
+                        timePicker.setHour(c.getTime().getHours());
+                        timePicker.setMinute(6);
+                    } else if (c.getTime().getMinutes() >= 25 & c.getTime().getMinutes()<30) {
+                        timePicker.setHour(c.getTime().getHours());
+                        timePicker.setMinute(7);
+                    } else if (c.getTime().getMinutes() >= 30 & c.getTime().getMinutes()<35) {
+                        timePicker.setHour(c.getTime().getHours());
+                        timePicker.setMinute(8);
+                    } else if (c.getTime().getMinutes() >= 35 & c.getTime().getMinutes()<40) {
+                        timePicker.setHour(c.getTime().getHours());
+                        timePicker.setMinute(9);
+                    } else if (c.getTime().getMinutes() >= 40 & c.getTime().getMinutes()<45) {
+                        timePicker.setHour(c.getTime().getHours());
+                        timePicker.setMinute(10);
+                    } else if (c.getTime().getMinutes()>= 45 & c.getTime().getMinutes()<50) {
+                        timePicker.setHour(c.getTime().getHours());
+                        timePicker.setMinute(11);
+                    } else if (c.getTime().getMinutes() >= 55 & c.getTime().getMinutes()<60) {
+                        timePicker.setHour(c.getTime().getHours()+1);
+                        timePicker.setMinute(1);
+                    }
+
                 }
                 ad.setView(dialogView);
                 ad.setTitle("Назначить дату и время");  // заголовок
@@ -195,6 +251,7 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
 
                     }
                 });
+
                 ad.setPositiveButton("Сохранить", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
                         mDialog = new ProgressDialog(OrderCardActivity.this);
@@ -206,10 +263,10 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                         GregorianCalendar calendarBeg= null;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             calendarBeg = new GregorianCalendar(datePicker.getYear(),
-                                    datePicker.getMonth(),datePicker.getDayOfMonth(), timePicker.getHour(), timePicker.getMinute());
+                                    datePicker.getMonth(),datePicker.getDayOfMonth(), timePicker.getHour(), getMinute());
                         } else {
                             calendarBeg = new GregorianCalendar(datePicker.getYear(),
-                                    datePicker.getMonth(),datePicker.getDayOfMonth(), timePicker.getCurrentHour(), timePicker.getCurrentMinute());
+                                    datePicker.getMonth(),datePicker.getDayOfMonth(), timePicker.getCurrentHour(), getMinute());
                         }
 
                         Date begin=calendarBeg.getTime();
@@ -249,6 +306,30 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
                 ad.show();
             }
         });
+    }
+
+    public void setMinutePicker() {
+        int numValues = 60 / INTERVAL;
+        String[] displayedValues = new String[numValues];
+        for (int i = 0; i < numValues; i++) {
+            displayedValues[i] = FORMATTER.format(i * INTERVAL);
+        }
+
+        View minute = timePicker.findViewById(Resources.getSystem().getIdentifier("minute", "id", "android"));
+        if ((minute != null) && (minute instanceof NumberPicker)) {
+            minutePicker = (NumberPicker) minute;
+            minutePicker.setMinValue(0);
+            minutePicker.setMaxValue(numValues - 1);
+            minutePicker.setDisplayedValues(displayedValues);
+        }
+    }
+
+    public int getMinute() {
+        if (minutePicker != null) {
+            return (minutePicker.getValue() * INTERVAL);
+        } else {
+            return timePicker.getCurrentMinute();
+        }
     }
 
     @Override
