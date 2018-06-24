@@ -126,7 +126,7 @@ public class OrderCardListAdapter extends BaseAdapter {
             try{
                 if (!data.getAddress().getBuilding().equals("")
                         &!data.getAddress().getBuilding().equals("null")) {
-                    building = "к" +data.getAddress().getBuilding()+" ";
+                    building = "к." +data.getAddress().getBuilding()+" ";
                 }
             } catch (java.lang.NullPointerException ex) {}
 
