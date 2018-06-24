@@ -81,7 +81,6 @@ public class ChoiceTypeActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        try {callRedresh.cancel(); } catch (Exception ex) {}
         try {getChoiseType.cancel(); } catch (Exception ex) {}
     }
     private List<Data> getSortArray(List<Data> listData) {

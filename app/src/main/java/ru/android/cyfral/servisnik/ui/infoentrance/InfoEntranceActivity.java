@@ -142,7 +142,6 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
     @Override
     public void onDestroy() {
         super.onDestroy();
-        try {callRedresh.cancel(); } catch (Exception ex) {}
         try {getInfoEntranceCall.cancel(); } catch (Exception ex) {}
     }
 

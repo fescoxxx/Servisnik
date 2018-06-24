@@ -338,7 +338,6 @@ public class OrderCardActivity extends AppCompatActivity implements DataFetchLis
         try {orderCardCall.cancel(); } catch (Exception ex) {}
         try {isViewedCall.cancel(); } catch (Exception ex) {}
         try {putDateTimeAgreedCall.cancel(); } catch (Exception ex) {}
-        try {callRedresh.cancel(); } catch (Exception ex) {}
     }
 
     public static String toISO8601UTC(Date date) {

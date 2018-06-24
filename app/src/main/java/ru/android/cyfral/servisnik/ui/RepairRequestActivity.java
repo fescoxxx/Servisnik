@@ -181,7 +181,6 @@ public class RepairRequestActivity extends AppCompatActivity {
             Constants.FIRST_LOAD_APP.TAB_GENERAL_APP = 0;
             Constants.FIRST_LOAD_APP.ENTRANCE_TO_FIRST = true;
             try {repairRequestCall.cancel(); } catch (Exception ex) {}
-            try {callRedresh.cancel();} catch (Exception ex) {}
             try {entranceToCall.cancel();} catch (Exception ex) {}
             try {mDatabase.close();} catch (Exception ex) {}
 

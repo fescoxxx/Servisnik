@@ -164,7 +164,6 @@ public class ListWorkMapActivity extends AppCompatActivity implements
             locationManager.removeUpdates(locationListener);
         } catch (NullPointerException ex) {
         }
-        try {callRedresh.cancel(); } catch (Exception ex) {}
         try {listWorksCall.cancel(); } catch (Exception ex) {}
     }
 

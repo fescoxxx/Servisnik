@@ -171,11 +171,8 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
             locationManager.removeUpdates(locationListener);
         } catch (NullPointerException ex) {}
 
-        try {callRedresh.cancel(); } catch (Exception ex) {}
         try {putResultCall.cancel(); } catch (Exception ex) {}
         try {getResultCall.cancel(); } catch (Exception ex) {}
-
-
     }
     private void isLocationEnabled() {
 

@@ -77,7 +77,6 @@ public class ChoiceTMCActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        try {callRedresh.cancel(); } catch (Exception ex) {}
         try {getChoiseTmc.cancel(); } catch (Exception ex) {}
     }
 

@@ -99,7 +99,6 @@ public class NearListActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        try {callRedresh.cancel(); } catch (Exception ex) {}
         try {orderCardListCall.cancel(); } catch (Exception ex) {}
     }
     @Override

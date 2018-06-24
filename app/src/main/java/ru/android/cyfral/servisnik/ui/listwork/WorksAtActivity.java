@@ -124,7 +124,6 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onDestroy() {
         super.onDestroy();
-        try {callRedresh.cancel(); } catch (Exception ex) {}
         try {entranceListCall.cancel(); } catch (Exception ex) {}
         try {orderCardListCall.cancel(); } catch (Exception ex) {}
     }

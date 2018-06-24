@@ -78,7 +78,6 @@ public class ChoiceGroupActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        try {callRedresh.cancel(); } catch (Exception ex) {}
         try {getChoiseGroup.cancel(); } catch (Exception ex) {}
     }
     private String loadTextPref(String prefStr) {
