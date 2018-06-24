@@ -239,15 +239,17 @@ public class ChoiceTMCActivity extends AppCompatActivity {
         });
     }
     private void showErrorDialog(String code) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Ошибка "+code);
-        builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");
-        builder.setNeutralButton("Отмена",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                    }
-                });
-        builder.show();
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Ошибка "+code);
+            builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");
+            builder.setNeutralButton("Отмена",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                            int which) {
+                        }
+                    });
+            builder.show();
+        } catch (Exception ex) {}
     }
 }

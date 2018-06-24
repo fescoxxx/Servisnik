@@ -252,6 +252,7 @@ public class ChoiceGroupActivity extends AppCompatActivity {
         }
     }
         private void showErrorDialog(String code) {
+        try {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Ошибка "+code);
             builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");
@@ -262,6 +263,7 @@ public class ChoiceGroupActivity extends AppCompatActivity {
                         }
                     });
             builder.show();
+        } catch (Exception ex) {}
         }
 
     public static String getFormatDate(Date date) {
