@@ -1,5 +1,6 @@
 package ru.android.cyfral.servisnik.model.orderCard.adapter;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -124,9 +125,9 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
                         room);
 
         if(data.getIsViewed().equals("false")) {
-            mLine_is_view.setVisibility(View.VISIBLE);
+            mLine_is_view.setBackgroundColor(Color.parseColor("#0D3357"));
         } else if(data.getIsViewed().equals("true")) {
-            mLine_is_view.setVisibility(View.GONE);
+            mLine_is_view.setBackgroundColor(Color.parseColor("#ffffff"));
         }
 
 
@@ -136,7 +137,7 @@ public class DataViewHolder extends ChildViewHolder implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (clickListener != null) {
-            mLine_is_view.setVisibility(View.INVISIBLE);
+            mLine_is_view.setBackgroundColor(Color.parseColor("#ffffff"));
             clickListener.onClick(view, selectDate, getAdapterPosition());
         }
     }

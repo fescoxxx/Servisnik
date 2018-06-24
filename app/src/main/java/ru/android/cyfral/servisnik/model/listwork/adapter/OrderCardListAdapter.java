@@ -203,9 +203,9 @@ public class OrderCardListAdapter extends BaseAdapter {
             );
 
             if(data.getIsViewed().equals("false")) {
-                mLine_is_view.setVisibility(View.VISIBLE);
+                mLine_is_view.setBackgroundColor(Color.parseColor("#0D3357"));
             } else if(data.getIsViewed().equals("true")) {
-                mLine_is_view.setVisibility(View.GONE);
+                mLine_is_view.setBackgroundColor(Color.parseColor("#ffffff"));
             }
 
             Date dateToday = new Date();

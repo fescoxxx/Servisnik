@@ -148,10 +148,8 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
 
         if(mData.get(position).getIsViewed().equals("false")) {
             holder.mLine_is_view.setBackgroundColor(Color.parseColor("#0D3357"));
-           // holder.mLine_is_view.setVisibility(View.VISIBLE);
         } else if(mData.get(position).getIsViewed().equals("true")) {
-            holder.mLine_is_view.setBackgroundColor(Color.parseColor("#0D3357"));
-          //  holder.mLine_is_view.setVisibility(View.GONE);
+            holder.mLine_is_view.setBackgroundColor(Color.parseColor("#ffffff"));
         }
 
 
@@ -212,7 +210,6 @@ public class RepairRequestAdapter extends RecyclerView.Adapter<RepairRequestAdap
         }
         @Override
         public void onClick(View view) {
-        //    mLine_is_view.setVisibility(View.GONE);
             mLine_is_view.setBackgroundColor(Color.parseColor("#ffffff"));
             mListener.onClick(getLayoutPosition());
         }

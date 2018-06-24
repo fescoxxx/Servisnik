@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -162,7 +163,7 @@ public class NearListActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 View mLine_is_view = (View)  view.findViewById(R.id.line_is_view);
-                                mLine_is_view.setVisibility(View.GONE);
+                                mLine_is_view.setBackgroundColor(Color.parseColor("#ffffff"));
                                 Intent intent = new Intent("ru.android.cyfral.servisnik.card");
                                 intent.putExtra(Constants.SETTINGS.GUID, orderCardListAdapter.getData(position).getId());
                                 startActivityForResult(intent, 10);
@@ -292,15 +293,20 @@ public class NearListActivity extends AppCompatActivity {
         return sdf.format(date);
     }
     private void showErrorDialog(String code) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Ошибка "+code);
-        builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");
-        builder.setNeutralButton("Отмена",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                    }
-                });
-        builder.show();
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Ошибка "+code);
+            builder.setMessage("Произошла ошибка при выполнении запроса к серверу. Повторите попытку позже.");
+            builder.setNeutralButton("Отмена",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                            int which) {
+                        }
+                    });
+            builder.show();
+        } catch (Exception ex) {
+
+        }
+
     }
 }
