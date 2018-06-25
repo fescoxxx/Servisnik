@@ -6,8 +6,8 @@ package ru.android.cyfral.servisnik.model;
 
 public class Constants {
     public static final class HTTP {
-        public static final String BASE_URL_TOKEN = "https://testauth.cyfral-group.ru/";
-        public static final String BASE_URL_REQUEST = "https://testservice.cyfral-group.ru/";
+        public static final String BASE_URL_TOKEN = "https://auth.cyfral-group.ru/";
+        public static final String BASE_URL_REQUEST = "https://servisnik.cyfral-group.ru/";
     }
 
     public static final class DATABASE {
