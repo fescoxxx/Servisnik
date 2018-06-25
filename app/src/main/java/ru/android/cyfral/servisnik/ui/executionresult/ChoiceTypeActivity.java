@@ -38,7 +38,7 @@ import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 import ru.android.cyfral.servisnik.model.executionresult.choisetype.Data;
 import ru.android.cyfral.servisnik.model.executionresult.result.getResult.Type;
-
+//выбор вида работ
 public class ChoiceTypeActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
@@ -102,6 +102,7 @@ public class ChoiceTypeActivity extends AppCompatActivity {
         }
     }
 
+    //загрузка
     private void loadChoiseType() {
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
 
@@ -173,6 +174,7 @@ public class ChoiceTypeActivity extends AppCompatActivity {
         });
     }
 
+    //подготовка к загрузке
     private void getChoiseType() {
 
         String token = loadTextPref(Constants.SETTINGS.TOKEN);

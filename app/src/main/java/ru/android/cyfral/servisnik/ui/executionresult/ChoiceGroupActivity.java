@@ -39,6 +39,7 @@ import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 import ru.android.cyfral.servisnik.model.executionresult.result.getResult.Group;
 
+//Выберите группу работ
 public class ChoiceGroupActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
@@ -85,6 +86,7 @@ public class ChoiceGroupActivity extends AppCompatActivity {
         return sPref.getString(prefStr, "");
     }
 
+    //сортировка массива
     private List<Data> getSortArray(List<Data> listData) {
         try {
             List<Data> newArray = new ArrayList<>();
@@ -104,6 +106,7 @@ public class ChoiceGroupActivity extends AppCompatActivity {
         }
     }
 
+    //загрузка данных
     private void loadChoiseGroup(){
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         getChoiseGroup = serviceApiClient.getChoiseGroup("Bearer " + token);
@@ -174,6 +177,7 @@ public class ChoiceGroupActivity extends AppCompatActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
+    //подготовка к загрузке данных
     private void getChoiseGroup() {
 
         String token = loadTextPref(Constants.SETTINGS.TOKEN);

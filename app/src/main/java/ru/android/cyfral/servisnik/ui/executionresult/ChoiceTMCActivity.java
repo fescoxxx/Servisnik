@@ -39,6 +39,7 @@ import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 import ru.android.cyfral.servisnik.model.executionresult.choisetmc.Data;
 
+//Выберите ТМЦ
 public class ChoiceTMCActivity extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private ListView lv_choice_tmc;
@@ -101,6 +102,7 @@ public class ChoiceTMCActivity extends AppCompatActivity {
         return sPref.getString(prefStr, "");
     }
 
+    //подготовка к загрузке
     private void getChoiseTmc(){
 
 
@@ -168,6 +170,7 @@ public class ChoiceTMCActivity extends AppCompatActivity {
         }
     }
 
+    //загрука данных
     private void loadChoiseTmc() {
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         getChoiseTmc = serviceApiClient

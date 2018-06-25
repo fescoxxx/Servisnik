@@ -38,7 +38,7 @@ import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 import ru.android.cyfral.servisnik.model.executionresult.result.getResult.Element;
-
+//Выберите элемент работ
 public class ChoiceElementsActivity extends AppCompatActivity  {
 
     private ProgressBar mProgressBar;
@@ -102,6 +102,7 @@ public class ChoiceElementsActivity extends AppCompatActivity  {
         return sPref.getString(prefStr, "");
     }
 
+    //сортировка массива
     private List<Data> getSortArray(List<Data> listData) {
         try {
             List<Data> newArray = new ArrayList<>();
@@ -121,6 +122,7 @@ public class ChoiceElementsActivity extends AppCompatActivity  {
         }
     }
 
+    //загрузка данных
     private void loadChoiseElement(){
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         getChoiseElement = serviceApiClient
@@ -199,6 +201,7 @@ public class ChoiceElementsActivity extends AppCompatActivity  {
         setResult(RESULT_OK, intent);
         finish();
     }
+    //подготовка к загрузке данных
     private void getChoiseElement() {
 
         String token = loadTextPref(Constants.SETTINGS.TOKEN);

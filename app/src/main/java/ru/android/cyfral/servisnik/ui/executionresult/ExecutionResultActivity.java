@@ -55,6 +55,8 @@ import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 
+
+//активти - результат выполнения работ
 public class ExecutionResultActivity extends AppCompatActivity implements View.OnClickListener {
 
     private LinearLayout mLinearLayout;
@@ -304,7 +306,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         }
     }
 
-
+    //валидатор отправки результатов
     private boolean validadatorPutResult() {
 
         boolean errorGroup = true;
@@ -347,6 +349,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
 
     }
 
+    //отправка результатов
     private void putResult(){
         AlertDialog.Builder ad = new AlertDialog.Builder(this);
         ad.setMessage("Вы уверены, что хотите отправить результаты выполнения заказ-наряда?"); // сообщение
@@ -423,6 +426,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         ad.show();
     }
 
+    //подготовка отправки результатов
     private void preputResult() {
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         String token_ref = loadTextPref(Constants.SETTINGS.REFRESH_TOKEN);
@@ -496,13 +500,11 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         switch (v.getId()) {
             //отправка результатов
             case R.id.put_result_button:
-
                 if(validadatorPutResult()) {
                     preputResult();
                 } else {
                     Log.d("validadatorPutResult", "Ошибка");
                 }
-
 
                 break;
             //изменение работ
@@ -533,7 +535,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
         return sdf.format(date);
     }
 
-
+    //загруза данных для окна
     private void loadResult() {
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         getResultCall = serviceApiClient.getResult(guid, "Bearer " + token);
@@ -590,6 +592,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
 
     }
 
+    //подготовка загрузки данных для окна
     private void getResult(String guid) {
         //mProgressBar.setVisibility(View.INVISIBLE);
         //mLinearLayout.setVisibility(View.VISIBLE);
