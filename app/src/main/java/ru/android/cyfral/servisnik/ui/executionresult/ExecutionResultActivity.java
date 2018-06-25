@@ -347,6 +347,149 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
 
     }
 
+    private void putResult(){
+        AlertDialog.Builder ad = new AlertDialog.Builder(this);
+        ad.setMessage("Вы уверены, что хотите отправить результаты выполнения заказ-наряда?"); // сообщение
+        ad.setPositiveButton("Отправить", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                mDialog = new ProgressDialog(ExecutionResultActivity.this);
+                mDialog.setMessage("Отправка данных...");
+                mDialog.setCancelable(true);
+                mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mDialog.setIndeterminate(true);
+                mDialog.show();
+                PutResult putResult = new PutResult();
+                Works works = new Works();
+                works.setGroupID(
+                        currentResult
+                                .getData()
+                                .getWorks()
+                                .getGroup()
+                                .getId());
+                works.setElementID(
+                        currentResult
+                                .getData()
+                                .getWorks()
+                                .getElement()
+                                .getId());
+                works.setTypeID(
+                        currentResult
+                                .getData()
+                                .getWorks()
+                                .getType()
+                                .getId());
+                putResult.setWorks(works);
+                putResult.setClosed("true");
+                List<String> listtmas = new ArrayList<>();
+                for(int i =0; i<currentResult.getData().getTmas().size(); i++) {
+                    listtmas.add(currentResult.getData().getTmas().get(i).getId());
+                }
+                putResult.setTMAs(listtmas);
+
+                putResult.setLatitude(loadTextPref(Constants.SETTINGS.LATITUDE));
+                putResult.setLongitude(loadTextPref(Constants.SETTINGS.LONGITUDE));
+                Log.d("res_log",loadTextPref(Constants.SETTINGS.LATITUDE));
+                Log.d("res_log",loadTextPref(Constants.SETTINGS.LONGITUDE));
+                String token = loadTextPref(Constants.SETTINGS.TOKEN);
+                putResultCall = serviceApiClient.putResult(putResult,"Bearer " + token, guid);
+                putResultCall.enqueue(new Callback<StandartAnswer>() {
+                    @Override
+                    public void onResponse(Call<StandartAnswer> call, Response<StandartAnswer> response) {
+                        if (response.isSuccessful()) {
+                            mDialog.dismiss();
+                            if(response.body().getIsSuccess().equals("true")){
+                                Intent intent = new Intent();
+                                setResult(RESULT_OK, intent);
+                                finish();
+                            } else {
+                                mDialog.dismiss();
+                            }
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<StandartAnswer> call, Throwable t) {
+                        mDialog.dismiss();
+                        Log.d("res_log_error", t.toString());
+                    }
+                });
+
+            }
+        });
+        ad.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                Log.d("validadatorPutResult", "не Отправлено");
+            }
+        });
+        ad.show();
+    }
+
+    private void preputResult() {
+        String token = loadTextPref(Constants.SETTINGS.TOKEN);
+        String token_ref = loadTextPref(Constants.SETTINGS.REFRESH_TOKEN);
+        String life_time_token = loadTextPref(Constants.SETTINGS.DATE_TOKEN);
+        //токенов нет
+        if (token.equals("")) {
+            startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+            finish();
+        } else {
+            String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT_NOW);
+            Date date_ltt = null;
+            try {
+                date_ltt = df.parse(life_time_token);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Date date_now = new Date();
+            if (date_now.after(date_ltt)) {
+                Log.d("life_time_date_token4", " Новая дата позже" + date_now.toString() + "      " + date_ltt.toString());
+                //Токен просрочен, пробуем получить новый
+                callRedresh = tokenClient.refreshToken("refresh_token",
+                        "mpservisnik",
+                        "secret",
+                        loadTextPref("token_refresh"));
+                callRedresh.enqueue(new Callback<RefreshToken>() {
+                    @Override
+                    public void onResponse(Call<RefreshToken> call, Response<RefreshToken> response) {
+                        if (response.isSuccessful()) {
+                            SharedPreferences myPrefs = getSharedPreferences("myPrefs", MODE_PRIVATE);
+                            SharedPreferences.Editor ed = myPrefs.edit();
+                            ed.putString(Constants.SETTINGS.TOKEN, response.body().getAccess_token());
+                            ed.putString(Constants.SETTINGS.REFRESH_TOKEN, response.body().getRefresh_token());
+                            Calendar date = Calendar.getInstance();
+                            long t = date.getTimeInMillis();
+                            Date life_time_date_token =
+                                    new Date(t + (Constants.SETTINGS.ONE_SECUNDE_IN_MILLIS
+                                            * Integer.valueOf(response.body().getExpires_in())));
+                            ed.putString(Constants.SETTINGS.DATE_TOKEN, getFormatDate(life_time_date_token));
+                            ed.apply();
+                            putResult();
+                        } else {
+                            //сервер вернул ошибку
+                            //   mProgressBar.setVisibility(View.INVISIBLE);
+                            int rc = response.code();
+                            if (rc == 401) {
+                                mProgressBar.setVisibility(View.INVISIBLE);
+                                startActivity(new Intent("ru.android.cyfral.servisnik.login"));
+                                finish();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RefreshToken> call, Throwable t) {
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                        showErrorDialog("");
+                    }
+                });
+
+            } else {
+                //токен живой
+                putResult();
+            }
+        }
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -355,79 +498,7 @@ public class ExecutionResultActivity extends AppCompatActivity implements View.O
             case R.id.put_result_button:
 
                 if(validadatorPutResult()) {
-                    AlertDialog.Builder ad = new AlertDialog.Builder(this);
-                    ad.setMessage("Вы уверены, что хотите отправить результаты выполнения заказ-наряда?"); // сообщение
-                    ad.setPositiveButton("Отправить", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int arg1) {
-                            mDialog = new ProgressDialog(ExecutionResultActivity.this);
-                            mDialog.setMessage("Отправка данных...");
-                            mDialog.setCancelable(true);
-                            mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                            mDialog.setIndeterminate(true);
-                            mDialog.show();
-                            PutResult putResult = new PutResult();
-                            Works works = new Works();
-                            works.setGroupID(
-                                    currentResult
-                                            .getData()
-                                            .getWorks()
-                                            .getGroup()
-                                            .getId());
-                            works.setElementID(
-                                    currentResult
-                                    .getData()
-                                    .getWorks()
-                                    .getElement()
-                                    .getId());
-                            works.setTypeID(
-                                    currentResult
-                                    .getData()
-                                    .getWorks()
-                                    .getType()
-                                    .getId());
-                            putResult.setWorks(works);
-                            putResult.setClosed("true");
-                            List<String> listtmas = new ArrayList<>();
-                            for(int i =0; i<currentResult.getData().getTmas().size(); i++) {
-                                listtmas.add(currentResult.getData().getTmas().get(i).getId());
-                            }
-                            putResult.setTMAs(listtmas);
-
-                            putResult.setLatitude(loadTextPref(Constants.SETTINGS.LATITUDE));
-                            putResult.setLongitude(loadTextPref(Constants.SETTINGS.LONGITUDE));
-                            Log.d("res_log",loadTextPref(Constants.SETTINGS.LATITUDE));
-                            Log.d("res_log",loadTextPref(Constants.SETTINGS.LONGITUDE));
-                            String token = loadTextPref(Constants.SETTINGS.TOKEN);
-                            putResultCall = serviceApiClient.putResult(putResult,"Bearer " + token, guid);
-                            putResultCall.enqueue(new Callback<StandartAnswer>() {
-                                @Override
-                                public void onResponse(Call<StandartAnswer> call, Response<StandartAnswer> response) {
-                                    if (response.isSuccessful()) {
-                                        mDialog.dismiss();
-                                        if(response.body().getIsSuccess().equals("true")){
-                                            Intent intent = new Intent();
-                                            setResult(RESULT_OK, intent);
-                                            finish();
-                                        } else {
-                                            mDialog.dismiss();
-                                        }
-                                    }
-                                }
-                                @Override
-                                public void onFailure(Call<StandartAnswer> call, Throwable t) {
-                                    mDialog.dismiss();
-                                    Log.d("res_log_error", t.toString());
-                                }
-                            });
-
-                        }
-                    });
-                    ad.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int arg1) {
-                            Log.d("validadatorPutResult", "не Отправлено");
-                        }
-                    });
-                    ad.show();
+                    preputResult();
                 } else {
                     Log.d("validadatorPutResult", "Ошибка");
                 }
