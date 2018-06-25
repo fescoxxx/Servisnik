@@ -198,6 +198,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         }
     };
 
+    //инициализация карты
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -221,6 +222,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         centerMeMap();
 
     }
+
     private String loadTextPref(String prefStr) {
         SharedPreferences sPref = getSharedPreferences("myPrefs", MODE_PRIVATE);
         return sPref.getString(prefStr, "");
@@ -282,6 +284,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         }
     }
 
+    //подгатовка запроса
     private void getListWorks() {
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         String token_ref = loadTextPref(Constants.SETTINGS.REFRESH_TOKEN);
@@ -347,6 +350,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         }
     }
 
+    //показать маркеры на карте
     private void showListWorks(ListWorks currentListWorks){
         this.currentListWorks = currentListWorks;
         for (int i=0; i<currentListWorks.getData().size(); i++) {
@@ -381,6 +385,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
 
     }
 
+    //магическое превращение объекта drawable в маркер для карты
     private BitmapDescriptor getMarkerIconFromDrawable(Drawable drawable) {
         Canvas canvas = new Canvas();
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
@@ -389,6 +394,8 @@ public class ListWorkMapActivity extends AppCompatActivity implements
         drawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
+
+    //Расстановка маркеров на карту
     private void pinBlackMap(Double latitude,
                              Double longitude,
                              String color,
@@ -427,6 +434,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
 
     }
 
+    //загрузка списка работ
     private void loadListWork() {
 
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
@@ -467,6 +475,7 @@ public class ListWorkMapActivity extends AppCompatActivity implements
 
     }
 
+    //центрирование карты
     private void centerMeMap() {
         mMap.clear();
         LatLng myTown = new LatLng(Double.parseDouble(loadTextPref(Constants.SETTINGS.LATITUDE)),

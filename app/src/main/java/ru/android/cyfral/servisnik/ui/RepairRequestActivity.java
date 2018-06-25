@@ -136,6 +136,7 @@ public class RepairRequestActivity extends AppCompatActivity {
         return true;
     }
 
+    //меню сверху
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(Constants.FIRST_LOAD_APP.TAB_GENERAL_APP == 0) {
@@ -170,6 +171,7 @@ public class RepairRequestActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //фрагмент основного окна списка ЗН
      public static class RepairRequestFragment extends Fragment implements DataCategoryAdapter.ItemClickListener, DataFetchSearchActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         public RepairRequestFragment() {
@@ -761,6 +763,7 @@ public class RepairRequestActivity extends AppCompatActivity {
 
     }
 
+    //Фрагмент окна списка подъездов на ТО
     public static class ListPprFragment extends Fragment implements  EntranceToRecycleAdapter.EntranceToClickListener, DataFetchEntranceTo {
         /**
          * The fragment argument representing the section number for this
