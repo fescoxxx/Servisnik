@@ -34,6 +34,7 @@ import ru.android.cyfral.servisnik.model.DataFetchSearchActivity;
 import ru.android.cyfral.servisnik.model.orderCard.adapter.RepairRequestAdapter;
 import ru.android.cyfral.servisnik.model.repairRequests.Data;
 
+//поиск по улице, телефону, номеру ЗН
 public class SearchActivity extends AppCompatActivity  implements  RepairRequestAdapter.RepairRequestClickListener, DataFetchSearchActivity {
     private SearchView searchView;
     private String searchHint;

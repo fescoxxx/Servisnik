@@ -64,6 +64,7 @@ import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 
+//основное активти
 public class RepairRequestActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;

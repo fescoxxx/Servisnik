@@ -42,9 +42,9 @@ import ru.android.cyfral.servisnik.model.entranceto.EntranceTo;
 import ru.android.cyfral.servisnik.model.entranceto.adapter.EntranceToAdapter;
 import ru.android.cyfral.servisnik.model.entranceto.adapter.EntranceToRecycleAdapter;
 
+//поиск по подъездам
 public class EntranceSearchActivity extends AppCompatActivity implements DataFetchEntranceTo, EntranceToRecycleAdapter.EntranceToClickListener {
     SearchView searchView;
-  //  Toolbar toolbar;
     private static DataDatabase mDatabase;
     private String filtrText;
     private EntranceTo entranceTo;
@@ -74,15 +74,8 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-      /*  getMenuInflater().inflate(R.menu.search_menu_item_entrance_to, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
-        searchView.showVoice(true);
-        searchView.showSearch();
-        searchView.setVoiceSearch(true);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);*/
 
-      MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
 
 
@@ -125,27 +118,12 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
 
                         filtrListEntranceTo(newText);
                         filtrText = newText;
-                       // mRepairRequestAdapter.clearData();
-
-                        // getFeedFromDatabaseSearchFiltr(newText);
                     }
                 };
                 cntr.start();
                 return false;
             }
         });
-
-       /* searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-            @Override
-            public void onSearchViewShown() {
-                //Do some magic
-            }
-
-            @Override
-            public void onSearchViewClosed() {
-                filtrListEntranceTo(filtrText);
-            }
-        });*/
 
         return true;
     }
@@ -177,7 +155,7 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
         }
     }
 
-
+    //Фильтр по поиску
     private void filtrListEntranceTo(String filtr) {
         List<Data> listData= new ArrayList<>();
         try {
@@ -194,6 +172,7 @@ public class EntranceSearchActivity extends AppCompatActivity implements DataFet
 
     }
 
+    //показать список
     private void showListEntranceTo(List<Data> listData) {
         final EntranceToRecycleAdapter entranceToAdapter;
         entranceToAdapter = new EntranceToRecycleAdapter(this ,this);

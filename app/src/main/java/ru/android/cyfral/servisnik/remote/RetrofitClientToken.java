@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by joe on 29.04.2018.
  */
-
+//RetrofitClien для авторизации
 public class RetrofitClientToken {
 
     private static Retrofit retrofitToken = null;

@@ -12,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by joe on 30.04.2018.
  */
 
+//RetrofitClien для основного апи
 public class RetrofitClientServiseApi {
 
     private static Retrofit retrofitServise = null;
