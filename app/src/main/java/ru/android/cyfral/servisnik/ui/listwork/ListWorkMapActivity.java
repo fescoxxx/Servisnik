@@ -56,6 +56,7 @@ import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 
+//активити с картой
 public class ListWorkMapActivity extends AppCompatActivity implements
         OnMapReadyCallback,
         View.OnClickListener,

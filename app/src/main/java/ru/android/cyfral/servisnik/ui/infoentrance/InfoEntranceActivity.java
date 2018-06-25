@@ -43,7 +43,7 @@ import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 
-
+//активити информация о подъезде
 public class InfoEntranceActivity extends AppCompatActivity implements DataFetchInfoEntranceListener, View.OnClickListener {
     private ProgressBar mProgressBar;
     private OrderCard currentOrderCard;
@@ -185,6 +185,7 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
            }
     }
 
+    //получить список из БД
     private void getInfoEntranceDataBase() {
         mDatabase.fethcDatasForInfoEntrance(this, guid);
         try {
@@ -194,6 +195,7 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
         } catch (java.lang.NullPointerException ex) {}
     }
 
+    //подготовка запроса
     private void getInfoEntrance() {
 
 
@@ -261,6 +263,7 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
         }
     }
 
+    //видимость кнопок
     private void checkVisibleButton(InfoEntrance infoEntrance) {
         List<Contacts> contactsList = infoEntrance.getData().getContacts();
         List<VideoService> videoServiceList = infoEntrance.getData().getVideoService();
@@ -294,6 +297,7 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
         }
     }
 
+    //показать список
     private void showInfoEntrance(InfoEntrance infoEntrance){
         currentInfoEntrance = infoEntrance;
         checkVisibleButton(currentInfoEntrance);
@@ -366,6 +370,8 @@ public class InfoEntranceActivity extends AppCompatActivity implements DataFetch
                         room);
 
     }
+
+    //запрос списка
     private void loadInfoEntrance() {
 
         String token = loadTextPref(Constants.SETTINGS.TOKEN);

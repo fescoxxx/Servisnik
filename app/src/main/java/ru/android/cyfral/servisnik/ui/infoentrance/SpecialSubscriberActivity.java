@@ -14,7 +14,7 @@ import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.infoEntrance.SpecialApartments;
 import ru.android.cyfral.servisnik.model.infoEntrance.adapters.SpecialSubscriberAdapter;
-
+//Особые абоненты
 public class SpecialSubscriberActivity extends AppCompatActivity {
     private List<SpecialApartments> specialApartmentsList;
     private SpecialSubscriberAdapter specialSubscriberAdapter;

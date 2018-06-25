@@ -43,6 +43,7 @@ import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 
+//список ЗН рядом
 public class NearListActivity extends AppCompatActivity {
     private Context mContect;
     private Double latitude;
@@ -111,6 +112,8 @@ public class NearListActivity extends AppCompatActivity {
             getListNear();
         }
     }
+
+    //сортировка массива
     private List<Data> sortListData(List<Data> notSortListData){
         List<Data> result = new ArrayList<>();
 
@@ -126,6 +129,7 @@ public class NearListActivity extends AppCompatActivity {
         }
         return result;
     }
+    //запрос списка
     private void loadListNear() {
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         orderCardListCall = serviceApiClient
@@ -205,6 +209,7 @@ public class NearListActivity extends AppCompatActivity {
 
     }
 
+    //подгатовка запроса
     private void getListNear() {
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         String token_ref = loadTextPref(Constants.SETTINGS.REFRESH_TOKEN);

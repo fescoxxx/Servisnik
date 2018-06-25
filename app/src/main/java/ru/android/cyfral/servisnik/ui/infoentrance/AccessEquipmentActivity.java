@@ -17,6 +17,7 @@ import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.infoEntrance.PhoneNumbers;
 import ru.android.cyfral.servisnik.model.infoEntrance.adapters.AccessEquipmentAdapter;
 
+//Доступ к оборудованию
 public class AccessEquipmentActivity extends AppCompatActivity {
 
     private List<Contacts> listContacts;

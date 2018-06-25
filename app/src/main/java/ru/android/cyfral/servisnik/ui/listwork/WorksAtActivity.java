@@ -50,6 +50,7 @@ import ru.android.cyfral.servisnik.remote.RetrofitClientToken;
 import ru.android.cyfral.servisnik.service.ServiceApiClient;
 import ru.android.cyfral.servisnik.service.TokenClient;
 
+//активти работы по адресу
 public class WorksAtActivity extends AppCompatActivity implements View.OnClickListener{
 
     private LinearLayout mLinearLayout;
@@ -175,6 +176,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    //подгатовка запроса
     private void getListEntrance() {
 
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
@@ -245,7 +247,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-
+    //сортировка массива
     private List<Data> sortListData(List<Data> notSortListData){
         List<Data> result = new ArrayList<>();
 
@@ -262,6 +264,7 @@ public class WorksAtActivity extends AppCompatActivity implements View.OnClickLi
         return result;
     }
 
+    //запрос списка
     private void LoadListOrderCard() {
         String token = loadTextPref(Constants.SETTINGS.TOKEN);
         orderCardListCall = serviceApiClient

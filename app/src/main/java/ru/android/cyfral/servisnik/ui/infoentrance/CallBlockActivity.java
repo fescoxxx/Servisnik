@@ -15,6 +15,7 @@ import ru.android.cyfral.servisnik.model.infoEntrance.CallingDevice;
 import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.infoEntrance.adapters.CallBlockAdapter;
 
+//Вызывной блок
 public class CallBlockActivity extends AppCompatActivity {
     private List<CallingDevice> callingDeviceList;
     private CallBlockAdapter callBlockAdapter;

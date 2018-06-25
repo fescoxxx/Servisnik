@@ -14,7 +14,7 @@ import ru.android.cyfral.servisnik.R;
 import ru.android.cyfral.servisnik.model.infoEntrance.InfoEntrance;
 import ru.android.cyfral.servisnik.model.infoEntrance.VideoService;
 import ru.android.cyfral.servisnik.model.infoEntrance.adapters.VideoServiceAdapter;
-
+//Видеообслуживание
 public class VideoServiceActivity extends AppCompatActivity {
     private List<VideoService> listVideoService;
     private VideoServiceAdapter videoServiceAdapter;
